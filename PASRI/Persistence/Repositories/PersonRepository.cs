@@ -1,0 +1,28 @@
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using PASRI.Core.Domain;
+using PASRI.Core.Repositories;
+
+namespace PASRI.Persistence.Repositories
+{
+    public class PersonRepository : Repository<Person>, IPersonRepository
+    {
+        public PersonRepository(PasriDbContext context)
+            : base(context)
+        {
+        }
+
+        public PasriDbContext PasriDbContext
+        {
+            get { return Context as PasriDbContext; }
+        }
+
+        public Person GetPersonByIdentificationNumber(int personIdentificationId)
+        {
+            return PasriDbContext.Persons
+                .Include(p => p.PersonIdentifications)
+                .ThenInclude(pi => pi.PersonIdentificationName)
+                .SingleOrDefault(pi => pi.Id == personIdentificationId);
+        }
+    }
+}
