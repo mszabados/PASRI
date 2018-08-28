@@ -21,7 +21,8 @@ namespace PASRI.Persistence.Repositories
         {
             return PasriDbContext.Persons
                 .Include(p => p.PersonIdentifications)
-                .ThenInclude(pi => pi.PersonIdentificationName)
+                    .ThenInclude(pi => pi.PersonNameIdentifications)
+                        .ThenInclude(pni => pni.PersonLegalNameIdentifications)
                 .SingleOrDefault(pi => pi.Id == personIdentificationId);
         }
     }

@@ -10,8 +10,6 @@ namespace PASRI.Persistence.EntityConfigurations
         {
             builder.ToTable("PersonIdentification");
 
-            
-
             builder.HasOne<Person>(pi => pi.Person)
                 .WithMany(p => p.PersonIdentifications)
                 .HasForeignKey(pi => pi.PersonId)

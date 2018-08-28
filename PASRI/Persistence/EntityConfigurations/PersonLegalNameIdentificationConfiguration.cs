@@ -4,11 +4,11 @@ using PASRI.Core.Domain;
 
 namespace PASRI.Persistence.EntityConfigurations
 {
-    public class PersonIdentificationNameConfiguration : IEntityTypeConfiguration<PersonIdentificationName>
+    public class PersonLegalNameIdentificationConfiguration : IEntityTypeConfiguration<PersonLegalNameIdentification>
     {
-        public void Configure(EntityTypeBuilder<PersonIdentificationName> builder)
+        public void Configure(EntityTypeBuilder<PersonLegalNameIdentification> builder)
         {
-            builder.ToTable("PersonIdentificationName");
+            builder.ToTable("PersonLegalNameIdentification");
 
             builder.Property(p => p.First)
                 .HasMaxLength(255);
@@ -19,8 +19,9 @@ namespace PASRI.Persistence.EntityConfigurations
             builder.Property(p => p.Full)
                 .HasMaxLength(255);
 
-            builder.HasOne<PersonIdentification>(pin => pin.PersonIdentification)
-                .WithOne(pi => pi.PersonIdentificationName)
+            builder.HasOne<PersonNameIdentification>(plni => plni.PersonNameIdentification)
+                .WithMany(pni => pni.PersonLegalNameIdentifications)
+                .HasForeignKey(plni => plni.PersonNameIdentificationId)
                 .IsRequired();
         }
     }
