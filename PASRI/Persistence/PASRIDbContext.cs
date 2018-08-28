@@ -21,6 +21,15 @@ namespace PASRI.Persistence
             modelBuilder.ApplyConfiguration(new PersonNameIdentificationConfiguration());
             modelBuilder.ApplyConfiguration(new PersonLegalNameIdentificationConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceSuffixNameConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceCountryConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceStateConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceHairColorConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceEyeColorConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceTypeBloodConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceRaceDemographicConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceEthnicGroupDemographicConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceGenderDemographicConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceReligionDemographicConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

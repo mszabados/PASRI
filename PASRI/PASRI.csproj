@@ -17,6 +17,12 @@
     <Compile Remove="Migrations\20180828170839_CreateForeignKeyForLegalNameIdentificationToReferenceSuffixName.Designer.cs" />
     <Compile Remove="Migrations\20180828170931_CreateForeignKeyForLegalNameIdentificationToReferenceSuffixName.cs" />
     <Compile Remove="Migrations\20180828170931_CreateForeignKeyForLegalNameIdentificationToReferenceSuffixName.Designer.cs" />
+    <Compile Remove="Migrations\20180828182920_AddCountryEyeHairStateBloodTypeReferenceTables.cs" />
+    <Compile Remove="Migrations\20180828182920_AddCountryEyeHairStateBloodTypeReferenceTables.Designer.cs" />
+    <Compile Remove="Migrations\20180828183233_AddCountryEyeHairStateBloodTypeReferenceTables.cs" />
+    <Compile Remove="Migrations\20180828183233_AddCountryEyeHairStateBloodTypeReferenceTables.Designer.cs" />
+    <Compile Remove="Migrations\20180828183553_AddCountryEyeHairStateBloodTypeReferenceTables.cs" />
+    <Compile Remove="Migrations\20180828183553_AddCountryEyeHairStateBloodTypeReferenceTables.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -4,14 +4,14 @@ using PASRI.Core.Domain;
 
 namespace PASRI.Persistence.EntityConfigurations
 {
-    public class ReferenceSuffixNameConfiguration : IEntityTypeConfiguration<ReferenceSuffixName>
+    public class ReferenceRaceDemographicConfiguration : IEntityTypeConfiguration<ReferenceRaceDemographic>
     {
-        public void Configure(EntityTypeBuilder<ReferenceSuffixName> builder)
+        public void Configure(EntityTypeBuilder<ReferenceRaceDemographic> builder)
         {
-            builder.ToTable("ReferenceSuffixName");
+            builder.ToTable("ReferenceRaceDemographic");
             builder.HasKey(p => p.Code);
             builder.Property(p => p.Code)
-                .HasMaxLength(4)
+                .HasMaxLength(1)
                 .IsRequired();
             builder.Property(p => p.DisplayText)
                 .HasMaxLength(255)
