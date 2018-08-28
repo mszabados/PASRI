@@ -13,6 +13,10 @@
     <Compile Remove="Migrations\20180827110903_AddPersonIdentificationNameTable.Designer.cs" />
     <Compile Remove="Migrations\20180827115857_IsThereAnything.cs" />
     <Compile Remove="Migrations\20180827115857_IsThereAnything.Designer.cs" />
+    <Compile Remove="Migrations\20180828170839_CreateForeignKeyForLegalNameIdentificationToReferenceSuffixName.cs" />
+    <Compile Remove="Migrations\20180828170839_CreateForeignKeyForLegalNameIdentificationToReferenceSuffixName.Designer.cs" />
+    <Compile Remove="Migrations\20180828170931_CreateForeignKeyForLegalNameIdentificationToReferenceSuffixName.cs" />
+    <Compile Remove="Migrations\20180828170931_CreateForeignKeyForLegalNameIdentificationToReferenceSuffixName.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="automapper.extensions.microsoft.dependencyinjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="microsoft.entityframeworkcore.sqlserver" Version="2.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.1916590" />

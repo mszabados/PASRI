@@ -19,6 +19,8 @@ namespace PASRI.Persistence
             modelBuilder.ApplyConfiguration(new PersonConfiguration());
             modelBuilder.ApplyConfiguration(new PersonIdentificationConfiguration());
             modelBuilder.ApplyConfiguration(new PersonNameIdentificationConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonLegalNameIdentificationConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceSuffixNameConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

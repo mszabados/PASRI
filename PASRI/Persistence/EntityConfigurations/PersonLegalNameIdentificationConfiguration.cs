@@ -16,6 +16,8 @@ namespace PASRI.Persistence.EntityConfigurations
                 .HasMaxLength(255);
             builder.Property(p => p.Last)
                 .HasMaxLength(255);
+            builder.Property(p => p.ReferenceSuffixNameCode)
+                .HasMaxLength(4);
             builder.Property(p => p.Full)
                 .HasMaxLength(255);
 
@@ -23,6 +25,10 @@ namespace PASRI.Persistence.EntityConfigurations
                 .WithMany(pni => pni.PersonLegalNameIdentifications)
                 .HasForeignKey(plni => plni.PersonNameIdentificationId)
                 .IsRequired();
+
+            builder.HasOne<ReferenceSuffixName>(plni => plni.ReferenceSuffixName)
+                .WithOne(rsn => rsn.PersonLegalNameIdentification)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

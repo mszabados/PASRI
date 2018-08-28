@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PASRI.Persistence;
 
 namespace PASRI.Migrations
 {
     [DbContext(typeof(PasriDbContext))]
-    partial class PasriDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180828130958_AddReferenceSuffixNameTable")]
+    partial class AddReferenceSuffixNameTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,16 +69,9 @@ namespace PASRI.Migrations
 
                     b.Property<int>("PersonNameIdentificationId");
 
-                    b.Property<string>("ReferenceSuffixNameCode")
-                        .HasMaxLength(4);
-
                     b.HasKey("Id");
 
                     b.HasIndex("PersonNameIdentificationId");
-
-                    b.HasIndex("ReferenceSuffixNameCode")
-                        .IsUnique()
-                        .HasFilter("[ReferenceSuffixNameCode] IS NOT NULL");
 
                     b.ToTable("PersonLegalNameIdentification");
                 });
@@ -129,11 +124,6 @@ namespace PASRI.Migrations
                         .WithMany("PersonLegalNameIdentifications")
                         .HasForeignKey("PersonNameIdentificationId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PASRI.Core.Domain.ReferenceSuffixName", "ReferenceSuffixName")
-                        .WithOne("PersonLegalNameIdentification")
-                        .HasForeignKey("PASRI.Core.Domain.PersonLegalNameIdentification", "ReferenceSuffixNameCode")
-                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("PASRI.Core.Domain.PersonNameIdentification", b =>

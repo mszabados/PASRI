@@ -6,8 +6,8 @@ namespace PASRI.Core.Domain
     {
         public int Id { get; set; }
         public int PersonIdentificationId { get; set; }
-        public PersonIdentification PersonIdentification { get; set; }
-        public ICollection<PersonLegalNameIdentification> PersonLegalNameIdentifications { get; set; }
+        public virtual PersonIdentification PersonIdentification { get; set; }
+        public virtual ICollection<PersonLegalNameIdentification> PersonLegalNameIdentifications { get; set; }
         public int DoDServicePersonDocumentID { get; set; }
     }
 }

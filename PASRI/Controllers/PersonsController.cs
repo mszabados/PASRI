@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PASRI.Core;
 using PASRI.Core.Domain;
@@ -10,10 +11,12 @@ namespace PASRI.Controllers
     public class PersonsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public PersonsController(IUnitOfWork unitOfWork)
+        public PersonsController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         // GET /api/persons
