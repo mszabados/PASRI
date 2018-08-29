@@ -11,11 +11,15 @@ namespace PASRI.Persistence.EntityConfigurations
             builder.ToTable("ReferenceGenderDemographic");
             builder.HasKey(p => p.Code);
             builder.Property(p => p.Code)
-                .HasMaxLength(1)
+                .HasColumnType("char(1)")
                 .IsRequired();
             builder.Property(p => p.DisplayText)
-                .HasMaxLength(255)
+                .HasColumnType("varchar(255)")
                 .IsRequired();
+            builder.Property(p => p.StartDate)
+                .HasColumnType("datetime");
+            builder.Property(p => p.EndDate)
+                .HasColumnType("datetime");
         }
     }
 }

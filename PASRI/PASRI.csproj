@@ -23,6 +23,18 @@
     <Compile Remove="Migrations\20180828183233_AddCountryEyeHairStateBloodTypeReferenceTables.Designer.cs" />
     <Compile Remove="Migrations\20180828183553_AddCountryEyeHairStateBloodTypeReferenceTables.cs" />
     <Compile Remove="Migrations\20180828183553_AddCountryEyeHairStateBloodTypeReferenceTables.Designer.cs" />
+    <Compile Remove="Migrations\20180829020410_ChangeNVarcharStringsToVarcharAndCharStrings.cs" />
+    <Compile Remove="Migrations\20180829020410_ChangeNVarcharStringsToVarcharAndCharStrings.Designer.cs" />
+    <Compile Remove="Migrations\20180829104949_ConvertNVarcharFieldsToVarcharInConfigurations.cs" />
+    <Compile Remove="Migrations\20180829104949_ConvertNVarcharFieldsToVarcharInConfigurations.Designer.cs" />
+    <Compile Remove="Migrations\20180829105609_ConvertNVarcharFieldsToVarcharFields1.cs" />
+    <Compile Remove="Migrations\20180829105609_ConvertNVarcharFieldsToVarcharFields1.Designer.cs" />
+    <Compile Remove="Migrations\20180829112900_RepairIssueWithDisplayTextAndCodeLengths.cs" />
+    <Compile Remove="Migrations\20180829112900_RepairIssueWithDisplayTextAndCodeLengths.Designer.cs" />
+    <Compile Remove="Migrations\20180829113134_DropCodeKeysAndRepairIssueWithDisplayTextAndCodeLengths.cs" />
+    <Compile Remove="Migrations\20180829113134_DropCodeKeysAndRepairIssueWithDisplayTextAndCodeLengths.Designer.cs" />
+    <Compile Remove="Migrations\20180829113606_ReplacePrimaryKeysInReferenceTablesAfterCodeLengthRepair.cs" />
+    <Compile Remove="Migrations\20180829113606_ReplacePrimaryKeysInReferenceTablesAfterCodeLengthRepair.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

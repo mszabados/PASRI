@@ -11,15 +11,17 @@ namespace PASRI.Persistence.EntityConfigurations
             builder.ToTable("PersonLegalNameIdentification");
 
             builder.Property(p => p.First)
-                .HasMaxLength(255);
+                .HasColumnType("varchar(255)");
             builder.Property(p => p.Middle)
-                .HasMaxLength(255);
+                .HasColumnType("varchar(255)");
             builder.Property(p => p.Last)
-                .HasMaxLength(255);
+                .HasColumnType("varchar(255)");
             builder.Property(p => p.ReferenceSuffixNameCode)
-                .HasMaxLength(4);
+                .HasColumnType("char(4)");
             builder.Property(p => p.Full)
-                .HasMaxLength(255);
+                .HasColumnType("varchar(255)");
+            builder.Property(p => p.EffectiveDate)
+                .HasColumnType("datetime");
 
             builder.HasOne<PersonNameIdentification>(plni => plni.PersonNameIdentification)
                 .WithMany(pni => pni.PersonLegalNameIdentifications)

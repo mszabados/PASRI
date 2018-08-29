@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PASRI.Persistence;
 
 namespace PASRI.Migrations
 {
     [DbContext(typeof(PasriDbContext))]
-    partial class PasriDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180829105951_ReplacePrimaryKeysRelatedToNVarcharCodesInReferenceTablesWithId")]
+    partial class ReplacePrimaryKeysRelatedToNVarcharCodesInReferenceTablesWithId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,33 +53,33 @@ namespace PASRI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("EffectiveDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EffectiveDate");
 
                     b.Property<string>("First")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
                     b.Property<string>("Full")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
                     b.Property<string>("Last")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
                     b.Property<string>("Middle")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
                     b.Property<int>("PersonNameIdentificationId");
 
                     b.Property<string>("ReferenceSuffixNameCode")
-                        .HasColumnType("char(4)");
+                        .HasColumnType("char")
+                        .HasMaxLength(4);
 
                     b.HasKey("Id");
 
                     b.HasIndex("PersonNameIdentificationId");
-
-                    b.HasIndex("ReferenceSuffixNameCode")
-                        .IsUnique()
-                        .HasFilter("[ReferenceSuffixNameCode] IS NOT NULL");
 
                     b.ToTable("PersonLegalNameIdentification");
                 });
@@ -101,210 +103,250 @@ namespace PASRI.Migrations
 
             modelBuilder.Entity("PASRI.Core.Domain.ReferenceCountry", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(2)");
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("char")
+                        .HasMaxLength(2);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
                     b.ToTable("ReferenceCountry");
                 });
 
             modelBuilder.Entity("PASRI.Core.Domain.ReferenceEthnicGroupDemographic", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(2)");
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("char")
+                        .HasMaxLength(2);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
                     b.ToTable("ReferenceEthnicGroupDemographic");
                 });
 
             modelBuilder.Entity("PASRI.Core.Domain.ReferenceEyeColor", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(2)");
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("char")
+                        .HasMaxLength(2);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
                     b.ToTable("ReferenceEyeColor");
                 });
 
             modelBuilder.Entity("PASRI.Core.Domain.ReferenceGenderDemographic", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(1)");
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("char")
+                        .HasMaxLength(1);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
                     b.ToTable("ReferenceGenderDemographic");
                 });
 
             modelBuilder.Entity("PASRI.Core.Domain.ReferenceHairColor", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(2)");
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("char")
+                        .HasMaxLength(2);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
                     b.ToTable("ReferenceHairColor");
                 });
 
             modelBuilder.Entity("PASRI.Core.Domain.ReferenceRaceDemographic", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(1)");
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("char")
+                        .HasMaxLength(1);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
                     b.ToTable("ReferenceRaceDemographic");
                 });
 
             modelBuilder.Entity("PASRI.Core.Domain.ReferenceReligionDemographic", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(2)");
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("char")
+                        .HasMaxLength(2);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
                     b.ToTable("ReferenceReligionDemographic");
                 });
 
             modelBuilder.Entity("PASRI.Core.Domain.ReferenceState", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(2)");
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("char")
+                        .HasMaxLength(2);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
                     b.ToTable("ReferenceState");
                 });
 
             modelBuilder.Entity("PASRI.Core.Domain.ReferenceSuffixName", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(4)");
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("char")
+                        .HasMaxLength(4);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
                     b.ToTable("ReferenceSuffixName");
                 });
 
             modelBuilder.Entity("PASRI.Core.Domain.ReferenceTypeBlood", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(1)");
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("char")
+                        .HasMaxLength(1);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
                     b.ToTable("ReferenceTypeBlood");
                 });
@@ -323,11 +365,6 @@ namespace PASRI.Migrations
                         .WithMany("PersonLegalNameIdentifications")
                         .HasForeignKey("PersonNameIdentificationId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PASRI.Core.Domain.ReferenceSuffixName", "ReferenceSuffixName")
-                        .WithOne("PersonLegalNameIdentification")
-                        .HasForeignKey("PASRI.Core.Domain.PersonLegalNameIdentification", "ReferenceSuffixNameCode")
-                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("PASRI.Core.Domain.PersonNameIdentification", b =>

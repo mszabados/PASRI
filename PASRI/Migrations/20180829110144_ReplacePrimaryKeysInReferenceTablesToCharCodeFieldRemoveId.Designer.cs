@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PASRI.Persistence;
 
 namespace PASRI.Migrations
 {
     [DbContext(typeof(PasriDbContext))]
-    partial class PasriDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180829110144_ReplacePrimaryKeysInReferenceTablesToCharCodeFieldRemoveId")]
+    partial class ReplacePrimaryKeysInReferenceTablesToCharCodeFieldRemoveId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,25 +53,29 @@ namespace PASRI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("EffectiveDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EffectiveDate");
 
                     b.Property<string>("First")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
                     b.Property<string>("Full")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
                     b.Property<string>("Last")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
                     b.Property<string>("Middle")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
                     b.Property<int>("PersonNameIdentificationId");
 
                     b.Property<string>("ReferenceSuffixNameCode")
-                        .HasColumnType("char(4)");
+                        .HasColumnType("char")
+                        .HasMaxLength(4);
 
                     b.HasKey("Id");
 
@@ -103,17 +109,17 @@ namespace PASRI.Migrations
                 {
                     b.Property<string>("Code")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(2)");
+                        .HasColumnType("char")
+                        .HasMaxLength(2);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
                     b.HasKey("Code");
 
@@ -124,17 +130,17 @@ namespace PASRI.Migrations
                 {
                     b.Property<string>("Code")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(2)");
+                        .HasColumnType("char")
+                        .HasMaxLength(2);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
                     b.HasKey("Code");
 
@@ -145,17 +151,17 @@ namespace PASRI.Migrations
                 {
                     b.Property<string>("Code")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(2)");
+                        .HasColumnType("char")
+                        .HasMaxLength(2);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
                     b.HasKey("Code");
 
@@ -166,17 +172,17 @@ namespace PASRI.Migrations
                 {
                     b.Property<string>("Code")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(1)");
+                        .HasColumnType("char")
+                        .HasMaxLength(1);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
                     b.HasKey("Code");
 
@@ -187,17 +193,17 @@ namespace PASRI.Migrations
                 {
                     b.Property<string>("Code")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(2)");
+                        .HasColumnType("char")
+                        .HasMaxLength(2);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
                     b.HasKey("Code");
 
@@ -208,17 +214,17 @@ namespace PASRI.Migrations
                 {
                     b.Property<string>("Code")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(1)");
+                        .HasColumnType("char")
+                        .HasMaxLength(1);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
                     b.HasKey("Code");
 
@@ -229,17 +235,17 @@ namespace PASRI.Migrations
                 {
                     b.Property<string>("Code")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(2)");
+                        .HasColumnType("char")
+                        .HasMaxLength(2);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
                     b.HasKey("Code");
 
@@ -250,17 +256,17 @@ namespace PASRI.Migrations
                 {
                     b.Property<string>("Code")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(2)");
+                        .HasColumnType("char")
+                        .HasMaxLength(2);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
                     b.HasKey("Code");
 
@@ -271,17 +277,17 @@ namespace PASRI.Migrations
                 {
                     b.Property<string>("Code")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(4)");
+                        .HasColumnType("char")
+                        .HasMaxLength(4);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
                     b.HasKey("Code");
 
@@ -292,17 +298,17 @@ namespace PASRI.Migrations
                 {
                     b.Property<string>("Code")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(1)");
+                        .HasColumnType("char")
+                        .HasMaxLength(1);
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar")
+                        .HasMaxLength(255);
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("StartDate");
 
                     b.HasKey("Code");
 
