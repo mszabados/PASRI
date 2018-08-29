@@ -35,6 +35,12 @@
     <Compile Remove="Migrations\20180829113134_DropCodeKeysAndRepairIssueWithDisplayTextAndCodeLengths.Designer.cs" />
     <Compile Remove="Migrations\20180829113606_ReplacePrimaryKeysInReferenceTablesAfterCodeLengthRepair.cs" />
     <Compile Remove="Migrations\20180829113606_ReplacePrimaryKeysInReferenceTablesAfterCodeLengthRepair.Designer.cs" />
+    <Compile Remove="Migrations\20180829115101_Tet.cs" />
+    <Compile Remove="Migrations\20180829115101_Tet.Designer.cs" />
+    <Compile Remove="Migrations\20180829122027_test.cs" />
+    <Compile Remove="Migrations\20180829122027_test.Designer.cs" />
+    <Compile Remove="Migrations\20180829145319_test.cs" />
+    <Compile Remove="Migrations\20180829145319_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,9 +50,10 @@
   <ItemGroup>
     <PackageReference Include="automapper.extensions.microsoft.dependencyinjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="microsoft.entityframeworkcore.design" Version="2.1.2" />
     <PackageReference Include="microsoft.entityframeworkcore.sqlserver" Version="2.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.1916590" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.3" />
     <PackageReference Include="npgsql.entityframeworkcore.postgresql" Version="2.1.1.1" />
   </ItemGroup>
 

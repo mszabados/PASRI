@@ -19,7 +19,7 @@ namespace PASRI.Controllers
             _mapper = mapper;
         }
 
-        // GET /api/persons
+        // GET /api/Persons
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Person>))]
         public IActionResult GetPersons()
@@ -27,8 +27,8 @@ namespace PASRI.Controllers
             return Ok(_unitOfWork.Persons.GetAll());
         }
 
-        // GET /api/persons/5
-        [HttpGet]
+        // GET /api/Persons/5
+        [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Person))]
         [ProducesResponseType(404)]
         public IActionResult GetPerson(int id)
@@ -41,7 +41,7 @@ namespace PASRI.Controllers
             return Ok(person);
         }
 
-        // POST /api/persons
+        // POST /api/Persons
         [HttpPost]
         [ProducesResponseType(200, Type = typeof(Person))]
         [ProducesResponseType(400)]
@@ -56,7 +56,7 @@ namespace PASRI.Controllers
             return Ok(person);
         }
 
-        // PUT /api/persons/5
+        // PUT /api/Persons/5
         [HttpPut]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -75,7 +75,7 @@ namespace PASRI.Controllers
             return Ok();
         }
 
-        // DELETE /api/persons/5
+        // DELETE /api/Persons/5
         [HttpDelete]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]

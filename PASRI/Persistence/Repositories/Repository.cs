@@ -22,10 +22,16 @@ namespace PASRI.Persistence.Repositories
             _entities = Context.Set<TEntity>();
         }
 
-        public TEntity Get(int id)
+        public TEntity Get(int primaryKeyString)
         {
             
-            return _entities.Find(id);
+            return _entities.Find(primaryKeyString);
+        }
+
+        public TEntity Get(string code)
+        {
+
+            return _entities.Find(code);
         }
 
         public IEnumerable<TEntity> GetAll()

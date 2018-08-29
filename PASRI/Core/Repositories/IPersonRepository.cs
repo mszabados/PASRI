@@ -4,6 +4,6 @@ namespace PASRI.Core.Repositories
 {
     public interface IPersonRepository : IRepository<Person>
     {
-        Person GetPersonByIdentificationNumber(int personIdentificationId);
+        Person GetByIdentificationNumber(int personIdentificationId);
     }
 }

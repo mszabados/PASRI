@@ -12,9 +12,11 @@ namespace PASRI.Persistence
         {
             _context = context;
             Persons = new PersonRepository(_context);
+            ReferenceCountries = new ReferenceCountryRepository(_context);
         }
 
         public IPersonRepository Persons { get; private set; }
+        public IReferenceCountryRepository ReferenceCountries { get; private set; }
 
         public int Complete()
         {

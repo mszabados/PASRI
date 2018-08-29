@@ -17,7 +17,7 @@ namespace PASRI.Persistence.Repositories
             get { return Context as PasriDbContext; }
         }
 
-        public Person GetPersonByIdentificationNumber(int personIdentificationId)
+        public Person GetByIdentificationNumber(int personIdentificationId)
         {
             return PasriDbContext.Persons
                 .Include(p => p.PersonIdentifications)
