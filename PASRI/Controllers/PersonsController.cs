@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PASRI.Core;
 using PASRI.Core.Domain;
+using System.Collections.Generic;
 
 namespace PASRI.Controllers
 {

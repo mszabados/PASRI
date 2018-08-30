@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PASRI.Core.Domain;
 using PASRI.Core.Repositories;
+using System.Linq;
 
 namespace PASRI.Persistence.Repositories
 {

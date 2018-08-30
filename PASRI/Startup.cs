@@ -1,5 +1,4 @@
-﻿using System.IO;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PASRI.Core;
 using PASRI.Persistence;
+using System.IO;
 
 namespace PASRI
 {

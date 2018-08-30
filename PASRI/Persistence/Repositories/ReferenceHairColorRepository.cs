@@ -4,14 +4,14 @@ using System;
 
 namespace PASRI.Persistence.Repositories
 {
-    public class ReferenceCountryRepository : Repository<ReferenceCountry>, IReferenceCountryRepository
+    public class ReferenceHairColorRepository : Repository<ReferenceHairColor>, IReferenceHairColorRepository
     {
-        public ReferenceCountryRepository(PasriDbContext context)
+        public ReferenceHairColorRepository(PasriDbContext context)
             : base(context)
         {
         }
 
-        public new ReferenceCountry Get(int id)
+        public new ReferenceHairColor Get(int id)
         {
             throw new NotImplementedException();
         }

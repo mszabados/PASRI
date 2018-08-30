@@ -1,12 +1,10 @@
-﻿using System;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PASRI.Core;
 using PASRI.Core.Domain;
+using PASRI.Dtos;
 using System.Collections.Generic;
 using System.Linq;
-using PASRI.Dtos;
 
 namespace PASRI.Controllers
 {
@@ -31,7 +29,7 @@ namespace PASRI.Controllers
             return Ok(_unitOfWork.ReferenceCountries.GetAll().Select(_mapper.Map<ReferenceCountry, ReferenceCountryDto>));
         }
 
-        // GET /api/ReferenceCountries/5
+        // GET /api/ReferenceCountries/US
         [HttpGet("{code}")]
         [ProducesResponseType(200, Type = typeof(ReferenceCountryDto))]
         [ProducesResponseType(404)]
@@ -72,9 +70,9 @@ namespace PASRI.Controllers
                 referenceCountryDto);
         }
 
-        // PUT /api/ReferenceCountries/5
+        // PUT /api/ReferenceCountries/US
         [HttpPut("{code}")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public IActionResult UpdateReferenceCountry(string code, ReferenceCountryDto referenceCountryDto)
@@ -87,6 +85,23 @@ namespace PASRI.Controllers
                 return NotFound();
 
             _mapper.Map<ReferenceCountryDto, ReferenceCountry>(referenceCountryDto, referenceCountryInDb);
+            _unitOfWork.Complete();
+
+            return NoContent();
+        }
+
+        // DELETE /api/ReferenceCountries/US
+        [HttpDelete("{code}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult DeleteReferenceCountry(string code)
+        {
+            var referenceCountryInDb = _unitOfWork.ReferenceCountries.Get(code);
+
+            if (referenceCountryInDb == null)
+                return NotFound();
+
+            _unitOfWork.ReferenceCountries.Remove(referenceCountryInDb);
             _unitOfWork.Complete();
 
             return NoContent();

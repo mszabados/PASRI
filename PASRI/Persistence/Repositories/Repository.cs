@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using PASRI.Core.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
-using PASRI.Core.Repositories;
 
 namespace PASRI.Persistence.Repositories
 {
@@ -22,16 +22,16 @@ namespace PASRI.Persistence.Repositories
             _entities = Context.Set<TEntity>();
         }
 
-        public TEntity Get(int primaryKeyString)
+        public TEntity Get(int id)
         {
             
-            return _entities.Find(primaryKeyString);
+            return _entities.Find(id);
         }
 
-        public TEntity Get(string code)
+        public TEntity Get(string primaryKeyString)
         {
 
-            return _entities.Find(code);
+            return _entities.Find(primaryKeyString);
         }
 
         public IEnumerable<TEntity> GetAll()
