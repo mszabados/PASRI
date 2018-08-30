@@ -5,9 +5,9 @@ using System;
 namespace PASRI.Persistence.Repositories
 {
     /// <summary>
-    /// Extends the <see cref="Repository{TEntity}"/> for <see cref="Person"/>, implementing
-    /// <see cref="IPersonRepository"/>, using the <see cref="PasriDbContext"/> to get,
-    /// find with predicate, add, or remove <see cref="Person"/> objects in the database in
+    /// Extends the <see cref="Repository{TEntity}"/> for <see cref="ReferenceCountry"/>, implementing
+    /// <see cref="IReferenceCountryRepository"/>, using the <see cref="PasriDbContext"/> to get,
+    /// find with predicate, add, or remove <see cref="ReferenceCountry"/> objects in the database in
     /// accordance with the implemented repository methods.
     /// 
     /// This should be included in a class implementing the <see cref="Core.IUnitOfWork"/> interface
@@ -18,14 +18,14 @@ namespace PASRI.Persistence.Repositories
     /// to write fat queries multiple times in the application code, therefore, to minimize
     /// this query logic, it should be abstracted to a repository.
     /// </remarks>
-    public class PersonRepository : Repository<Person>, IPersonRepository
+    public class ReferenceCountryRepository : Repository<ReferenceCountry>, IReferenceCountryRepository
     {
-        public PersonRepository(PasriDbContext context)
+        public ReferenceCountryRepository(PasriDbContext context)
             : base(context)
         {
         }
 
-        public new Person Get(int id)
+        public new ReferenceCountry Get(int id)
         {
             throw new NotImplementedException();
         }
