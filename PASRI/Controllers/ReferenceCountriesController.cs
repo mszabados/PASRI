@@ -21,7 +21,9 @@ namespace PASRI.Controllers
             _mapper = mapper;
         }
 
-        // GET /api/ReferenceCountries
+        /// <summary>
+        /// Get a list of all countries
+        /// </summary>
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceCountryDto>))]
         public IActionResult GetReferenceCountries()
@@ -29,7 +31,9 @@ namespace PASRI.Controllers
             return Ok(_unitOfWork.ReferenceCountries.GetAll().Select(_mapper.Map<ReferenceCountry, ReferenceCountryDto>));
         }
 
-        // GET /api/ReferenceCountries/US
+        /// <summary>
+        /// Get a single country by its unique country code
+        /// </summary>
         [HttpGet("{code}")]
         [ProducesResponseType(200, Type = typeof(ReferenceCountryDto))]
         [ProducesResponseType(404)]
@@ -43,7 +47,10 @@ namespace PASRI.Controllers
             return Ok(_mapper.Map<ReferenceCountry, ReferenceCountryDto>(referenceCountry));
         }
 
-        // POST /api/ReferenceCountries
+        /// <summary>
+        /// Create a new country
+        /// </summary>
+        /// <param name="referenceCountryDto">A data transformation object representing the country</param>
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -70,7 +77,12 @@ namespace PASRI.Controllers
                 referenceCountryDto);
         }
 
-        // PUT /api/ReferenceCountries/US
+        /// <summary>
+        /// Update an existing country
+        /// </summary>
+        /// <param name="code">Unique country code to be updated</param>
+        /// <param name="referenceCountryDto">A data transformation object representing the country</param>
+        /// <returns></returns>
         [HttpPut("{code}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -90,7 +102,10 @@ namespace PASRI.Controllers
             return NoContent();
         }
 
-        // DELETE /api/ReferenceCountries/US
+        /// <summary>
+        /// Delete an existing country
+        /// </summary>
+        /// <param name="code">Unique country code to be deleted</param>
         [HttpDelete("{code}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
