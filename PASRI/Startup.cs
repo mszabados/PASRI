@@ -38,9 +38,9 @@ namespace PASRI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             //services.AddEntityFrameworkNpgsql();
 
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new Info
+                options.SwaggerDoc("v1", new Info
                 {
                     Title = "PASR-Identity API",
                     Version = "v1",
@@ -52,10 +52,14 @@ namespace PASRI
                     }
                 });
 
+                options.DocInclusionPredicate((_, api) => !string.IsNullOrWhiteSpace(api.GroupName));
+
+                options.TagActionsBy(api => api.GroupName);
+
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
+                options.IncludeXmlComments(xmlPath);
             });
         }
 

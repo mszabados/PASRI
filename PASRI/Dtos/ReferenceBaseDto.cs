@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PASRI.Dtos
 {
-    public class ReferenceCountryDto
+    public class ReferenceBaseDto
     {
         [Required]
         [StringLength(2)]
