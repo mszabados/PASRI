@@ -4,6 +4,14 @@ using PASRI.Core.Domain;
 
 namespace PASRI.Persistence.EntityConfigurations
 {
+    /// <summary>
+    /// Configures the database schema for the domain model
+    /// <see cref="ReferenceGenderDemographic"/> for use with code-first migrations
+    /// </summary>
+    /// <remarks>
+    /// Data annotations should not be added to <see cref="ReferenceGenderDemographic"/> so the code
+    /// controlling database schema remains maintained only in this class.
+    /// </remarks>
     public class ReferenceGenderDemographicConfiguration : IEntityTypeConfiguration<ReferenceGenderDemographic>
     {
         public void Configure(EntityTypeBuilder<ReferenceGenderDemographic> builder)

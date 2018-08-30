@@ -7,6 +7,21 @@ using System.Linq.Expressions;
 
 namespace PASRI.Persistence.Repositories
 {
+    /// <summary>
+    /// Base generic repository class taking in any base DbContext to perform its work
+    /// </summary>
+    /// <remarks>
+    /// A repository should act like a collection of objects in memory and not an extension of the database.
+    /// There should be no Update methods.  If you want to update an object, get it from a collection and
+    /// change it in the database with the unit of work pattern.
+    /// 
+    /// The main benefits of the repository and unit of work pattern is to create an abstraction
+    /// layer between the data access/persistence layer and the business logic/application layer.
+    /// It minimizes duplicate query logic and promotes testability (unit tests or TDD)
+    /// 
+    /// See also Patterns of Enterprise Application Architecture from Martin Fowler
+    /// https://www.martinfowler.com/eaaCatalog/repository.html
+    /// </remarks>
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext Context;

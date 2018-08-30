@@ -26,6 +26,7 @@ namespace PASRI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Create an EntityFramework DbContext from the configured connection string
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
@@ -33,11 +34,19 @@ namespace PASRI
             var connectionString = configuration.GetConnectionString("PasriDbContext");
             services.AddDbContext<PasriDbContext>(options => options.UseSqlServer(connectionString));
 
+            // Add the automapper service for transforming DTOs to DMOs and vice versa 
             services.AddAutoMapper();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            //services.AddEntityFrameworkNpgsql();
 
+            // Inject the dependency of the IUnitOfWork to UnitOfWork to the scoped service lifetime (once per request)
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            // Add the MVC service to the ASP.NET Core 2.1 version
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // Add the entity framework service for PostGreSQL
+            // services.AddEntityFrameworkNpgsql();
+
+            // Add the Open API (Swagger) documentation service
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Info

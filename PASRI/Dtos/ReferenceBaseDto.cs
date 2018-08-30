@@ -3,6 +3,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PASRI.Dtos
 {
+    /// <summary>
+    /// Represents the data transfer object for all reference types that inherit from the
+    /// <see cref="Core.Domain.ReferenceBase"/>
+    /// </summary>
+    /// <remarks>
+    /// For information why DTOs are being used in this application see the
+    /// Patterns of Enterprise Application Architecture from Martin Fowler
+    /// https://www.martinfowler.com/eaaCatalog/dataTransferObject.html
+    /// </remarks>
     public class ReferenceBaseDto
     {
         [Required]

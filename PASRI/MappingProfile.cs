@@ -4,6 +4,10 @@ using PASRI.Dtos;
 
 namespace PASRI
 {
+    /// <summary>
+    /// Creates the AutoMapper profile for the bidirectional mapping of
+    /// domain model objects and their respective DTO objects
+    /// </summary>
     public class MappingProfile : Profile
     {
         public MappingProfile()

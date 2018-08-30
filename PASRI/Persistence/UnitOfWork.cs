@@ -4,6 +4,19 @@ using PASRI.Persistence.Repositories;
 
 namespace PASRI.Persistence
 {
+    /// <summary>
+    /// Unit of work class for the PasriDbContext maintains a list of objects affected by a
+    /// business transaction and coordinates the writing out of changes.
+    /// <remarks>
+    /// The main benefits of the repository and unit of work pattern is to create an abstraction
+    /// layer between the data access/persistence layer and the business logic/application layer.
+    /// It minimizes duplicate query logic and promotes testability (unit tests or TDD)
+    /// 
+    /// See also Patterns of Enterprise Application Architecture from Martin Fowler
+    /// https://www.martinfowler.com/eaaCatalog/unitOfWork.html
+    ///
+    /// Repository properties should be named in plural form.
+    /// </remarks>
     public class UnitOfWork : IUnitOfWork
     {
         private readonly PasriDbContext _context;

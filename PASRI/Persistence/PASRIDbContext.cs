@@ -4,6 +4,14 @@ using PASRI.Persistence.EntityConfigurations;
 
 namespace PASRI.Persistence
 {
+    /// <summary>
+    /// The <see cref="DbContext"/> for the project which exposes <see cref="DbSet{TEntity}"/>
+    /// for schema and CRUD operations to the database.  Schema configurations for each
+    /// <see cref="DbSet{TEntity}"/> are defined in separate classes.
+    /// </summary>
+    /// <remarks>
+    /// Properties should be named in plural form.
+    /// </remarks>
     public class PasriDbContext : DbContext
     {
         public PasriDbContext(DbContextOptions<PasriDbContext> options)
