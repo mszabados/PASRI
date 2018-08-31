@@ -30,8 +30,8 @@ namespace PASRI
             CreateMap<ReferenceBaseDto, ReferenceState>();
             CreateMap<ReferenceSuffixName, ReferenceBaseDto>();
             CreateMap<ReferenceBaseDto, ReferenceSuffixName>();
-            CreateMap<ReferenceTypeBlood, ReferenceBaseDto>();
-            CreateMap<ReferenceBaseDto, ReferenceTypeBlood>();
+            CreateMap<ReferenceBloodType, ReferenceBaseDto>();
+            CreateMap<ReferenceBaseDto, ReferenceBloodType>();
         }
     }
 }

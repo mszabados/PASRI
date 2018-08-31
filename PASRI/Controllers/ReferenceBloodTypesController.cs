@@ -8,15 +8,15 @@ using System.Linq;
 
 namespace PASRI.Controllers
 {
-    [Route("api/ReferenceBloodTypes")]
+    [Route("api/[controller]")]
     [ApiController]
     [ApiExplorerSettings(GroupName = "Reference Blood Types")]
-    public class ReferenceTypeBloodsController : ControllerBase
+    public class ReferenceBloodTypesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ReferenceTypeBloodsController(IUnitOfWork unitOfWork, IMapper mapper)
+        public ReferenceBloodTypesController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -29,7 +29,7 @@ namespace PASRI.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceBaseDto>))]
         public IActionResult GetReferenceTypeBlood()
         {
-            return Ok(_unitOfWork.ReferenceTypeBloods.GetAll().Select(_mapper.Map<ReferenceTypeBlood, ReferenceBaseDto>));
+            return Ok(_unitOfWork.ReferenceTypeBloods.GetAll().Select(_mapper.Map<ReferenceBloodType, ReferenceBaseDto>));
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace PASRI.Controllers
             if (referenceTypeBlood == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<ReferenceTypeBlood, ReferenceBaseDto>(referenceTypeBlood));
+            return Ok(_mapper.Map<ReferenceBloodType, ReferenceBaseDto>(referenceTypeBlood));
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace PASRI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var referenceTypeBlood = _mapper.Map<ReferenceBaseDto, ReferenceTypeBlood>(payload);
+            var referenceTypeBlood = _mapper.Map<ReferenceBaseDto, ReferenceBloodType>(payload);
 
             var referenceTypeBloodInDb = _unitOfWork.ReferenceTypeBloods.Get(payload.Code);
             if (referenceTypeBloodInDb != null)
@@ -97,7 +97,7 @@ namespace PASRI.Controllers
             if (referenceTypeBloodInDb == null)
                 return NotFound();
 
-            _mapper.Map<ReferenceBaseDto, ReferenceTypeBlood>(payload, referenceTypeBloodInDb);
+            _mapper.Map<ReferenceBaseDto, ReferenceBloodType>(payload, referenceTypeBloodInDb);
             _unitOfWork.Complete();
 
             return NoContent();

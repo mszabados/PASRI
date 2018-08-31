@@ -7,6 +7,7 @@ namespace PASRI.Persistence
     /// <summary>
     /// Unit of work class for the PasriDbContext maintains a list of objects affected by a
     /// business transaction and coordinates the writing out of changes.
+    /// </summary>
     /// <remarks>
     /// The main benefits of the repository and unit of work pattern is to create an abstraction
     /// layer between the data access/persistence layer and the business logic/application layer.
@@ -34,7 +35,7 @@ namespace PASRI.Persistence
             ReferenceReligionDemographics = new ReferenceReligionDemographicRepository(_context);
             ReferenceStates = new ReferenceStateRepository(_context);
             ReferenceSuffixNames = new ReferenceSuffixNameRepository(_context);
-            ReferenceTypeBloods = new ReferenceTypeBloodRepository(_context);
+            ReferenceTypeBloods = new ReferenceBloodTypeRepository(_context);
         }
 
         public IPersonRepository Persons { get; private set; }
@@ -47,7 +48,7 @@ namespace PASRI.Persistence
         public IReferenceReligionDemographicRepository ReferenceReligionDemographics { get; private set; }
         public IReferenceStateRepository ReferenceStates { get; private set; }
         public IReferenceSuffixNameRepository ReferenceSuffixNames { get; private set; }
-        public IReferenceTypeBloodRepository ReferenceTypeBloods { get; private set; }
+        public IReferenceBloodTypeRepository ReferenceTypeBloods { get; private set; }
 
         public int Complete()
         {

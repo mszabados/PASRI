@@ -6,15 +6,15 @@ namespace PASRI.Persistence.EntityConfigurations
 {
     /// <summary>
     /// Configures the database schema for the domain model
-    /// <see cref="ReferenceTypeBloodConfiguration"/> for use with code-first migrations
+    /// <see cref="ReferenceBloodTypeConfiguration"/> for use with code-first migrations
     /// </summary>
     /// <remarks>
-    /// Data annotations should not be added to <see cref="ReferenceTypeBloodConfiguration"/> so the code
+    /// Data annotations should not be added to <see cref="ReferenceBloodTypeConfiguration"/> so the code
     /// controlling database schema remains maintained only in this class.
     /// </remarks>
-    public class ReferenceTypeBloodConfiguration : IEntityTypeConfiguration<ReferenceTypeBlood>
+    public class ReferenceBloodTypeConfiguration : IEntityTypeConfiguration<ReferenceBloodType>
     {
-        public void Configure(EntityTypeBuilder<ReferenceTypeBlood> builder)
+        public void Configure(EntityTypeBuilder<ReferenceBloodType> builder)
         {
             builder.ToTable("ReferenceTypeBlood");
             builder.HasKey(p => p.Code);

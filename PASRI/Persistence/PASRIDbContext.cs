@@ -29,7 +29,7 @@ namespace PASRI.Persistence
         public virtual DbSet<ReferenceReligionDemographic> ReferenceReligionDemographics { get; set; }
         public virtual DbSet<ReferenceState> ReferenceStates { get; set; }
         public virtual DbSet<ReferenceSuffixName> ReferenceSuffixNames { get; set; }
-        public virtual DbSet<ReferenceTypeBlood> ReferenceTypeBloods { get; set; }
+        public virtual DbSet<ReferenceBloodType> ReferenceTypeBloods { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,7 +46,7 @@ namespace PASRI.Persistence
             modelBuilder.ApplyConfiguration(new ReferenceReligionDemographicConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceStateConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceSuffixNameConfiguration());
-            modelBuilder.ApplyConfiguration(new ReferenceTypeBloodConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceBloodTypeConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

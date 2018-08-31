@@ -3,7 +3,7 @@
 namespace PASRI.Core.Repositories
 {
     /// <summary>
-    /// Extends the <see cref="IRepository{TEntity}"/> for <see cref="ReferenceTypeBlood"/>
+    /// Extends the <see cref="IRepository{TEntity}"/> for <see cref="ReferenceBloodType"/>
     /// to minimize duplicate fat query logic (for example: get top 10 records order by a column).
     ///
     /// This should be included in an <see cref="IUnitOfWork"/> interface for <see cref="Persistence.PasriDbContext"/>
@@ -13,7 +13,7 @@ namespace PASRI.Core.Repositories
     /// to write fat queries multiple times in the application code, therefore, to minimize
     /// this query logic, it should be abstracted to a repository.
     /// </remarks>
-    public interface IReferenceTypeBloodRepository : IRepository<ReferenceTypeBlood>
+    public interface IReferenceBloodTypeRepository : IRepository<ReferenceBloodType>
     {
     }
 }

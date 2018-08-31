@@ -5,9 +5,9 @@ using System;
 namespace PASRI.Persistence.Repositories
 {
     /// <summary>
-    /// Extends the <see cref="Repository{TEntity}"/> for <see cref="ReferenceTypeBlood"/>, implementing
-    /// <see cref="IReferenceTypeBloodRepository"/>, using the <see cref="PasriDbContext"/> to get,
-    /// find with predicate, add, or remove <see cref="ReferenceTypeBlood"/> objects in the database in
+    /// Extends the <see cref="Repository{TEntity}"/> for <see cref="ReferenceBloodType"/>, implementing
+    /// <see cref="IReferenceBloodTypeRepository"/>, using the <see cref="PasriDbContext"/> to get,
+    /// find with predicate, add, or remove <see cref="ReferenceBloodType"/> objects in the database in
     /// accordance with the implemented repository methods.
     /// 
     /// This should be included in a class implementing the <see cref="Core.IUnitOfWork"/> interface
@@ -18,14 +18,14 @@ namespace PASRI.Persistence.Repositories
     /// to write fat queries multiple times in the application code, therefore, to minimize
     /// this query logic, it should be abstracted to a repository.
     /// </remarks>
-    public class ReferenceTypeBloodRepository : Repository<ReferenceTypeBlood>, IReferenceTypeBloodRepository
+    public class ReferenceBloodTypeRepository : Repository<ReferenceBloodType>, IReferenceBloodTypeRepository
     {
-        public ReferenceTypeBloodRepository(PasriDbContext context)
+        public ReferenceBloodTypeRepository(PasriDbContext context)
             : base(context)
         {
         }
 
-        public new ReferenceTypeBlood Get(int id)
+        public new ReferenceBloodType Get(int id)
         {
             throw new NotImplementedException();
         }
