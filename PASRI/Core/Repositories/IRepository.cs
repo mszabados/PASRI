@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace PASRI.Core.Repositories
+namespace PASRI.API.Core.Repositories
 {
     /// <summary>
     /// Provides generic methods for getting one or many repository objects,

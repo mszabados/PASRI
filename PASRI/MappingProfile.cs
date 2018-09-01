@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using PASRI.Core.Domain;
-using PASRI.Dtos;
+using PASRI.API.Core.Domain;
+using PASRI.API.Dtos;
 
-namespace PASRI
+namespace PASRI.API
 {
     /// <summary>
     /// Creates the AutoMapper profile for the bidirectional mapping of

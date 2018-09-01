@@ -1,8 +1,8 @@
-﻿using PASRI.Core;
-using PASRI.Core.Repositories;
-using PASRI.Persistence.Repositories;
+﻿using PASRI.API.Core;
+using PASRI.API.Core.Repositories;
+using PASRI.API.Persistence.Repositories;
 
-namespace PASRI.Persistence
+namespace PASRI.API.Persistence
 {
     /// <summary>
     /// Unit of work class for the PasriDbContext maintains a list of objects affected by a

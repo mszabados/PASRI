@@ -1,6 +1,6 @@
-﻿using PASRI.Core.Domain;
+﻿using PASRI.API.Core.Domain;
 
-namespace PASRI.Core.Repositories
+namespace PASRI.API.Core.Repositories
 {
     /// <summary>
     /// Extends the <see cref="IRepository{TEntity}"/> for <see cref="ReferenceGenderDemographic"/>

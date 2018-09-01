@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace PASRI.Dtos
+namespace PASRI.API.Dtos
 {
     /// <summary>
     /// Represents the data transfer object for all reference types that inherit from the

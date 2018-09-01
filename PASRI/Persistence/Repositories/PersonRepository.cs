@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PASRI.Core.Domain;
-using PASRI.Core.Repositories;
-using System.Linq;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using PASRI.API.Core.Domain;
+using PASRI.API.Core.Repositories;
 
-namespace PASRI.Persistence.Repositories
+namespace PASRI.API.Persistence.Repositories
 {
     /// <summary>
     /// Extends the <see cref="Repository{TEntity}"/> for <see cref="Person"/>, implementing

@@ -1,7 +1,7 @@
-﻿using PASRI.Core.Repositories;
-using System;
+﻿using System;
+using PASRI.API.Core.Repositories;
 
-namespace PASRI.Core
+namespace PASRI.API.Core
 {
     /// <summary>
     /// Unit of work interface to expose a list of objects affected by a business transaction

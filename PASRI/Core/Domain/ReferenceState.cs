@@ -1,4 +1,4 @@
-﻿namespace PASRI.Core.Domain
+﻿namespace PASRI.API.Core.Domain
 {
     public class ReferenceState : ReferenceBase
     {

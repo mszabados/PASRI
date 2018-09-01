@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PASRI.Core.Domain;
+using PASRI.API.Core.Domain;
 
-namespace PASRI.Persistence.EntityConfigurations
+namespace PASRI.API.Persistence.EntityConfigurations
 {
     /// <summary>
     /// Configures the database schema for the domain model

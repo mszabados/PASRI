@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PASRI.Migrations
+namespace PASRI.API.Migrations
 {
     public partial class AddPersonIdentificationTable : Migration
     {

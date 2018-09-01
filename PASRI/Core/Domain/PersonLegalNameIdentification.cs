@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PASRI.Core.Domain
+namespace PASRI.API.Core.Domain
 {
     public class PersonLegalNameIdentification
     {

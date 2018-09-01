@@ -1,12 +1,12 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using PASRI.Core;
-using PASRI.Core.Domain;
-using PASRI.Dtos;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using PASRI.API.Core;
+using PASRI.API.Core.Domain;
+using PASRI.API.Dtos;
 
-namespace PASRI.Controllers
+namespace PASRI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

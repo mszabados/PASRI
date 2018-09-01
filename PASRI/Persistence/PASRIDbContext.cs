@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PASRI.Core.Domain;
-using PASRI.Persistence.EntityConfigurations;
+using PASRI.API.Core.Domain;
+using PASRI.API.Persistence.EntityConfigurations;
 
-namespace PASRI.Persistence
+namespace PASRI.API.Persistence
 {
     /// <summary>
     /// The <see cref="DbContext"/> for the project which exposes <see cref="DbSet{TEntity}"/>

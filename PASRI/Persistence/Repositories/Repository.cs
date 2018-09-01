@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PASRI.Core.Repositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using PASRI.API.Core.Repositories;
 
-namespace PASRI.Persistence.Repositories
+namespace PASRI.API.Persistence.Repositories
 {
     /// <summary>
     /// Base generic repository class taking in any base DbContext to perform its work

@@ -1,8 +1,8 @@
-﻿using PASRI.Core.Domain;
-using PASRI.Core.Repositories;
-using System;
+﻿using System;
+using PASRI.API.Core.Domain;
+using PASRI.API.Core.Repositories;
 
-namespace PASRI.Persistence.Repositories
+namespace PASRI.API.Persistence.Repositories
 {
     /// <summary>
     /// Extends the <see cref="Repository{TEntity}"/> for <see cref="ReferenceSuffixName"/>, implementing

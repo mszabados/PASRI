@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,13 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PASRI.Core;
-using PASRI.Persistence;
+using PASRI.API.Core;
+using PASRI.API.Persistence;
 using Swashbuckle.AspNetCore.Swagger;
-using System.IO;
-using System.Reflection;
 
-namespace PASRI
+namespace PASRI.API
 {
     public class Startup
     {
