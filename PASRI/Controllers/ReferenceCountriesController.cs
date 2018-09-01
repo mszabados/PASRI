@@ -97,7 +97,7 @@ namespace PASRI.API.Controllers
             if (referenceCountryInDb == null)
                 return NotFound();
 
-            _mapper.Map<ReferenceBaseDto, ReferenceCountry>(payload, referenceCountryInDb);
+            _mapper.Map(payload, referenceCountryInDb);
             _unitOfWork.Complete();
 
             return NoContent();

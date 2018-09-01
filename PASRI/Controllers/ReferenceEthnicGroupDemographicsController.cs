@@ -97,7 +97,7 @@ namespace PASRI.API.Controllers
             if (referenceEthnicGroupDemographicInDb == null)
                 return NotFound();
 
-            _mapper.Map<ReferenceBaseDto, ReferenceEthnicGroupDemographic>(payload, referenceEthnicGroupDemographicInDb);
+            _mapper.Map(payload, referenceEthnicGroupDemographicInDb);
             _unitOfWork.Complete();
 
             return NoContent();

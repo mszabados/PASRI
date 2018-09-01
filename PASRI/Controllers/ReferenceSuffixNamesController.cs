@@ -97,7 +97,7 @@ namespace PASRI.API.Controllers
             if (referenceSuffixNameInDb == null)
                 return NotFound();
 
-            _mapper.Map<ReferenceBaseDto, ReferenceSuffixName>(payload, referenceSuffixNameInDb);
+            _mapper.Map(payload, referenceSuffixNameInDb);
             _unitOfWork.Complete();
 
             return NoContent();

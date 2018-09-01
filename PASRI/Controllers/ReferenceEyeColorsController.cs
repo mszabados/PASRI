@@ -97,7 +97,7 @@ namespace PASRI.API.Controllers
             if (referenceEyeColorInDb == null)
                 return NotFound();
 
-            _mapper.Map<ReferenceBaseDto, ReferenceEyeColor>(payload, referenceEyeColorInDb);
+            _mapper.Map(payload, referenceEyeColorInDb);
             _unitOfWork.Complete();
 
             return NoContent();

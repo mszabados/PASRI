@@ -97,7 +97,7 @@ namespace PASRI.API.Controllers
             if (referenceTypeBloodInDb == null)
                 return NotFound();
 
-            _mapper.Map<ReferenceBaseDto, ReferenceBloodType>(payload, referenceTypeBloodInDb);
+            _mapper.Map(payload, referenceTypeBloodInDb);
             _unitOfWork.Complete();
 
             return NoContent();

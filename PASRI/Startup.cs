@@ -91,7 +91,8 @@ namespace PASRI.API
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PASR-Identity API V1");
+                c.SwaggerEndpoint(Configuration["AppSettings:VirtualDirectory"] + "swagger/v1/swagger.json", 
+                    "PASR-Identity API V1");
                 c.RoutePrefix = string.Empty;
             });
 

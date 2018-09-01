@@ -97,7 +97,7 @@ namespace PASRI.API.Controllers
             if (referenceStateInDb == null)
                 return NotFound();
 
-            _mapper.Map<ReferenceBaseDto, ReferenceState>(payload, referenceStateInDb);
+            _mapper.Map(payload, referenceStateInDb);
             _unitOfWork.Complete();
 
             return NoContent();

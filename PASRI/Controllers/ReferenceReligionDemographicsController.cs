@@ -97,7 +97,7 @@ namespace PASRI.API.Controllers
             if (referenceReligionDemographicInDb == null)
                 return NotFound();
 
-            _mapper.Map<ReferenceBaseDto, ReferenceReligionDemographic>(payload, referenceReligionDemographicInDb);
+            _mapper.Map(payload, referenceReligionDemographicInDb);
             _unitOfWork.Complete();
 
             return NoContent();

@@ -31,12 +31,12 @@ namespace PASRI.API.Persistence.EntityConfigurations
             builder.Property(p => p.EffectiveDate)
                 .HasColumnType("datetime");
 
-            builder.HasOne<PersonNameIdentification>(plni => plni.PersonNameIdentification)
+            builder.HasOne(plni => plni.PersonNameIdentification)
                 .WithMany(pni => pni.PersonLegalNameIdentifications)
                 .HasForeignKey(plni => plni.PersonNameIdentificationId)
                 .IsRequired();
 
-            builder.HasOne<ReferenceSuffixName>(plni => plni.ReferenceSuffixName)
+            builder.HasOne(plni => plni.ReferenceSuffixName)
                 .WithOne(rsn => rsn.PersonLegalNameIdentification)
                 .OnDelete(DeleteBehavior.SetNull);
         }

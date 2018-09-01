@@ -97,7 +97,7 @@ namespace PASRI.API.Controllers
             if (referenceHairColorInDb == null)
                 return NotFound();
 
-            _mapper.Map<ReferenceBaseDto, ReferenceHairColor>(payload, referenceHairColorInDb);
+            _mapper.Map(payload, referenceHairColorInDb);
             _unitOfWork.Complete();
 
             return NoContent();

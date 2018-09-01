@@ -21,7 +21,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
             builder.Property(p => p.DoDServicePersonDocumentID)
                 .IsRequired();
 
-            builder.HasOne<PersonIdentification>(pni => pni.PersonIdentification)
+            builder.HasOne(pni => pni.PersonIdentification)
                 .WithMany(pi => pi.PersonNameIdentifications)
                 .HasForeignKey(pni => pni.PersonIdentificationId)
                 .IsRequired();
