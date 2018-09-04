@@ -269,7 +269,7 @@ namespace PASRI.API.UnitTests.Repositories
         protected override void LoadTestData()
         {
             PasriDbContext.ReferenceCountries.AddRange(
-                new ReferenceCountry { Code = "US", DisplayText = "United States of America", StartDate = DateTime.Parse("7/4/1776") }, 
+                new ReferenceCountry { Code = "US", DisplayText = "United States of America", StartDate = DateTime.Parse("7/4/1776"), EndDate = DateTime.MaxValue }, 
                 new ReferenceCountry { Code = "CA", DisplayText = "Canada" }, 
                 new ReferenceCountry { Code = "MX", DisplayText = "Mexico" }
                 );
