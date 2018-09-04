@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using PASRI.API.Core;
 using PASRI.API.Persistence;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace PASRI.API
 {
@@ -32,7 +32,10 @@ namespace PASRI.API
                 .AddJsonFile("appsettings.json")
                 .Build();
             var connectionString = configuration.GetConnectionString("PasriDbContext");
-            services.AddDbContext<PasriDbContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<PasriDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            });
 
             // Add the automapper service for transforming DTOs to DMOs and vice versa 
             services.AddAutoMapper();
