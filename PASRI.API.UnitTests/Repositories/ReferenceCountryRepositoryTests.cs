@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using PASRI.API.Core.Domain;
+using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -267,15 +268,6 @@ namespace PASRI.API.UnitTests.Repositories
             Assert.That(() =>
                 UnitOfWork.Complete(), 
                 Throws.TypeOf<DbUpdateConcurrencyException>());
-        }
-
-        protected override void LoadTestData()
-        {
-            PasriDbContext.ReferenceCountries.AddRange(
-                new ReferenceCountry { Code = "US", DisplayText = "United States of America", StartDate = DateTime.Parse("7/4/1776"), EndDate = DateTime.MaxValue }, 
-                new ReferenceCountry { Code = "CA", DisplayText = "Canada" }, 
-                new ReferenceCountry { Code = "MX", DisplayText = "Mexico" }
-                );
         }
     }
 }

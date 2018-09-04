@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using PASRI.API.Core.Domain;
+using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -268,16 +269,6 @@ namespace PASRI.API.UnitTests.Repositories
             Assert.That(() =>
                 UnitOfWork.Complete(),
                 Throws.TypeOf<DbUpdateConcurrencyException>());
-        }
-
-        protected override void LoadTestData()
-        {
-            PasriDbContext.ReferenceBloodTypes.AddRange(
-                new ReferenceBloodType { Code = "O", DisplayText = "No antigens, A and B antibodies" },
-                new ReferenceBloodType { Code = "A", DisplayText = "A antigen, B antibody" },
-                new ReferenceBloodType { Code = "B", DisplayText = "B antigen, A antibody" },
-                new ReferenceBloodType { Code = "AB", DisplayText = "A and B antigen, no antibodies" }
-                );
         }
     }
 }

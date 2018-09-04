@@ -26,7 +26,9 @@ namespace PASRI.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ConfigureDatabase(services);
+            // Add a database context to the collection of services
+            // May be overridden by derived classes (e.g. test startups)
+            AddDatabaseContext(services);
 
             // Add the automapper service for transforming DTOs to DMOs and vice versa 
             services.AddAutoMapper();
@@ -78,6 +80,8 @@ namespace PASRI.API
                 app.UseHsts();
             }
 
+            SeedDatabaseContext(app);
+
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -90,12 +94,11 @@ namespace PASRI.API
                 c.RoutePrefix = string.Empty;
             });
 
-
             app.UseHttpsRedirection();
             app.UseMvc();
         }
 
-        public virtual void ConfigureDatabase(IServiceCollection services)
+        protected virtual void AddDatabaseContext(IServiceCollection services)
         {
             // Create an EntityFramework DbContext from the configured connection string
             IConfigurationRoot configuration = new ConfigurationBuilder()
@@ -107,6 +110,12 @@ namespace PASRI.API
             {
                 options.UseSqlServer(connectionString);
             });
+        }
+
+        protected virtual void SeedDatabaseContext(IApplicationBuilder app)
+        {
+            // If necessary, a derived startup class can seed the database
+            // (e.g. for testing)
         }
     }
 }

@@ -6,43 +6,32 @@ using NUnit.Framework;
 using System;
 using System.IO;
 using System.Net.Http;
-using System.Threading.Tasks;
+using PASRI.API.TestHelper;
 
 namespace PASRI.API.IntegrationTests
 {
     [TestFixture]
     public class BaseIntegrationTestProvider : IDisposable
     {
-        private readonly TestServer _server;
-        private readonly HttpClient _client;
+        protected readonly TestServer Server;
+        protected readonly HttpClient Client;
 
         public BaseIntegrationTestProvider()
         {
             var integrationsTestsPath = PlatformServices.Default.Application.ApplicationBasePath;
             var applicationPath = Path.GetFullPath(Path.Combine(integrationsTestsPath, "../../../../PASRI"));
 
-            _server = new TestServer(WebHost.CreateDefaultBuilder()
+            Server = new TestServer(WebHost.CreateDefaultBuilder()
                 .UseStartup<TestStartup>()
                 .UseContentRoot(applicationPath)
                 .UseEnvironment("Development"));
-            _client = _server.CreateClient();
+            Client = Server.CreateClient();
         }
 
         public void Dispose()
         {
-            _client.Dispose();
-            _server.Dispose();
-        }
-
-        [Test]
-        public async Task Index_Get_ReturnsSwaggerUIBundle()
-        {
-            var response = await _client.GetAsync("/index.html");
-
-            response.EnsureSuccessStatusCode();
-
-            var responseString = await response.Content.ReadAsStringAsync();
-            Assert.IsTrue(responseString.Contains("SwaggerUIBundle"));
+            Client.Dispose();
+            Server.Dispose();
         }
     }
 }

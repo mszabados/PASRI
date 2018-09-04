@@ -23,6 +23,7 @@ namespace PASRI.API.Persistence
         public virtual DbSet<PersonIdentification> PersonIdentifications { get; set; }
         public virtual DbSet<ReferenceCountry> ReferenceCountries{ get; set; }
         public virtual DbSet<ReferenceEthnicGroupDemographic> ReferenceEthnicGroupDemographics { get; set; }
+        public virtual DbSet<ReferenceGenderDemographic> ReferenceGenderDemographics { get; set; }
         public virtual DbSet<ReferenceEyeColor> ReferenceEyeColors { get; set; }
         public virtual DbSet<ReferenceHairColor> ReferenceHairColors { get; set; }
         public virtual DbSet<ReferenceRaceDemographic> ReferenceRaceDemographics { get; set; }
