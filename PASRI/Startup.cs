@@ -26,16 +26,7 @@ namespace PASRI.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Create an EntityFramework DbContext from the configured connection string
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
-            var connectionString = configuration.GetConnectionString("PasriDbContext");
-            services.AddDbContext<PasriDbContext>(options =>
-            {
-                options.UseSqlServer(connectionString);
-            });
+            ConfigureDatabase(services);
 
             // Add the automapper service for transforming DTOs to DMOs and vice versa 
             services.AddAutoMapper();
@@ -102,6 +93,20 @@ namespace PASRI.API
 
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        public virtual void ConfigureDatabase(IServiceCollection services)
+        {
+            // Create an EntityFramework DbContext from the configured connection string
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+            var connectionString = configuration.GetConnectionString("PasriDbContext");
+            services.AddDbContext<PasriDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            });
         }
     }
 }

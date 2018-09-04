@@ -9,7 +9,7 @@ using PASRI.API.Core.Domain;
 namespace PASRI.API.UnitTests.Repositories
 {
     [TestFixture]
-    public class ReferenceCountryRepositoryTests : BaseTestProvider
+    public class ReferenceCountryRepositoryTests : BaseUnitTestProvider
     {
         [Test]
         public void GetAll_WhenCalled_ReturnsCollection()
@@ -105,16 +105,19 @@ namespace PASRI.API.UnitTests.Repositories
         public void Add_ValidCountryNotExists_FetchNewCountry()
         {
             string testCountryCode = "ZZ";
-            UnitOfWork.ReferenceCountries.Add(
-                new ReferenceCountry() {
-                    Code = testCountryCode,
-                    DisplayText = testCountryCode
-                });
+            var newReferenceCountry = new ReferenceCountry()
+            {
+                Code = testCountryCode,
+                DisplayText = testCountryCode
+            };
+
+            UnitOfWork.ReferenceCountries.Add(newReferenceCountry);
             UnitOfWork.Complete();
 
             var result = UnitOfWork.ReferenceCountries.Get(testCountryCode);
 
             Assert.That(result, Is.Not.Null);
+            AssertPropertyValuesAreEqual(newReferenceCountry, result);
         }
 
         [Test]
@@ -139,7 +142,7 @@ namespace PASRI.API.UnitTests.Repositories
         }
 
         [Test]
-        public void AddRange_ValidCountries_FetchNewCountry()
+        public void AddRange_ValidCountries_CountIncreasedByTwo()
         {
             var newCountries = new Collection<ReferenceCountry>
             {

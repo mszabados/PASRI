@@ -9,7 +9,7 @@ using PASRI.API.Core.Domain;
 namespace PASRI.API.UnitTests.Repositories
 {
     [TestFixture]
-    public class ReferenceBloodTypeRepositoryTests : BaseTestProvider
+    public class ReferenceBloodTypeRepositoryTests : BaseUnitTestProvider
     {
         [Test]
         public void GetAll_WhenCalled_ReturnsCollection()
@@ -105,17 +105,19 @@ namespace PASRI.API.UnitTests.Repositories
         public void Add_ValidBloodTypeNotExists_FetchNewBloodType()
         {
             string testBloodTypeCode = "Z";
-            UnitOfWork.ReferenceBloodTypes.Add(
-                new ReferenceBloodType()
-                {
-                    Code = testBloodTypeCode,
-                    DisplayText = testBloodTypeCode
-                });
+            var newReferenceBloodType = new ReferenceBloodType()
+            {
+                Code = testBloodTypeCode,
+                DisplayText = testBloodTypeCode
+            };
+
+            UnitOfWork.ReferenceBloodTypes.Add(newReferenceBloodType);
             UnitOfWork.Complete();
 
             var result = UnitOfWork.ReferenceBloodTypes.Get(testBloodTypeCode);
 
             Assert.That(result, Is.Not.Null);
+            AssertPropertyValuesAreEqual(newReferenceBloodType, result);
         }
 
         [Test]
@@ -140,7 +142,7 @@ namespace PASRI.API.UnitTests.Repositories
         }
 
         [Test]
-        public void AddRange_ValidBloodTypes_FetchNewBloodType()
+        public void AddRange_ValidBloodTypes_CountIncreasedByTwo()
         {
             var newBloodTypes = new Collection<ReferenceBloodType>
             {
