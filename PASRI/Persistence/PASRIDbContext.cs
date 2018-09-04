@@ -29,7 +29,7 @@ namespace PASRI.API.Persistence
         public virtual DbSet<ReferenceReligionDemographic> ReferenceReligionDemographics { get; set; }
         public virtual DbSet<ReferenceState> ReferenceStates { get; set; }
         public virtual DbSet<ReferenceSuffixName> ReferenceSuffixNames { get; set; }
-        public virtual DbSet<ReferenceBloodType> ReferenceTypeBloods { get; set; }
+        public virtual DbSet<ReferenceBloodType> ReferenceBloodTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

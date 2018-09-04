@@ -27,7 +27,7 @@ namespace PASRI.API.Core
         IReferenceReligionDemographicRepository ReferenceReligionDemographics { get; }
         IReferenceStateRepository ReferenceStates { get; }
         IReferenceSuffixNameRepository ReferenceSuffixNames { get; }
-        IReferenceBloodTypeRepository ReferenceTypeBloods { get; }
+        IReferenceBloodTypeRepository ReferenceBloodTypes { get; }
 
         int Complete();
     }

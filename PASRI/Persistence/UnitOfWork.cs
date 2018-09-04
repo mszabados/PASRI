@@ -35,7 +35,7 @@ namespace PASRI.API.Persistence
             ReferenceReligionDemographics = new ReferenceReligionDemographicRepository(_context);
             ReferenceStates = new ReferenceStateRepository(_context);
             ReferenceSuffixNames = new ReferenceSuffixNameRepository(_context);
-            ReferenceTypeBloods = new ReferenceBloodTypeRepository(_context);
+            ReferenceBloodTypes = new ReferenceBloodTypeRepository(_context);
         }
 
         public IPersonRepository Persons { get; private set; }
@@ -48,7 +48,7 @@ namespace PASRI.API.Persistence
         public IReferenceReligionDemographicRepository ReferenceReligionDemographics { get; private set; }
         public IReferenceStateRepository ReferenceStates { get; private set; }
         public IReferenceSuffixNameRepository ReferenceSuffixNames { get; private set; }
-        public IReferenceBloodTypeRepository ReferenceTypeBloods { get; private set; }
+        public IReferenceBloodTypeRepository ReferenceBloodTypes { get; private set; }
 
         public int Complete()
         {

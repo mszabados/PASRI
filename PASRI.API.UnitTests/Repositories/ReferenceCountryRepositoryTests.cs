@@ -1,12 +1,12 @@
-using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using PASRI.API.Core.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using PASRI.API.Core.Domain;
 
-namespace PASRI.API.UnitTests
+namespace PASRI.API.UnitTests.Repositories
 {
     [TestFixture]
     public class ReferenceCountryRepositoryTests : BaseTestProvider
@@ -41,7 +41,7 @@ namespace PASRI.API.UnitTests
         }
 
         [Test]
-        public void Find_PredicateUsedToFindOneCountry_ReturnsCollectionWithOneCountry()
+        public void Find_PredicateUsedToFindOneCountry_ReturnsCollection()
         {
             Expression<Func<ReferenceCountry, bool>> predicate =
                 (p => p.StartDate <= new DateTime(1800, 1, 1));
@@ -51,7 +51,7 @@ namespace PASRI.API.UnitTests
         }
 
         [Test]
-        public void Find_PredicateUsedToFindMoreThanOneCountry_ReturnsCollectionWithOneCountry()
+        public void Find_PredicateUsedToFindMoreThanOneCountry_ReturnsCollection()
         {
             Expression<Func<ReferenceCountry, bool>> predicate =
                 (p => p.StartDate == null);

@@ -27,9 +27,9 @@ namespace PASRI.API.Controllers
         /// </summary>
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceBaseDto>))]
-        public IActionResult GetReferenceTypeBlood()
+        public IActionResult GetReferenceBloodType()
         {
-            return Ok(_unitOfWork.ReferenceTypeBloods.GetAll().Select(_mapper.Map<ReferenceBloodType, ReferenceBaseDto>));
+            return Ok(_unitOfWork.ReferenceBloodTypes.GetAll().Select(_mapper.Map<ReferenceBloodType, ReferenceBaseDto>));
         }
 
         /// <summary>
@@ -38,14 +38,14 @@ namespace PASRI.API.Controllers
         [HttpGet("{code}")]
         [ProducesResponseType(200, Type = typeof(ReferenceBaseDto))]
         [ProducesResponseType(404)]
-        public IActionResult GetReferenceTypeBlood(string code)
+        public IActionResult GetReferenceBloodType(string code)
         {
-            var referenceTypeBlood = _unitOfWork.ReferenceTypeBloods.Get(code);
+            var referenceBloodType = _unitOfWork.ReferenceBloodTypes.Get(code);
 
-            if (referenceTypeBlood == null)
+            if (referenceBloodType == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<ReferenceBloodType, ReferenceBaseDto>(referenceTypeBlood));
+            return Ok(_mapper.Map<ReferenceBloodType, ReferenceBaseDto>(referenceBloodType));
         }
 
         /// <summary>
@@ -56,21 +56,21 @@ namespace PASRI.API.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(409, Type = typeof(ReferenceBaseDto))]
-        public IActionResult CreateReferenceTypeBlood(ReferenceBaseDto payload)
+        public IActionResult CreateReferenceBloodType(ReferenceBaseDto payload)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var referenceTypeBlood = _mapper.Map<ReferenceBaseDto, ReferenceBloodType>(payload);
+            var referenceBloodType = _mapper.Map<ReferenceBaseDto, ReferenceBloodType>(payload);
 
-            var referenceTypeBloodInDb = _unitOfWork.ReferenceTypeBloods.Get(payload.Code);
-            if (referenceTypeBloodInDb != null)
+            var referenceBloodTypeInDb = _unitOfWork.ReferenceBloodTypes.Get(payload.Code);
+            if (referenceBloodTypeInDb != null)
                 return new ConflictResult();
 
-            _unitOfWork.ReferenceTypeBloods.Add(referenceTypeBlood);
+            _unitOfWork.ReferenceBloodTypes.Add(referenceBloodType);
             _unitOfWork.Complete();
 
-            return CreatedAtAction(nameof(GetReferenceTypeBlood),
+            return CreatedAtAction(nameof(GetReferenceBloodType),
                 new
                 {
                     code = payload.Code
@@ -88,16 +88,16 @@ namespace PASRI.API.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceTypeBlood(string code, ReferenceBaseDto payload)
+        public IActionResult UpdateReferenceBloodType(string code, ReferenceBaseDto payload)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var referenceTypeBloodInDb = _unitOfWork.ReferenceTypeBloods.Get(code);
-            if (referenceTypeBloodInDb == null)
+            var referenceBloodTypeInDb = _unitOfWork.ReferenceBloodTypes.Get(code);
+            if (referenceBloodTypeInDb == null)
                 return NotFound();
 
-            _mapper.Map(payload, referenceTypeBloodInDb);
+            _mapper.Map(payload, referenceBloodTypeInDb);
             _unitOfWork.Complete();
 
             return NoContent();
@@ -110,14 +110,14 @@ namespace PASRI.API.Controllers
         [HttpDelete("{code}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteReferenceTypeBlood(string code)
+        public IActionResult DeleteReferenceBloodType(string code)
         {
-            var referenceTypeBloodInDb = _unitOfWork.ReferenceTypeBloods.Get(code);
+            var referenceBloodTypeInDb = _unitOfWork.ReferenceBloodTypes.Get(code);
 
-            if (referenceTypeBloodInDb == null)
+            if (referenceBloodTypeInDb == null)
                 return NotFound();
 
-            _unitOfWork.ReferenceTypeBloods.Remove(referenceTypeBloodInDb);
+            _unitOfWork.ReferenceBloodTypes.Remove(referenceBloodTypeInDb);
             _unitOfWork.Complete();
 
             return NoContent();
