@@ -1,52 +1,27 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PASRI.API.Persistence;
+using PASRI.API.Core;
 
 namespace PASRI.API.TestHelper
 {
+    /// <summary>
+    /// Used as a startup class for the <see cref="BaseIntegrationTestProvider"/>
+    /// that initializes the <see cref="TestUnitOfWork"/> which
+    /// provides in-memory database implementation
+    /// </summary>
     public class TestStartup : Startup
     {
-        private const string SqliteTestConnectionString = ":memory:";
-
         public TestStartup(IConfiguration configuration) : base(configuration)
         {
         }
 
-        protected override void AddDatabaseContext(IServiceCollection services)
+        protected override void AddDatabaseServices(IServiceCollection services)
         {
             // Replace default database connection with an in-memory database (SQLite)
-            services.AddDbContext<PasriDbContext>(options =>
-                {
-                    options.UseSqlite(SqliteTestConnectionString);
-                });
+            services.AddEntityFrameworkSqlite().AddDbContext<SqlitePasriDbContext>();
 
-            // Register the database seeder
-            services.AddTransient<DatabaseSeeder>();
-        }
-
-        protected override void SeedDatabaseContext(IApplicationBuilder app)
-        {
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                var seeder = serviceScope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
-                seeder.Seed();
-            }
-        }
-
-        public static DbContextOptions<PasriDbContext> GetTestDbContextOptions()
-        {
-            var connectionStringBuilder =
-                new SqliteConnectionStringBuilder { DataSource = SqliteTestConnectionString };
-            var connectionString = connectionStringBuilder.ToString();
-            var connection = new SqliteConnection(connectionString);
-
-            var builder = new DbContextOptionsBuilder<PasriDbContext>();
-            builder.UseSqlite(connection);
-            return builder.Options;
+            // Inject the dependency of the IUnitOfWork to UnitOfWork to the scoped service lifetime (once per request)
+            services.AddScoped<IUnitOfWork, TestUnitOfWork>();
         }
     }
 }

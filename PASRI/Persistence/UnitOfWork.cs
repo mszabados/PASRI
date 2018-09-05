@@ -5,8 +5,9 @@ using PASRI.API.Persistence.Repositories;
 namespace PASRI.API.Persistence
 {
     /// <summary>
-    /// Unit of work class for the PasriDbContext maintains a list of objects affected by a
-    /// business transaction and coordinates the writing out of changes.
+    /// Unit of work class for the <see cref="PasriDbContext"/> which maintains a
+    /// list of objects affected by a business transaction and coordinates the
+    /// writing out of changes.
     /// </summary>
     /// <remarks>
     /// The main benefits of the repository and unit of work pattern is to create an abstraction
@@ -20,11 +21,14 @@ namespace PASRI.API.Persistence
     /// </remarks>
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly PasriDbContext _context;
+        protected PasriDbContext _context;
 
         public UnitOfWork(PasriDbContext context)
         {
             _context = context;
+
+            InitializeTestDatabaseInMemory();
+
             Persons = new PersonRepository(_context);
             ReferenceCountries = new ReferenceCountryRepository(_context);
             ReferenceEthnicGroupDemographics = new ReferenceEthnicGroupDemographicRepository(_context);
@@ -38,18 +42,31 @@ namespace PASRI.API.Persistence
             ReferenceBloodTypes = new ReferenceBloodTypeRepository(_context);
         }
 
-        public IPersonRepository Persons { get; private set; }
-        public IReferenceCountryRepository ReferenceCountries { get; private set; }
-        public IReferenceEthnicGroupDemographicRepository ReferenceEthnicGroupDemographics { get; private set; }
-        public IReferenceEyeColorRepository ReferenceEyeColors { get; private set; }
-        public IReferenceGenderDemographicRepository ReferenceGenderDemographics { get; private set; }
-        public IReferenceHairColorRepository ReferenceHairColors { get; private set; }
-        public IReferenceRaceDemographicRepository ReferenceRaceDemographics { get; private set; }
-        public IReferenceReligionDemographicRepository ReferenceReligionDemographics { get; private set; }
-        public IReferenceStateRepository ReferenceStates { get; private set; }
-        public IReferenceSuffixNameRepository ReferenceSuffixNames { get; private set; }
-        public IReferenceBloodTypeRepository ReferenceBloodTypes { get; private set; }
+        public IPersonRepository Persons { get; protected set; }
+        public IReferenceCountryRepository ReferenceCountries { get; protected set; }
+        public IReferenceEthnicGroupDemographicRepository ReferenceEthnicGroupDemographics { get; protected set; }
+        public IReferenceEyeColorRepository ReferenceEyeColors { get; protected set; }
+        public IReferenceGenderDemographicRepository ReferenceGenderDemographics { get; protected set; }
+        public IReferenceHairColorRepository ReferenceHairColors { get; protected set; }
+        public IReferenceRaceDemographicRepository ReferenceRaceDemographics { get; protected set; }
+        public IReferenceReligionDemographicRepository ReferenceReligionDemographics { get; protected set; }
+        public IReferenceStateRepository ReferenceStates { get; protected set; }
+        public IReferenceSuffixNameRepository ReferenceSuffixNames { get; protected set; }
+        public IReferenceBloodTypeRepository ReferenceBloodTypes { get; protected set; }
 
+        /// <summary>
+        /// A derived unit of work class can initialize and
+        /// seed the database for testing.  This method is called
+        /// in this <see cref="UnitOfWork"/> constructor
+        /// </summary>
+        virtual protected void InitializeTestDatabaseInMemory()
+        {
+        }
+
+        /// <summary>
+        /// Saves the changes into the context, and subsequently into the defined database
+        /// </summary>
+        /// <returns></returns>
         public int Complete()
         {
             return _context.SaveChanges();

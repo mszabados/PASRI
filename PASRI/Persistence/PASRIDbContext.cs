@@ -14,6 +14,10 @@ namespace PASRI.API.Persistence
     /// </remarks>
     public class PasriDbContext : DbContext
     {
+        protected PasriDbContext()
+        {
+        }
+
         public PasriDbContext(DbContextOptions<PasriDbContext> options)
             : base(options)
         {

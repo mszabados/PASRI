@@ -1,8 +1,12 @@
-﻿using System.Threading.Tasks;
-using PASRI.API.Persistence;
+﻿using PASRI.API.Persistence;
+using System.Threading.Tasks;
 
 namespace PASRI.API.TestHelper
 {
+    /// <summary>
+    /// Exposes a method to see the <see cref="PasriDbContext"/> with test data
+    /// defined in the <see cref="PreDefinedData"/> class.
+    /// </summary>
     public class DatabaseSeeder
     {
         private readonly PasriDbContext _context;
@@ -12,10 +16,12 @@ namespace PASRI.API.TestHelper
             _context = context;
         }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         /// <summary>
-        /// Add all of the pre-defined data into the context
+        /// Add all of the pre-defined data into the <see cref="PasriDbContext"/>
         /// </summary>
         public async Task Seed()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             _context.ReferenceBloodTypes.AddRange(PreDefinedData.ReferenceBloodTypes);
             _context.ReferenceCountries.AddRange(PreDefinedData.ReferenceCountries);

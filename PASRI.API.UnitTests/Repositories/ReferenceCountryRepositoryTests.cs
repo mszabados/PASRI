@@ -1,10 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using PASRI.API.Core.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using PASRI.API.Core.Domain;
 using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
@@ -118,7 +118,7 @@ namespace PASRI.API.UnitTests.Repositories
             var result = UnitOfWork.ReferenceCountries.Get(testCountryCode);
 
             Assert.That(result, Is.Not.Null);
-            AssertPropertyValuesAreEqual(newReferenceCountry, result);
+            Helper.AreObjectsEqual(newReferenceCountry, result);
         }
 
         [Test]
