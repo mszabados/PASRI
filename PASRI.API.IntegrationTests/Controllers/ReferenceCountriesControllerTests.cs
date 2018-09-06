@@ -35,14 +35,16 @@ namespace PASRI.API.IntegrationTests.Controllers
             IEnumerable<ReferenceBaseDto> preDefinedCountries =
                 PreDefinedData.ReferenceCountries.Select(Mapper.Map<ReferenceCountry, ReferenceBaseDto>).ToList().AsEnumerable<ReferenceBaseDto>();
 
-            Helper.AreObjectsEqual(queriedCountries, preDefinedCountries);
+            AssertHelper.AreObjectsEqual(queriedCountries, preDefinedCountries);
         }
 
         [Test]
         public async Task Get_ValidCountryCode_HttpOkAndReturnsSingleCountry()
         {
-            var validCountryCode = "US";
-            var response = await Client.GetAsync($"{_apiRelativePath}/{validCountryCode}");
+            var randomCountryCode = PreDefinedData.ReferenceCountries[
+                    new Random().Next(0, PreDefinedData.ReferenceCountries.Length)
+                ].Code;
+            var response = await Client.GetAsync($"{_apiRelativePath}/{randomCountryCode}");
             var responseString = await response.Content.ReadAsStringAsync();
 
             Assert.DoesNotThrow(
@@ -55,15 +57,15 @@ namespace PASRI.API.IntegrationTests.Controllers
 
             ReferenceCountry preDefinedCountry =
                 PreDefinedData.ReferenceCountries
-                    .SingleOrDefault(c => c.Code == validCountryCode);
+                    .SingleOrDefault(c => c.Code == randomCountryCode);
 
-            Helper.AreObjectsEqual(queriedCountry, Mapper.Map<ReferenceCountry, ReferenceBaseDto>(preDefinedCountry));
+            AssertHelper.AreObjectsEqual(queriedCountry, Mapper.Map<ReferenceCountry, ReferenceBaseDto>(preDefinedCountry));
         }
 
         [Test]
         public async Task Get_InvalidCountryCode_HttpNotFound()
         {
-            var invalidCountryCode = "ZZ";
+            var invalidCountryCode = "ABCD";
             var response = await Client.GetAsync($"{_apiRelativePath}/{invalidCountryCode}");
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));

@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PASRI.API", "PASRI\PASRI.AP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PASRI.API.UnitTests", "PASRI.API.UnitTests\PASRI.API.UnitTests.csproj", "{50525729-933A-44F6-B133-9AF5C8741C6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PASRI.API.IntegrationTests", "PASRI.API.IntegrationTests\PASRI.API.IntegrationTests.csproj", "{9ABF670A-4B94-4803-9F4F-85D88D8921D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PASRI.API.IntegrationTests", "PASRI.API.IntegrationTests\PASRI.API.IntegrationTests.csproj", "{9ABF670A-4B94-4803-9F4F-85D88D8921D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PASRI.API.TestHelper", "PASRI.API.TestHelper\PASRI.API.TestHelper.csproj", "{D234A534-FA21-4F81-A5CF-4DDA2AB95D95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PASRI.API.TestHelper", "PASRI.API.TestHelper\PASRI.API.TestHelper.csproj", "{D234A534-FA21-4F81-A5CF-4DDA2AB95D95}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4B959F23-C684-473C-B99A-6CD4A9D1C63D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

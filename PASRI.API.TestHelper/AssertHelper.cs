@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
@@ -10,8 +11,63 @@ namespace PASRI.API.TestHelper
     /// <summary>
     /// Static method provider to assist in tests
     /// </summary>
-    public class Helper
+    public class AssertHelper
     {
+        private static Random _random = new Random();
+        public const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        /// <summary>
+        /// From an array of objects, return a random <see cref="string"/> value of a
+        /// specified length that does not exist in the specified <see cref="string"/>
+        /// property of any element in the array
+        /// </summary>
+        public static string GetValueNotInArray(object[] array, 
+            string propertyName, 
+            int length)
+        {
+            Start:
+            string testValue = new string(Enumerable.Repeat(Alphabet, length)
+                .Select(s => s[_random.Next(s.Length)]).ToArray());
+
+            foreach (object o in array)
+            {
+                PropertyInfo propertyInfo = o.GetType().GetProperty(propertyName);
+                string propertyValue = propertyInfo.GetValue(o, null).ToString();
+
+                if (String.Compare(propertyValue, testValue, true) == 0)
+                {
+                    goto Start;
+                }
+            }
+
+            return testValue;
+        }
+
+        /// <summary>
+        /// From an array of objects, return a random <see cref="Int32"/> value of a
+        /// between the specified minimum and maximum value that does not exist in
+        /// the specified <see cref="Int32"/> property of any element in the array
+        /// </summary>
+        public static Int32 GetValueNotInArray(object[] array,
+            string propertyName,
+            int minValue,
+            int maxValue)
+        {
+            Start:
+            Int32 testValue = _random.Next(minValue, maxValue);
+
+            foreach (object o in array)
+            {
+                PropertyInfo propertyInfo = o.GetType().GetProperty(propertyName);
+                if ((int)propertyInfo.GetValue(o, null) == testValue)
+                {
+                    goto Start;
+                }
+            }
+
+            return testValue;
+        }
+
         /// <summary>
         /// Compares the properties of two objects of the same type and returns if all properties are equal.
         /// </summary>
@@ -21,17 +77,13 @@ namespace PASRI.API.TestHelper
         /// </param>
         /// <returns><c>true</c> if all property values
         ///           are equal, otherwise <c>false</c>.</returns>
-        public static bool AreObjectsEqual(object objectA, object objectB, params string[] ignoreList)
+        public static void AreObjectsEqual(object objectA, object objectB, params string[] ignoreList)
         {
-            bool result;
-
             if (objectA != null && objectB != null)
             {
                 Type objectType;
 
                 objectType = objectA.GetType();
-
-                result = true; // assume by default they are equal
 
                 foreach (PropertyInfo propertyInfo in objectType.GetProperties(
                         BindingFlags.Public | BindingFlags.Instance)
@@ -55,7 +107,6 @@ namespace PASRI.API.TestHelper
                         {
                             Assert.Fail("Mismatch with property '{0}.{1}' found.",
                                 objectType.FullName, propertyInfo.Name);
-                            result = false;
                         }
                     }
                     // if it implements IEnumerable, then scan any items
@@ -71,7 +122,6 @@ namespace PASRI.API.TestHelper
                         {
                             Assert.Fail("Mismatch with property '{0}.{1}' found.",
                                 objectType.FullName, propertyInfo.Name);
-                            result = false;
                         }
                         else if (valueA != null && valueB != null)
                         {
@@ -85,7 +135,6 @@ namespace PASRI.API.TestHelper
                             {
                                 Assert.Fail("Collection counts for property '{0}.{1}' do not match.",
                                     objectType.FullName, propertyInfo.Name);
-                                result = false;
                             }
                             // and if they do, compare each item...
                             // this assumes both collections have the same order
@@ -107,34 +156,23 @@ namespace PASRI.API.TestHelper
                                         {
                                             Assert.Fail("Item {0} in property collection '{1}.{2}' does not match.",
                                                 i, objectType.FullName, propertyInfo.Name);
-                                            result = false;
                                         }
                                     }
-                                    else if (!AreObjectsEqual(collectionItem1, collectionItem2, ignoreList))
-                                    {
-                                        Assert.Fail("Item {0} in property collection '{1}.{2}' does not match.",
-                                            i, objectType.FullName, propertyInfo.Name);
-                                        result = false;
-                                    }
+
+                                    AreObjectsEqual(collectionItem1, collectionItem2, ignoreList);
                                 }
                             }
                         }
                     }
                     else if (propertyInfo.PropertyType.IsClass)
                     {
-                        if (!AreObjectsEqual(propertyInfo.GetValue(objectA, null),
-                            propertyInfo.GetValue(objectB, null), ignoreList))
-                        {
-                            Assert.Fail("Mismatch with property '{0}.{1}' found.",
-                                objectType.FullName, propertyInfo.Name);
-                            result = false;
-                        }
+                        AreObjectsEqual(propertyInfo.GetValue(objectA, null),
+                            propertyInfo.GetValue(objectB, null), ignoreList);
                     }
                     else
                     {
                         Assert.Fail("Cannot compare property '{0}.{1}'.",
                             objectType.FullName, propertyInfo.Name);
-                        result = false;
                     }
                 }
 
@@ -157,21 +195,20 @@ namespace PASRI.API.TestHelper
                         {
                             valueA = propertyInfo.GetValue(objectA, new object[] {i});
                             valueB = propertyInfo.GetValue(objectB, new object[] {i});
-                            result = AreObjectsEqual(valueA, valueB);
+                            AreObjectsEqual(valueA, valueB);
                         }
                         catch (TargetInvocationException) 
                         {
                             // No more objects in the list to compare
-                            result = true;
                             break;
                         }
                     }
                 }
             }
             else
-                result = object.Equals(objectA, objectB);
-
-            return result;
+            {
+                Assert.That(objectA, Is.EqualTo(objectB));
+            }
         }
 
         /// <summary>

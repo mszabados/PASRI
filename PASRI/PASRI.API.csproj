@@ -43,6 +43,8 @@
     <Compile Remove="Migrations\20180829122027_test.Designer.cs" />
     <Compile Remove="Migrations\20180829145319_test.cs" />
     <Compile Remove="Migrations\20180829145319_test.Designer.cs" />
+    <Compile Remove="Migrations\20180906103550_test.cs" />
+    <Compile Remove="Migrations\20180906103550_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
