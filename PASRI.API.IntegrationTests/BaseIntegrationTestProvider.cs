@@ -26,10 +26,12 @@ namespace PASRI.API.IntegrationTests
     {
         protected readonly TestServer Server;
         protected readonly HttpClient Client;
+        protected readonly IUnitOfWork UnitOfWork;
         protected readonly IMapper Mapper;
 
         protected const string HttpExceptionFormattedMessage =
             "An internal server error occurred, read through the response below to find the exception\r\n\r\n{0}";
+        protected const string JsonMediaType = "application/json";
 
         public BaseIntegrationTestProvider()
         {
@@ -42,6 +44,8 @@ namespace PASRI.API.IntegrationTests
                 .UseEnvironment("Development"));
             Client = Server.CreateClient();
 
+            UnitOfWork = new TestUnitOfWork(new SqlitePasriDbContext());
+
             var config = new MapperConfiguration(cfg => new MappingProfile());
             Mapper = config.CreateMapper();
         }
@@ -50,6 +54,7 @@ namespace PASRI.API.IntegrationTests
         {
             Client.Dispose();
             Server.Dispose();
+            UnitOfWork.Dispose();
         }
     }
 }
