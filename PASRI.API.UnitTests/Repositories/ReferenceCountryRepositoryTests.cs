@@ -12,25 +12,6 @@ namespace PASRI.API.UnitTests.Repositories
     [TestFixture]
     public class ReferenceCountryRepositoryTests : BaseUnitTestProvider
     {
-        /// <summary>
-        /// Helper method to retrieve a country code, which is the primary key
-        /// of the <see cref="ReferenceCountry"/> that does not exist in the
-        /// <see cref="PreDefinedData.ReferenceCountries"/> test collection
-        /// </summary>
-        private static string GetNotExistsCountryCode() =>
-            AssertHelper.GetValueNotInArray(PreDefinedData.ReferenceCountries,
-                "Code", 2);
-
-        /// <summary>
-        /// Helper method to retrieve a country code, which is the primary key
-        /// of the <see cref="ReferenceCountry"/> that exists in the
-        /// <see cref="PreDefinedData.ReferenceCountries"/> test collection
-        /// </summary>
-        private static string GetRandomCountryCode() =>
-            PreDefinedData.ReferenceCountries[
-                new Random().Next(0, PreDefinedData.ReferenceCountries.Length)
-            ].Code;
-
         [Test]
         public void GetAll_WhenCalled_ReturnsCollection()
         {
@@ -42,7 +23,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Get_ValidCountryCode_ReturnsSingleCountry()
         {
-            var randomCountryCode = GetRandomCountryCode();
+            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
             var result = UnitOfWork.ReferenceCountries.Get(randomCountryCode);
 
             Assert.That(result, Is.Not.Null);
@@ -63,7 +44,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindOneCountry_ReturnsCollection()
         {
-            var randomCountryCode = GetRandomCountryCode();
+            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
             Expression<Func<ReferenceCountry, bool>> predicate =
                 (p => p.Code == randomCountryCode);
             var result = UnitOfWork.ReferenceCountries.Find(predicate);
@@ -75,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneCountry_ReturnsCollection()
         {
-            var randomCountryCode = GetRandomCountryCode();
+            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
             Expression<Func<ReferenceCountry, bool>> predicate =
                 (p => p.Code != randomCountryCode);
             var result = UnitOfWork.ReferenceCountries.Find(predicate);
@@ -87,7 +68,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoCountries_ReturnsEmptyCollection()
         {
-            var notExistsCountryCode = GetNotExistsCountryCode();
+            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
             Expression<Func<ReferenceCountry, bool>> predicate =
                 (p => p.Code == notExistsCountryCode);
             var result = UnitOfWork.ReferenceCountries.Find(predicate);
@@ -99,7 +80,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindOneCountry_ReturnsOneCountry()
         {
-            var randomCountryCode = GetRandomCountryCode();
+            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
             Expression<Func<ReferenceCountry, bool>> predicate =
                 (p => p.Code == randomCountryCode);
             var result = UnitOfWork.ReferenceCountries.SingleOrDefault(predicate);
@@ -110,7 +91,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindMoreOneCountry_ThrowsInvalidOperationException()
         {
-            var randomCountryCode = GetRandomCountryCode();
+            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
             Expression<Func<ReferenceCountry, bool>> predicate =
                 (p => p.Code != randomCountryCode);
 
@@ -122,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoCountries_ReturnsNull()
         {
-            var notExistsCountryCode = GetNotExistsCountryCode();
+            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
             Expression<Func<ReferenceCountry, bool>> predicate =
                 (p => p.Code == notExistsCountryCode);
             var result = UnitOfWork.ReferenceCountries.SingleOrDefault(predicate);
@@ -133,7 +114,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Add_ValidCountryNotExists_FetchNewCountry()
         {
-            var notExistsCountryCode = GetNotExistsCountryCode();
+            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
             var newReferenceCountry = new ReferenceCountry()
             {
                 Code = notExistsCountryCode,
@@ -152,7 +133,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Add_ValidCountryExists_ThrowsInvalidOperationException()
         {
-            var randomCountryCode = GetRandomCountryCode();
+            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
             Assert.That(() => UnitOfWork.ReferenceCountries.Add(
                 new ReferenceCountry()
                 {
@@ -174,8 +155,8 @@ namespace PASRI.API.UnitTests.Repositories
         public void AddRange_TwoValidCountries_CountIncreasedByTwo()
         {
         Start:
-            var notExistsCountryCode1 = GetNotExistsCountryCode();
-            var notExistsCountryCode2 = GetNotExistsCountryCode();
+            var notExistsCountryCode1 = PreDefinedData.GetNotExistsCountryCode();
+            var notExistsCountryCode2 = PreDefinedData.GetNotExistsCountryCode();
             if (notExistsCountryCode1 == notExistsCountryCode2)
                 goto Start;
 
@@ -195,7 +176,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void AddRange_TwoValidCountriesDuplicated_ThrowsInvalidOperationException()
         {
-            var notExistsCountryCode = GetNotExistsCountryCode();
+            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
             var newCountries = new Collection<ReferenceCountry>
             {
                 new ReferenceCountry() { Code = notExistsCountryCode, DisplayText = "" },
@@ -224,7 +205,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidCountryNotExists_ThrowsDbUpdateConcurrencyException()
         {
-            var notExistsCountryCode = GetNotExistsCountryCode();
+            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
             UnitOfWork.ReferenceCountries.Remove(
                 new ReferenceCountry()
                 {
@@ -238,7 +219,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidCountryExists_CountryCannotBeFetched()
         {
-            var randomCountryCode = GetRandomCountryCode();
+            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
             var removeReferenceCountry = UnitOfWork.ReferenceCountries.Get(randomCountryCode);
             UnitOfWork.ReferenceCountries.Remove(removeReferenceCountry);
             UnitOfWork.Complete();
@@ -280,7 +261,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void RemoveRange_TwoValidCountriesDuplicated_ThrowsInvalidOperationException()
         {
-            var randomCountryCode = GetRandomCountryCode();
+            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
             var newCountries = new Collection<ReferenceCountry>
             {
                 new ReferenceCountry() { Code = randomCountryCode },

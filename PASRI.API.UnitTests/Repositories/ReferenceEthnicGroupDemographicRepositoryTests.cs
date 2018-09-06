@@ -12,25 +12,6 @@ namespace PASRI.API.UnitTests.Repositories
     [TestFixture]
     public class ReferenceEthnicGroupDemographicRepositoryTests : BaseUnitTestProvider
     {
-        /// <summary>
-        /// Helper method to retrieve a ethnic group demographic code, which is the primary key
-        /// of the <see cref="ReferenceEthnicGroupDemographic"/> that does not exist in the
-        /// <see cref="PreDefinedData.ReferenceEthnicGroupDemographics"/> test collection
-        /// </summary>
-        private static string GetNotExistsEthnicGroupDemographicCode() =>
-            AssertHelper.GetValueNotInArray(PreDefinedData.ReferenceEthnicGroupDemographics,
-                "Code", 2);
-
-        /// <summary>
-        /// Helper method to retrieve a ethnic group demographic code, which is the primary key
-        /// of the <see cref="ReferenceEthnicGroupDemographic"/> that exists in the
-        /// <see cref="PreDefinedData.ReferenceEthnicGroupDemographics"/> test collection
-        /// </summary>
-        private static string GetRandomEthnicGroupDemographicCode() =>
-            PreDefinedData.ReferenceEthnicGroupDemographics[
-                new Random().Next(0, PreDefinedData.ReferenceEthnicGroupDemographics.Length)
-            ].Code;
-
         [Test]
         public void GetAll_WhenCalled_ReturnsCollection()
         {
@@ -42,7 +23,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Get_ValidEthnicGroupDemographicCode_ReturnsSingleEthnicGroupDemographic()
         {
-            var randomEthnicGroupDemographicCode = GetRandomEthnicGroupDemographicCode();
+            var randomEthnicGroupDemographicCode = PreDefinedData.GetRandomEthnicGroupDemographicCode();
             var result = UnitOfWork.ReferenceEthnicGroupDemographics.Get(randomEthnicGroupDemographicCode);
 
             Assert.That(result, Is.Not.Null);
@@ -63,7 +44,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindOneEthnicGroupDemographic_ReturnsCollection()
         {
-            var randomEthnicGroupDemographicCode = GetRandomEthnicGroupDemographicCode();
+            var randomEthnicGroupDemographicCode = PreDefinedData.GetRandomEthnicGroupDemographicCode();
             Expression<Func<ReferenceEthnicGroupDemographic, bool>> predicate =
                 (p => p.Code == randomEthnicGroupDemographicCode);
             var result = UnitOfWork.ReferenceEthnicGroupDemographics.Find(predicate);
@@ -75,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneEthnicGroupDemographic_ReturnsCollection()
         {
-            var randomEthnicGroupDemographicCode = GetRandomEthnicGroupDemographicCode();
+            var randomEthnicGroupDemographicCode = PreDefinedData.GetRandomEthnicGroupDemographicCode();
             Expression<Func<ReferenceEthnicGroupDemographic, bool>> predicate =
                 (p => p.Code != randomEthnicGroupDemographicCode);
             var result = UnitOfWork.ReferenceEthnicGroupDemographics.Find(predicate);
@@ -87,7 +68,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoEthnicGroupDemographics_ReturnsEmptyCollection()
         {
-            var notExistsEthnicGroupDemographicCode = GetNotExistsEthnicGroupDemographicCode();
+            var notExistsEthnicGroupDemographicCode = PreDefinedData.GetNotExistsEthnicGroupDemographicCode();
             Expression<Func<ReferenceEthnicGroupDemographic, bool>> predicate =
                 (p => p.Code == notExistsEthnicGroupDemographicCode);
             var result = UnitOfWork.ReferenceEthnicGroupDemographics.Find(predicate);
@@ -99,7 +80,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindOneEthnicGroupDemographic_ReturnsOneEthnicGroupDemographic()
         {
-            var randomEthnicGroupDemographicCode = GetRandomEthnicGroupDemographicCode();
+            var randomEthnicGroupDemographicCode = PreDefinedData.GetRandomEthnicGroupDemographicCode();
             Expression<Func<ReferenceEthnicGroupDemographic, bool>> predicate =
                 (p => p.Code == randomEthnicGroupDemographicCode);
             var result = UnitOfWork.ReferenceEthnicGroupDemographics.SingleOrDefault(predicate);
@@ -110,7 +91,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindMoreOneEthnicGroupDemographic_ThrowsInvalidOperationException()
         {
-            var randomEthnicGroupDemographicCode = GetRandomEthnicGroupDemographicCode();
+            var randomEthnicGroupDemographicCode = PreDefinedData.GetRandomEthnicGroupDemographicCode();
             Expression<Func<ReferenceEthnicGroupDemographic, bool>> predicate =
                 (p => p.Code != randomEthnicGroupDemographicCode);
 
@@ -122,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoEthnicGroupDemographics_ReturnsNull()
         {
-            var notExistsEthnicGroupDemographicCode = GetNotExistsEthnicGroupDemographicCode();
+            var notExistsEthnicGroupDemographicCode = PreDefinedData.GetNotExistsEthnicGroupDemographicCode();
             Expression<Func<ReferenceEthnicGroupDemographic, bool>> predicate =
                 (p => p.Code == notExistsEthnicGroupDemographicCode);
             var result = UnitOfWork.ReferenceEthnicGroupDemographics.SingleOrDefault(predicate);
@@ -133,7 +114,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Add_ValidEthnicGroupDemographicNotExists_FetchNewEthnicGroupDemographic()
         {
-            var notExistsEthnicGroupDemographicCode = GetNotExistsEthnicGroupDemographicCode();
+            var notExistsEthnicGroupDemographicCode = PreDefinedData.GetNotExistsEthnicGroupDemographicCode();
             var newReferenceEthnicGroupDemographic = new ReferenceEthnicGroupDemographic()
             {
                 Code = notExistsEthnicGroupDemographicCode,
@@ -152,7 +133,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Add_ValidEthnicGroupDemographicExists_ThrowsInvalidOperationException()
         {
-            var randomEthnicGroupDemographicCode = GetRandomEthnicGroupDemographicCode();
+            var randomEthnicGroupDemographicCode = PreDefinedData.GetRandomEthnicGroupDemographicCode();
             Assert.That(() => UnitOfWork.ReferenceEthnicGroupDemographics.Add(
                 new ReferenceEthnicGroupDemographic()
                 {
@@ -174,8 +155,8 @@ namespace PASRI.API.UnitTests.Repositories
         public void AddRange_TwoValidEthnicGroupDemographics_CountIncreasedByTwo()
         {
         Start:
-            var notExistsEthnicGroupDemographicCode1 = GetNotExistsEthnicGroupDemographicCode();
-            var notExistsEthnicGroupDemographicCode2 = GetNotExistsEthnicGroupDemographicCode();
+            var notExistsEthnicGroupDemographicCode1 = PreDefinedData.GetNotExistsEthnicGroupDemographicCode();
+            var notExistsEthnicGroupDemographicCode2 = PreDefinedData.GetNotExistsEthnicGroupDemographicCode();
             if (notExistsEthnicGroupDemographicCode1 == notExistsEthnicGroupDemographicCode2)
                 goto Start;
 
@@ -195,7 +176,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void AddRange_TwoValidEthnicGroupDemographicsDuplicated_ThrowsInvalidOperationException()
         {
-            var notExistsEthnicGroupDemographicCode = GetNotExistsEthnicGroupDemographicCode();
+            var notExistsEthnicGroupDemographicCode = PreDefinedData.GetNotExistsEthnicGroupDemographicCode();
             var newEthnicGroupDemographics = new Collection<ReferenceEthnicGroupDemographic>
             {
                 new ReferenceEthnicGroupDemographic() { Code = notExistsEthnicGroupDemographicCode, DisplayText = "" },
@@ -224,7 +205,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidEthnicGroupDemographicNotExists_ThrowsDbUpdateConcurrencyException()
         {
-            var notExistsEthnicGroupDemographicCode = GetNotExistsEthnicGroupDemographicCode();
+            var notExistsEthnicGroupDemographicCode = PreDefinedData.GetNotExistsEthnicGroupDemographicCode();
             UnitOfWork.ReferenceEthnicGroupDemographics.Remove(
                 new ReferenceEthnicGroupDemographic()
                 {
@@ -238,7 +219,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidEthnicGroupDemographicExists_EthnicGroupDemographicCannotBeFetched()
         {
-            var randomEthnicGroupDemographicCode = GetRandomEthnicGroupDemographicCode();
+            var randomEthnicGroupDemographicCode = PreDefinedData.GetRandomEthnicGroupDemographicCode();
             var removeReferenceEthnicGroupDemographic = UnitOfWork.ReferenceEthnicGroupDemographics.Get(randomEthnicGroupDemographicCode);
             UnitOfWork.ReferenceEthnicGroupDemographics.Remove(removeReferenceEthnicGroupDemographic);
             UnitOfWork.Complete();
@@ -280,7 +261,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void RemoveRange_TwoValidEthnicGroupDemographicsDuplicated_ThrowsInvalidOperationException()
         {
-            var randomEthnicGroupDemographicCode = GetRandomEthnicGroupDemographicCode();
+            var randomEthnicGroupDemographicCode = PreDefinedData.GetRandomEthnicGroupDemographicCode();
             var newEthnicGroupDemographics = new Collection<ReferenceEthnicGroupDemographic>
             {
                 new ReferenceEthnicGroupDemographic() { Code = randomEthnicGroupDemographicCode },

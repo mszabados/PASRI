@@ -12,25 +12,6 @@ namespace PASRI.API.UnitTests.Repositories
     [TestFixture]
     public class ReferenceStateRepositoryTests : BaseUnitTestProvider
     {
-        /// <summary>
-        /// Helper method to retrieve a state code, which is the primary key
-        /// of the <see cref="ReferenceState"/> that does not exist in the
-        /// <see cref="PreDefinedData.ReferenceStates"/> test collection
-        /// </summary>
-        private static string GetNotExistsStateCode() =>
-            AssertHelper.GetValueNotInArray(PreDefinedData.ReferenceStates,
-                "Code", 2);
-
-        /// <summary>
-        /// Helper method to retrieve a state code, which is the primary key
-        /// of the <see cref="ReferenceState"/> that exists in the
-        /// <see cref="PreDefinedData.ReferenceStates"/> test collection
-        /// </summary>
-        private static string GetRandomStateCode() =>
-            PreDefinedData.ReferenceStates[
-                new Random().Next(0, PreDefinedData.ReferenceStates.Length)
-            ].Code;
-
         [Test]
         public void GetAll_WhenCalled_ReturnsCollection()
         {
@@ -42,7 +23,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Get_ValidStateCode_ReturnsSingleState()
         {
-            var randomStateCode = GetRandomStateCode();
+            var randomStateCode = PreDefinedData.GetRandomStateCode();
             var result = UnitOfWork.ReferenceStates.Get(randomStateCode);
 
             Assert.That(result, Is.Not.Null);
@@ -63,7 +44,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindOneState_ReturnsCollection()
         {
-            var randomStateCode = GetRandomStateCode();
+            var randomStateCode = PreDefinedData.GetRandomStateCode();
             Expression<Func<ReferenceState, bool>> predicate =
                 (p => p.Code == randomStateCode);
             var result = UnitOfWork.ReferenceStates.Find(predicate);
@@ -75,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneState_ReturnsCollection()
         {
-            var randomStateCode = GetRandomStateCode();
+            var randomStateCode = PreDefinedData.GetRandomStateCode();
             Expression<Func<ReferenceState, bool>> predicate =
                 (p => p.Code != randomStateCode);
             var result = UnitOfWork.ReferenceStates.Find(predicate);
@@ -87,7 +68,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoStates_ReturnsEmptyCollection()
         {
-            var notExistsStateCode = GetNotExistsStateCode();
+            var notExistsStateCode = PreDefinedData.GetNotExistsStateCode();
             Expression<Func<ReferenceState, bool>> predicate =
                 (p => p.Code == notExistsStateCode);
             var result = UnitOfWork.ReferenceStates.Find(predicate);
@@ -99,7 +80,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindOneState_ReturnsOneState()
         {
-            var randomStateCode = GetRandomStateCode();
+            var randomStateCode = PreDefinedData.GetRandomStateCode();
             Expression<Func<ReferenceState, bool>> predicate =
                 (p => p.Code == randomStateCode);
             var result = UnitOfWork.ReferenceStates.SingleOrDefault(predicate);
@@ -110,7 +91,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindMoreOneState_ThrowsInvalidOperationException()
         {
-            var randomStateCode = GetRandomStateCode();
+            var randomStateCode = PreDefinedData.GetRandomStateCode();
             Expression<Func<ReferenceState, bool>> predicate =
                 (p => p.Code != randomStateCode);
 
@@ -122,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoStates_ReturnsNull()
         {
-            var notExistsStateCode = GetNotExistsStateCode();
+            var notExistsStateCode = PreDefinedData.GetNotExistsStateCode();
             Expression<Func<ReferenceState, bool>> predicate =
                 (p => p.Code == notExistsStateCode);
             var result = UnitOfWork.ReferenceStates.SingleOrDefault(predicate);
@@ -133,7 +114,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Add_ValidStateNotExists_FetchNewState()
         {
-            var notExistsStateCode = GetNotExistsStateCode();
+            var notExistsStateCode = PreDefinedData.GetNotExistsStateCode();
             var newReferenceState = new ReferenceState()
             {
                 Code = notExistsStateCode,
@@ -152,7 +133,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Add_ValidStateExists_ThrowsInvalidOperationException()
         {
-            var randomStateCode = GetRandomStateCode();
+            var randomStateCode = PreDefinedData.GetRandomStateCode();
             Assert.That(() => UnitOfWork.ReferenceStates.Add(
                 new ReferenceState()
                 {
@@ -174,8 +155,8 @@ namespace PASRI.API.UnitTests.Repositories
         public void AddRange_TwoValidStates_CountIncreasedByTwo()
         {
         Start:
-            var notExistsStateCode1 = GetNotExistsStateCode();
-            var notExistsStateCode2 = GetNotExistsStateCode();
+            var notExistsStateCode1 = PreDefinedData.GetNotExistsStateCode();
+            var notExistsStateCode2 = PreDefinedData.GetNotExistsStateCode();
             if (notExistsStateCode1 == notExistsStateCode2)
                 goto Start;
 
@@ -195,7 +176,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void AddRange_TwoValidStatesDuplicated_ThrowsInvalidOperationException()
         {
-            var notExistsStateCode = GetNotExistsStateCode();
+            var notExistsStateCode = PreDefinedData.GetNotExistsStateCode();
             var newStates = new Collection<ReferenceState>
             {
                 new ReferenceState() { Code = notExistsStateCode, DisplayText = "" },
@@ -224,7 +205,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidStateNotExists_ThrowsDbUpdateConcurrencyException()
         {
-            var notExistsStateCode = GetNotExistsStateCode();
+            var notExistsStateCode = PreDefinedData.GetNotExistsStateCode();
             UnitOfWork.ReferenceStates.Remove(
                 new ReferenceState()
                 {
@@ -238,7 +219,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidStateExists_StateCannotBeFetched()
         {
-            var randomStateCode = GetRandomStateCode();
+            var randomStateCode = PreDefinedData.GetRandomStateCode();
             var removeReferenceState = UnitOfWork.ReferenceStates.Get(randomStateCode);
             UnitOfWork.ReferenceStates.Remove(removeReferenceState);
             UnitOfWork.Complete();
@@ -280,7 +261,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void RemoveRange_TwoValidStatesDuplicated_ThrowsInvalidOperationException()
         {
-            var randomStateCode = GetRandomStateCode();
+            var randomStateCode = PreDefinedData.GetRandomStateCode();
             var newStates = new Collection<ReferenceState>
             {
                 new ReferenceState() { Code = randomStateCode },

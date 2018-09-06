@@ -41,9 +41,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         [Test]
         public async Task Get_ValidCountryCode_HttpOkAndReturnsSingleCountry()
         {
-            var randomCountryCode = PreDefinedData.ReferenceCountries[
-                    new Random().Next(0, PreDefinedData.ReferenceCountries.Length)
-                ].Code;
+            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
             var response = await Client.GetAsync($"{_apiRelativePath}/{randomCountryCode}");
             var responseString = await response.Content.ReadAsStringAsync();
 
@@ -65,8 +63,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         [Test]
         public async Task Get_InvalidCountryCode_HttpNotFound()
         {
-            var invalidCountryCode = "ABCD";
-            var response = await Client.GetAsync($"{_apiRelativePath}/{invalidCountryCode}");
+            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
+            var response = await Client.GetAsync($"{_apiRelativePath}/{notExistsCountryCode}");
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         }

@@ -12,25 +12,6 @@ namespace PASRI.API.UnitTests.Repositories
     [TestFixture]
     public class ReferenceBloodTypeRepositoryTests : BaseUnitTestProvider
     {
-        /// <summary>
-        /// Helper method to retrieve a blood type code, which is the primary key
-        /// of the <see cref="ReferenceBloodType"/> that does not exist in the
-        /// <see cref="PreDefinedData.ReferenceBloodTypes"/> test collection
-        /// </summary>
-        private static string GetNotExistsBloodTypeCode() =>
-            AssertHelper.GetValueNotInArray(PreDefinedData.ReferenceBloodTypes,
-                "Code", 1);
-
-        /// <summary>
-        /// Helper method to retrieve a blood type code, which is the primary key
-        /// of the <see cref="ReferenceBloodType"/> that exists in the
-        /// <see cref="PreDefinedData.ReferenceBloodTypes"/> test collection
-        /// </summary>
-        private static string GetRandomBloodTypeCode() =>
-            PreDefinedData.ReferenceBloodTypes[
-                new Random().Next(0, PreDefinedData.ReferenceBloodTypes.Length)
-            ].Code;
-
         [Test]
         public void GetAll_WhenCalled_ReturnsCollection()
         {
@@ -42,7 +23,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Get_ValidBloodTypeCode_ReturnsSingleBloodType()
         {
-            var randomBloodTypeCode = GetRandomBloodTypeCode();
+            var randomBloodTypeCode = PreDefinedData.GetRandomBloodTypeCode();
             var result = UnitOfWork.ReferenceBloodTypes.Get(randomBloodTypeCode);
 
             Assert.That(result, Is.Not.Null);
@@ -63,7 +44,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindOneBloodType_ReturnsCollection()
         {
-            var randomBloodTypeCode = GetRandomBloodTypeCode();
+            var randomBloodTypeCode = PreDefinedData.GetRandomBloodTypeCode();
             Expression<Func<ReferenceBloodType, bool>> predicate =
                 (p => p.Code == randomBloodTypeCode);
             var result = UnitOfWork.ReferenceBloodTypes.Find(predicate);
@@ -75,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneBloodType_ReturnsCollection()
         {
-            var randomBloodTypeCode = GetRandomBloodTypeCode();
+            var randomBloodTypeCode = PreDefinedData.GetRandomBloodTypeCode();
             Expression<Func<ReferenceBloodType, bool>> predicate =
                 (p => p.Code != randomBloodTypeCode);
             var result = UnitOfWork.ReferenceBloodTypes.Find(predicate);
@@ -87,7 +68,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoBloodTypes_ReturnsEmptyCollection()
         {
-            var notExistsBloodTypeCode = GetNotExistsBloodTypeCode();
+            var notExistsBloodTypeCode = PreDefinedData.GetNotExistsBloodTypeCode();
             Expression<Func<ReferenceBloodType, bool>> predicate =
                 (p => p.Code == notExistsBloodTypeCode);
             var result = UnitOfWork.ReferenceBloodTypes.Find(predicate);
@@ -99,7 +80,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindOneBloodType_ReturnsOneBloodType()
         {
-            var randomBloodTypeCode = GetRandomBloodTypeCode();
+            var randomBloodTypeCode = PreDefinedData.GetRandomBloodTypeCode();
             Expression<Func<ReferenceBloodType, bool>> predicate =
                 (p => p.Code == randomBloodTypeCode);
             var result = UnitOfWork.ReferenceBloodTypes.SingleOrDefault(predicate);
@@ -110,7 +91,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindMoreOneBloodType_ThrowsInvalidOperationException()
         {
-            var randomBloodTypeCode = GetRandomBloodTypeCode();
+            var randomBloodTypeCode = PreDefinedData.GetRandomBloodTypeCode();
             Expression<Func<ReferenceBloodType, bool>> predicate =
                 (p => p.Code != randomBloodTypeCode);
 
@@ -122,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoBloodTypes_ReturnsNull()
         {
-            var notExistsBloodTypeCode = GetNotExistsBloodTypeCode();
+            var notExistsBloodTypeCode = PreDefinedData.GetNotExistsBloodTypeCode();
             Expression<Func<ReferenceBloodType, bool>> predicate =
                 (p => p.Code == notExistsBloodTypeCode);
             var result = UnitOfWork.ReferenceBloodTypes.SingleOrDefault(predicate);
@@ -133,7 +114,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Add_ValidBloodTypeNotExists_FetchNewBloodType()
         {
-            var notExistsBloodTypeCode = GetNotExistsBloodTypeCode();
+            var notExistsBloodTypeCode = PreDefinedData.GetNotExistsBloodTypeCode();
             var newReferenceBloodType = new ReferenceBloodType()
             {
                 Code = notExistsBloodTypeCode,
@@ -152,7 +133,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Add_ValidBloodTypeExists_ThrowsInvalidOperationException()
         {
-            var randomBloodTypeCode = GetRandomBloodTypeCode();
+            var randomBloodTypeCode = PreDefinedData.GetRandomBloodTypeCode();
             Assert.That(() => UnitOfWork.ReferenceBloodTypes.Add(
                 new ReferenceBloodType()
                 {
@@ -174,8 +155,8 @@ namespace PASRI.API.UnitTests.Repositories
         public void AddRange_TwoValidBloodTypes_CountIncreasedByTwo()
         {
             Start:
-            var notExistsBloodTypeCode1 = GetNotExistsBloodTypeCode();
-            var notExistsBloodTypeCode2 = GetNotExistsBloodTypeCode();
+            var notExistsBloodTypeCode1 = PreDefinedData.GetNotExistsBloodTypeCode();
+            var notExistsBloodTypeCode2 = PreDefinedData.GetNotExistsBloodTypeCode();
             if (notExistsBloodTypeCode1 == notExistsBloodTypeCode2)
                 goto Start;
 
@@ -195,7 +176,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void AddRange_TwoValidBloodTypesDuplicated_ThrowsInvalidOperationException()
         {
-            var notExistsBloodTypeCode = GetNotExistsBloodTypeCode();
+            var notExistsBloodTypeCode = PreDefinedData.GetNotExistsBloodTypeCode();
             var newBloodTypes = new Collection<ReferenceBloodType>
             {
                 new ReferenceBloodType() { Code = notExistsBloodTypeCode, DisplayText = "" },
@@ -224,7 +205,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidBloodTypeNotExists_ThrowsDbUpdateConcurrencyException()
         {
-            var notExistsBloodTypeCode = GetNotExistsBloodTypeCode();
+            var notExistsBloodTypeCode = PreDefinedData.GetNotExistsBloodTypeCode();
             UnitOfWork.ReferenceBloodTypes.Remove(
                 new ReferenceBloodType()
                 {
@@ -238,7 +219,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidBloodTypeExists_BloodTypeCannotBeFetched()
         {
-            var randomBloodTypeCode = GetRandomBloodTypeCode();
+            var randomBloodTypeCode = PreDefinedData.GetRandomBloodTypeCode();
             var removeReferenceBloodType = UnitOfWork.ReferenceBloodTypes.Get(randomBloodTypeCode);
             UnitOfWork.ReferenceBloodTypes.Remove(removeReferenceBloodType);
             UnitOfWork.Complete();
@@ -280,7 +261,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void RemoveRange_TwoValidBloodTypesDuplicated_ThrowsInvalidOperationException()
         {
-            var randomBloodTypeCode = GetRandomBloodTypeCode();
+            var randomBloodTypeCode = PreDefinedData.GetRandomBloodTypeCode();
             var newBloodTypes = new Collection<ReferenceBloodType>
             {
                 new ReferenceBloodType() { Code = randomBloodTypeCode },

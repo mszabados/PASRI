@@ -12,25 +12,6 @@ namespace PASRI.API.UnitTests.Repositories
     [TestFixture]
     public class ReferenceSuffixNameRepositoryTests : BaseUnitTestProvider
     {
-        /// <summary>
-        /// Helper method to retrieve a suffix name code, which is the primary key
-        /// of the <see cref="ReferenceSuffixName"/> that does not exist in the
-        /// <see cref="PreDefinedData.ReferenceSuffixNames"/> test collection
-        /// </summary>
-        private static string GetNotExistsSuffixNameCode() =>
-            AssertHelper.GetValueNotInArray(PreDefinedData.ReferenceSuffixNames,
-                "Code", 4);
-
-        /// <summary>
-        /// Helper method to retrieve a suffix name code, which is the primary key
-        /// of the <see cref="ReferenceSuffixName"/> that exists in the
-        /// <see cref="PreDefinedData.ReferenceSuffixNames"/> test collection
-        /// </summary>
-        private static string GetRandomSuffixNameCode() =>
-            PreDefinedData.ReferenceSuffixNames[
-                new Random().Next(0, PreDefinedData.ReferenceSuffixNames.Length)
-            ].Code;
-
         [Test]
         public void GetAll_WhenCalled_ReturnsCollection()
         {
@@ -42,7 +23,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Get_ValidSuffixNameCode_ReturnsSingleSuffixName()
         {
-            var randomSuffixNameCode = GetRandomSuffixNameCode();
+            var randomSuffixNameCode = PreDefinedData.GetRandomSuffixNameCode();
             var result = UnitOfWork.ReferenceSuffixNames.Get(randomSuffixNameCode);
 
             Assert.That(result, Is.Not.Null);
@@ -63,7 +44,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindOneSuffixName_ReturnsCollection()
         {
-            var randomSuffixNameCode = GetRandomSuffixNameCode();
+            var randomSuffixNameCode = PreDefinedData.GetRandomSuffixNameCode();
             Expression<Func<ReferenceSuffixName, bool>> predicate =
                 (p => p.Code == randomSuffixNameCode);
             var result = UnitOfWork.ReferenceSuffixNames.Find(predicate);
@@ -75,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneSuffixName_ReturnsCollection()
         {
-            var randomSuffixNameCode = GetRandomSuffixNameCode();
+            var randomSuffixNameCode = PreDefinedData.GetRandomSuffixNameCode();
             Expression<Func<ReferenceSuffixName, bool>> predicate =
                 (p => p.Code != randomSuffixNameCode);
             var result = UnitOfWork.ReferenceSuffixNames.Find(predicate);
@@ -87,7 +68,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoSuffixNames_ReturnsEmptyCollection()
         {
-            var notExistsSuffixNameCode = GetNotExistsSuffixNameCode();
+            var notExistsSuffixNameCode = PreDefinedData.GetNotExistsSuffixNameCode();
             Expression<Func<ReferenceSuffixName, bool>> predicate =
                 (p => p.Code == notExistsSuffixNameCode);
             var result = UnitOfWork.ReferenceSuffixNames.Find(predicate);
@@ -99,7 +80,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindOneSuffixName_ReturnsOneSuffixName()
         {
-            var randomSuffixNameCode = GetRandomSuffixNameCode();
+            var randomSuffixNameCode = PreDefinedData.GetRandomSuffixNameCode();
             Expression<Func<ReferenceSuffixName, bool>> predicate =
                 (p => p.Code == randomSuffixNameCode);
             var result = UnitOfWork.ReferenceSuffixNames.SingleOrDefault(predicate);
@@ -110,7 +91,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindMoreOneSuffixName_ThrowsInvalidOperationException()
         {
-            var randomSuffixNameCode = GetRandomSuffixNameCode();
+            var randomSuffixNameCode = PreDefinedData.GetRandomSuffixNameCode();
             Expression<Func<ReferenceSuffixName, bool>> predicate =
                 (p => p.Code != randomSuffixNameCode);
 
@@ -122,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoSuffixNames_ReturnsNull()
         {
-            var notExistsSuffixNameCode = GetNotExistsSuffixNameCode();
+            var notExistsSuffixNameCode = PreDefinedData.GetNotExistsSuffixNameCode();
             Expression<Func<ReferenceSuffixName, bool>> predicate =
                 (p => p.Code == notExistsSuffixNameCode);
             var result = UnitOfWork.ReferenceSuffixNames.SingleOrDefault(predicate);
@@ -133,7 +114,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Add_ValidSuffixNameNotExists_FetchNewSuffixName()
         {
-            var notExistsSuffixNameCode = GetNotExistsSuffixNameCode();
+            var notExistsSuffixNameCode = PreDefinedData.GetNotExistsSuffixNameCode();
             var newReferenceSuffixName = new ReferenceSuffixName()
             {
                 Code = notExistsSuffixNameCode,
@@ -152,7 +133,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Add_ValidSuffixNameExists_ThrowsInvalidOperationException()
         {
-            var randomSuffixNameCode = GetRandomSuffixNameCode();
+            var randomSuffixNameCode = PreDefinedData.GetRandomSuffixNameCode();
             Assert.That(() => UnitOfWork.ReferenceSuffixNames.Add(
                 new ReferenceSuffixName()
                 {
@@ -174,8 +155,8 @@ namespace PASRI.API.UnitTests.Repositories
         public void AddRange_TwoValidSuffixNames_CountIncreasedByTwo()
         {
         Start:
-            var notExistsSuffixNameCode1 = GetNotExistsSuffixNameCode();
-            var notExistsSuffixNameCode2 = GetNotExistsSuffixNameCode();
+            var notExistsSuffixNameCode1 = PreDefinedData.GetNotExistsSuffixNameCode();
+            var notExistsSuffixNameCode2 = PreDefinedData.GetNotExistsSuffixNameCode();
             if (notExistsSuffixNameCode1 == notExistsSuffixNameCode2)
                 goto Start;
 
@@ -195,7 +176,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void AddRange_TwoValidSuffixNamesDuplicated_ThrowsInvalidOperationException()
         {
-            var notExistsSuffixNameCode = GetNotExistsSuffixNameCode();
+            var notExistsSuffixNameCode = PreDefinedData.GetNotExistsSuffixNameCode();
             var newSuffixNames = new Collection<ReferenceSuffixName>
             {
                 new ReferenceSuffixName() { Code = notExistsSuffixNameCode, DisplayText = "" },
@@ -224,7 +205,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidSuffixNameNotExists_ThrowsDbUpdateConcurrencyException()
         {
-            var notExistsSuffixNameCode = GetNotExistsSuffixNameCode();
+            var notExistsSuffixNameCode = PreDefinedData.GetNotExistsSuffixNameCode();
             UnitOfWork.ReferenceSuffixNames.Remove(
                 new ReferenceSuffixName()
                 {
@@ -238,7 +219,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidSuffixNameExists_SuffixNameCannotBeFetched()
         {
-            var randomSuffixNameCode = GetRandomSuffixNameCode();
+            var randomSuffixNameCode = PreDefinedData.GetRandomSuffixNameCode();
             var removeReferenceSuffixName = UnitOfWork.ReferenceSuffixNames.Get(randomSuffixNameCode);
             UnitOfWork.ReferenceSuffixNames.Remove(removeReferenceSuffixName);
             UnitOfWork.Complete();
@@ -280,7 +261,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void RemoveRange_TwoValidSuffixNamesDuplicated_ThrowsInvalidOperationException()
         {
-            var randomSuffixNameCode = GetRandomSuffixNameCode();
+            var randomSuffixNameCode = PreDefinedData.GetRandomSuffixNameCode();
             var newSuffixNames = new Collection<ReferenceSuffixName>
             {
                 new ReferenceSuffixName() { Code = randomSuffixNameCode },

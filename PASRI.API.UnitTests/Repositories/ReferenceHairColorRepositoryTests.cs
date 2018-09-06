@@ -12,25 +12,6 @@ namespace PASRI.API.UnitTests.Repositories
     [TestFixture]
     public class ReferenceHairColorRepositoryTests : BaseUnitTestProvider
     {
-        /// <summary>
-        /// Helper method to retrieve a hair color code, which is the primary key
-        /// of the <see cref="ReferenceHairColor"/> that does not exist in the
-        /// <see cref="PreDefinedData.ReferenceHairColors"/> test collection
-        /// </summary>
-        private static string GetNotExistsHairColorCode() =>
-            AssertHelper.GetValueNotInArray(PreDefinedData.ReferenceHairColors,
-                "Code", 2);
-
-        /// <summary>
-        /// Helper method to retrieve a hair color code, which is the primary key
-        /// of the <see cref="ReferenceHairColor"/> that exists in the
-        /// <see cref="PreDefinedData.ReferenceHairColors"/> test collection
-        /// </summary>
-        private static string GetRandomHairColorCode() =>
-            PreDefinedData.ReferenceHairColors[
-                new Random().Next(0, PreDefinedData.ReferenceHairColors.Length)
-            ].Code;
-
         [Test]
         public void GetAll_WhenCalled_ReturnsCollection()
         {
@@ -42,7 +23,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Get_ValidHairColorCode_ReturnsSingleHairColor()
         {
-            var randomHairColorCode = GetRandomHairColorCode();
+            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
             var result = UnitOfWork.ReferenceHairColors.Get(randomHairColorCode);
 
             Assert.That(result, Is.Not.Null);
@@ -63,7 +44,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindOneHairColor_ReturnsCollection()
         {
-            var randomHairColorCode = GetRandomHairColorCode();
+            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
             Expression<Func<ReferenceHairColor, bool>> predicate =
                 (p => p.Code == randomHairColorCode);
             var result = UnitOfWork.ReferenceHairColors.Find(predicate);
@@ -75,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneHairColor_ReturnsCollection()
         {
-            var randomHairColorCode = GetRandomHairColorCode();
+            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
             Expression<Func<ReferenceHairColor, bool>> predicate =
                 (p => p.Code != randomHairColorCode);
             var result = UnitOfWork.ReferenceHairColors.Find(predicate);
@@ -87,7 +68,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoHairColors_ReturnsEmptyCollection()
         {
-            var notExistsHairColorCode = GetNotExistsHairColorCode();
+            var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
             Expression<Func<ReferenceHairColor, bool>> predicate =
                 (p => p.Code == notExistsHairColorCode);
             var result = UnitOfWork.ReferenceHairColors.Find(predicate);
@@ -99,7 +80,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindOneHairColor_ReturnsOneHairColor()
         {
-            var randomHairColorCode = GetRandomHairColorCode();
+            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
             Expression<Func<ReferenceHairColor, bool>> predicate =
                 (p => p.Code == randomHairColorCode);
             var result = UnitOfWork.ReferenceHairColors.SingleOrDefault(predicate);
@@ -110,7 +91,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindMoreOneHairColor_ThrowsInvalidOperationException()
         {
-            var randomHairColorCode = GetRandomHairColorCode();
+            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
             Expression<Func<ReferenceHairColor, bool>> predicate =
                 (p => p.Code != randomHairColorCode);
 
@@ -122,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoHairColors_ReturnsNull()
         {
-            var notExistsHairColorCode = GetNotExistsHairColorCode();
+            var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
             Expression<Func<ReferenceHairColor, bool>> predicate =
                 (p => p.Code == notExistsHairColorCode);
             var result = UnitOfWork.ReferenceHairColors.SingleOrDefault(predicate);
@@ -133,7 +114,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Add_ValidHairColorNotExists_FetchNewHairColor()
         {
-            var notExistsHairColorCode = GetNotExistsHairColorCode();
+            var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
             var newReferenceHairColor = new ReferenceHairColor()
             {
                 Code = notExistsHairColorCode,
@@ -152,7 +133,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Add_ValidHairColorExists_ThrowsInvalidOperationException()
         {
-            var randomHairColorCode = GetRandomHairColorCode();
+            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
             Assert.That(() => UnitOfWork.ReferenceHairColors.Add(
                 new ReferenceHairColor()
                 {
@@ -174,8 +155,8 @@ namespace PASRI.API.UnitTests.Repositories
         public void AddRange_TwoValidHairColors_CountIncreasedByTwo()
         {
         Start:
-            var notExistsHairColorCode1 = GetNotExistsHairColorCode();
-            var notExistsHairColorCode2 = GetNotExistsHairColorCode();
+            var notExistsHairColorCode1 = PreDefinedData.GetNotExistsHairColorCode();
+            var notExistsHairColorCode2 = PreDefinedData.GetNotExistsHairColorCode();
             if (notExistsHairColorCode1 == notExistsHairColorCode2)
                 goto Start;
 
@@ -195,7 +176,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void AddRange_TwoValidHairColorsDuplicated_ThrowsInvalidOperationException()
         {
-            var notExistsHairColorCode = GetNotExistsHairColorCode();
+            var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
             var newHairColors = new Collection<ReferenceHairColor>
             {
                 new ReferenceHairColor() { Code = notExistsHairColorCode, DisplayText = "" },
@@ -224,7 +205,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidHairColorNotExists_ThrowsDbUpdateConcurrencyException()
         {
-            var notExistsHairColorCode = GetNotExistsHairColorCode();
+            var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
             UnitOfWork.ReferenceHairColors.Remove(
                 new ReferenceHairColor()
                 {
@@ -238,7 +219,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidHairColorExists_HairColorCannotBeFetched()
         {
-            var randomHairColorCode = GetRandomHairColorCode();
+            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
             var removeReferenceHairColor = UnitOfWork.ReferenceHairColors.Get(randomHairColorCode);
             UnitOfWork.ReferenceHairColors.Remove(removeReferenceHairColor);
             UnitOfWork.Complete();
@@ -280,7 +261,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void RemoveRange_TwoValidHairColorsDuplicated_ThrowsInvalidOperationException()
         {
-            var randomHairColorCode = GetRandomHairColorCode();
+            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
             var newHairColors = new Collection<ReferenceHairColor>
             {
                 new ReferenceHairColor() { Code = randomHairColorCode },

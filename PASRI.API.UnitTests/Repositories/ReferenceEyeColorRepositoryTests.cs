@@ -12,25 +12,6 @@ namespace PASRI.API.UnitTests.Repositories
     [TestFixture]
     public class ReferenceEyeColorRepositoryTests : BaseUnitTestProvider
     {
-        /// <summary>
-        /// Helper method to retrieve a eye color code, which is the primary key
-        /// of the <see cref="ReferenceEyeColor"/> that does not exist in the
-        /// <see cref="PreDefinedData.ReferenceEyeColors"/> test collection
-        /// </summary>
-        private static string GetNotExistsEyeColorCode() =>
-            AssertHelper.GetValueNotInArray(PreDefinedData.ReferenceEyeColors,
-                "Code", 2);
-
-        /// <summary>
-        /// Helper method to retrieve a eye color code, which is the primary key
-        /// of the <see cref="ReferenceEyeColor"/> that exists in the
-        /// <see cref="PreDefinedData.ReferenceEyeColors"/> test collection
-        /// </summary>
-        private static string GetRandomEyeColorCode() =>
-            PreDefinedData.ReferenceEyeColors[
-                new Random().Next(0, PreDefinedData.ReferenceEyeColors.Length)
-            ].Code;
-
         [Test]
         public void GetAll_WhenCalled_ReturnsCollection()
         {
@@ -42,7 +23,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Get_ValidEyeColorCode_ReturnsSingleEyeColor()
         {
-            var randomEyeColorCode = GetRandomEyeColorCode();
+            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
             var result = UnitOfWork.ReferenceEyeColors.Get(randomEyeColorCode);
 
             Assert.That(result, Is.Not.Null);
@@ -63,7 +44,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindOneEyeColor_ReturnsCollection()
         {
-            var randomEyeColorCode = GetRandomEyeColorCode();
+            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
             Expression<Func<ReferenceEyeColor, bool>> predicate =
                 (p => p.Code == randomEyeColorCode);
             var result = UnitOfWork.ReferenceEyeColors.Find(predicate);
@@ -75,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneEyeColor_ReturnsCollection()
         {
-            var randomEyeColorCode = GetRandomEyeColorCode();
+            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
             Expression<Func<ReferenceEyeColor, bool>> predicate =
                 (p => p.Code != randomEyeColorCode);
             var result = UnitOfWork.ReferenceEyeColors.Find(predicate);
@@ -87,7 +68,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoEyeColors_ReturnsEmptyCollection()
         {
-            var notExistsEyeColorCode = GetNotExistsEyeColorCode();
+            var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
             Expression<Func<ReferenceEyeColor, bool>> predicate =
                 (p => p.Code == notExistsEyeColorCode);
             var result = UnitOfWork.ReferenceEyeColors.Find(predicate);
@@ -99,7 +80,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindOneEyeColor_ReturnsOneEyeColor()
         {
-            var randomEyeColorCode = GetRandomEyeColorCode();
+            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
             Expression<Func<ReferenceEyeColor, bool>> predicate =
                 (p => p.Code == randomEyeColorCode);
             var result = UnitOfWork.ReferenceEyeColors.SingleOrDefault(predicate);
@@ -110,7 +91,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindMoreOneEyeColor_ThrowsInvalidOperationException()
         {
-            var randomEyeColorCode = GetRandomEyeColorCode();
+            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
             Expression<Func<ReferenceEyeColor, bool>> predicate =
                 (p => p.Code != randomEyeColorCode);
 
@@ -122,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoEyeColors_ReturnsNull()
         {
-            var notExistsEyeColorCode = GetNotExistsEyeColorCode();
+            var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
             Expression<Func<ReferenceEyeColor, bool>> predicate =
                 (p => p.Code == notExistsEyeColorCode);
             var result = UnitOfWork.ReferenceEyeColors.SingleOrDefault(predicate);
@@ -133,7 +114,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Add_ValidEyeColorNotExists_FetchNewEyeColor()
         {
-            var notExistsEyeColorCode = GetNotExistsEyeColorCode();
+            var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
             var newReferenceEyeColor = new ReferenceEyeColor()
             {
                 Code = notExistsEyeColorCode,
@@ -152,7 +133,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Add_ValidEyeColorExists_ThrowsInvalidOperationException()
         {
-            var randomEyeColorCode = GetRandomEyeColorCode();
+            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
             Assert.That(() => UnitOfWork.ReferenceEyeColors.Add(
                 new ReferenceEyeColor()
                 {
@@ -174,8 +155,8 @@ namespace PASRI.API.UnitTests.Repositories
         public void AddRange_TwoValidEyeColors_CountIncreasedByTwo()
         {
         Start:
-            var notExistsEyeColorCode1 = GetNotExistsEyeColorCode();
-            var notExistsEyeColorCode2 = GetNotExistsEyeColorCode();
+            var notExistsEyeColorCode1 = PreDefinedData.GetNotExistsEyeColorCode();
+            var notExistsEyeColorCode2 = PreDefinedData.GetNotExistsEyeColorCode();
             if (notExistsEyeColorCode1 == notExistsEyeColorCode2)
                 goto Start;
 
@@ -195,7 +176,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void AddRange_TwoValidEyeColorsDuplicated_ThrowsInvalidOperationException()
         {
-            var notExistsEyeColorCode = GetNotExistsEyeColorCode();
+            var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
             var newEyeColors = new Collection<ReferenceEyeColor>
             {
                 new ReferenceEyeColor() { Code = notExistsEyeColorCode, DisplayText = "" },
@@ -224,7 +205,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidEyeColorNotExists_ThrowsDbUpdateConcurrencyException()
         {
-            var notExistsEyeColorCode = GetNotExistsEyeColorCode();
+            var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
             UnitOfWork.ReferenceEyeColors.Remove(
                 new ReferenceEyeColor()
                 {
@@ -238,7 +219,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidEyeColorExists_EyeColorCannotBeFetched()
         {
-            var randomEyeColorCode = GetRandomEyeColorCode();
+            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
             var removeReferenceEyeColor = UnitOfWork.ReferenceEyeColors.Get(randomEyeColorCode);
             UnitOfWork.ReferenceEyeColors.Remove(removeReferenceEyeColor);
             UnitOfWork.Complete();
@@ -280,7 +261,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void RemoveRange_TwoValidEyeColorsDuplicated_ThrowsInvalidOperationException()
         {
-            var randomEyeColorCode = GetRandomEyeColorCode();
+            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
             var newEyeColors = new Collection<ReferenceEyeColor>
             {
                 new ReferenceEyeColor() { Code = randomEyeColorCode },
