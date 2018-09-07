@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PASRI.API.Persistence;
 
 namespace PASRI.API.Migrations
 {
     [DbContext(typeof(PasriDbContext))]
-    partial class PasriDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180907120944_DropReferenceBloodTypeTable")]
+    partial class DropReferenceBloodTypeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,23 +103,21 @@ namespace PASRI.API.Migrations
 
             modelBuilder.Entity("PASRI.API.Core.Domain.ReferenceBloodType", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(2)");
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DisplayText")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
+                    b.Property<string>("Code");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<string>("DisplayText");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime?>("EndDate");
 
-                    b.HasKey("Code");
+                    b.Property<DateTime?>("StartDate");
 
-                    b.ToTable("ReferenceTypeBlood");
+                    b.HasKey("Id");
+
+                    b.ToTable("ReferenceBloodTypes");
                 });
 
             modelBuilder.Entity("PASRI.API.Core.Domain.ReferenceCountry", b =>

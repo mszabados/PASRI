@@ -19,7 +19,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
             builder.ToTable("ReferenceTypeBlood");
             builder.HasKey(p => p.Code);
             builder.Property(p => p.Code)
-                .HasColumnType("char(1)")
+                .HasColumnType("char(2)")
                 .IsRequired();
             builder.Property(p => p.DisplayText)
                 .HasColumnType("varchar(255)")

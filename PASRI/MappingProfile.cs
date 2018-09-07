@@ -12,26 +12,26 @@ namespace PASRI.API
     {
         public MappingProfile()
         {
-            CreateMap<ReferenceCountry, ReferenceBaseDto>();
-            CreateMap<ReferenceBaseDto, ReferenceCountry>();
-            CreateMap<ReferenceEthnicGroupDemographic, ReferenceBaseDto>();
-            CreateMap<ReferenceBaseDto, ReferenceEthnicGroupDemographic>();
-            CreateMap<ReferenceEyeColor, ReferenceBaseDto>();
-            CreateMap<ReferenceBaseDto, ReferenceEyeColor>();
-            CreateMap<ReferenceGenderDemographic, ReferenceBaseDto>();
-            CreateMap<ReferenceBaseDto, ReferenceGenderDemographic>();
-            CreateMap<ReferenceHairColor, ReferenceBaseDto>();
-            CreateMap<ReferenceBaseDto, ReferenceHairColor>();
-            CreateMap<ReferenceRaceDemographic, ReferenceBaseDto>();
-            CreateMap<ReferenceBaseDto, ReferenceRaceDemographic>();
-            CreateMap<ReferenceReligionDemographic, ReferenceBaseDto>();
-            CreateMap<ReferenceBaseDto, ReferenceReligionDemographic>();
-            CreateMap<ReferenceState, ReferenceBaseDto>();
-            CreateMap<ReferenceBaseDto, ReferenceState>();
-            CreateMap<ReferenceSuffixName, ReferenceBaseDto>();
-            CreateMap<ReferenceBaseDto, ReferenceSuffixName>();
-            CreateMap<ReferenceBloodType, ReferenceBaseDto>();
-            CreateMap<ReferenceBaseDto, ReferenceBloodType>();
+            CreateMap<ReferenceCountry, ReferenceCountryDto>();
+            CreateMap<ReferenceCountryDto, ReferenceCountry>();
+            CreateMap<ReferenceEthnicGroupDemographic, ReferenceEthnicGroupDemographicDto>();
+            CreateMap<ReferenceEthnicGroupDemographicDto, ReferenceEthnicGroupDemographic>();
+            CreateMap<ReferenceEyeColor, ReferenceEyeColorDto>();
+            CreateMap<ReferenceEyeColorDto, ReferenceEyeColor>();
+            CreateMap<ReferenceGenderDemographic, ReferenceGenderDemographicDto>();
+            CreateMap<ReferenceGenderDemographicDto, ReferenceGenderDemographic>();
+            CreateMap<ReferenceHairColor, ReferenceHairColorDto>();
+            CreateMap<ReferenceHairColorDto, ReferenceHairColor>();
+            CreateMap<ReferenceRaceDemographic, ReferenceRaceDemographicDto>();
+            CreateMap<ReferenceRaceDemographicDto, ReferenceRaceDemographic>();
+            CreateMap<ReferenceReligionDemographic, ReferenceReligionDemographicDto>();
+            CreateMap<ReferenceReligionDemographicDto, ReferenceReligionDemographic>();
+            CreateMap<ReferenceState, ReferenceStateDto>();
+            CreateMap<ReferenceStateDto, ReferenceState>();
+            CreateMap<ReferenceSuffixName, ReferenceSuffixNameDto>();
+            CreateMap<ReferenceSuffixNameDto, ReferenceSuffixName>();
+            CreateMap<ReferenceBloodType, ReferenceBloodTypeDto>();
+            CreateMap<ReferenceBloodTypeDto, ReferenceBloodType>();
         }
     }
 }

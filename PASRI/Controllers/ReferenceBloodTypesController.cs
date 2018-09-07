@@ -26,17 +26,17 @@ namespace PASRI.API.Controllers
         /// Get a list of all blood types
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceBaseDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceBloodTypeDto>))]
         public IActionResult GetReferenceBloodType()
         {
-            return Ok(_unitOfWork.ReferenceBloodTypes.GetAll().Select(_mapper.Map<ReferenceBloodType, ReferenceBaseDto>));
+            return Ok(_unitOfWork.ReferenceBloodTypes.GetAll().Select(_mapper.Map<ReferenceBloodType, ReferenceBloodTypeDto>));
         }
 
         /// <summary>
         /// Get a single blood type by its unique blood type code
         /// </summary>
         [HttpGet("{code}")]
-        [ProducesResponseType(200, Type = typeof(ReferenceBaseDto))]
+        [ProducesResponseType(200, Type = typeof(ReferenceBloodTypeDto))]
         [ProducesResponseType(404)]
         public IActionResult GetReferenceBloodType(string code)
         {
@@ -45,7 +45,7 @@ namespace PASRI.API.Controllers
             if (referenceBloodType == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<ReferenceBloodType, ReferenceBaseDto>(referenceBloodType));
+            return Ok(_mapper.Map<ReferenceBloodType, ReferenceBloodTypeDto>(referenceBloodType));
         }
 
         /// <summary>
@@ -55,13 +55,10 @@ namespace PASRI.API.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [ProducesResponseType(409, Type = typeof(ReferenceBaseDto))]
-        public IActionResult CreateReferenceBloodType(ReferenceBaseDto payload)
+        [ProducesResponseType(409, Type = typeof(ReferenceBloodTypeDto))]
+        public IActionResult CreateReferenceBloodType(ReferenceBloodTypeDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var referenceBloodType = _mapper.Map<ReferenceBaseDto, ReferenceBloodType>(payload);
+            var referenceBloodType = _mapper.Map<ReferenceBloodTypeDto, ReferenceBloodType>(payload);
 
             var referenceBloodTypeInDb = _unitOfWork.ReferenceBloodTypes.Get(payload.Code);
             if (referenceBloodTypeInDb != null)
@@ -88,11 +85,8 @@ namespace PASRI.API.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceBloodType(string code, ReferenceBaseDto payload)
+        public IActionResult UpdateReferenceBloodType(string code, ReferenceBloodTypeDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             var referenceBloodTypeInDb = _unitOfWork.ReferenceBloodTypes.Get(code);
             if (referenceBloodTypeInDb == null)
                 return NotFound();

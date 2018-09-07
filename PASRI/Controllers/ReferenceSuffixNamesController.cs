@@ -26,17 +26,17 @@ namespace PASRI.API.Controllers
         /// Get a list of all suffix names
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceBaseDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceSuffixNameDto>))]
         public IActionResult GetReferenceSuffixName()
         {
-            return Ok(_unitOfWork.ReferenceSuffixNames.GetAll().Select(_mapper.Map<ReferenceSuffixName, ReferenceBaseDto>));
+            return Ok(_unitOfWork.ReferenceSuffixNames.GetAll().Select(_mapper.Map<ReferenceSuffixName, ReferenceSuffixNameDto>));
         }
 
         /// <summary>
         /// Get a single suffix name by its unique suffix name code
         /// </summary>
         [HttpGet("{code}")]
-        [ProducesResponseType(200, Type = typeof(ReferenceBaseDto))]
+        [ProducesResponseType(200, Type = typeof(ReferenceSuffixNameDto))]
         [ProducesResponseType(404)]
         public IActionResult GetReferenceSuffixName(string code)
         {
@@ -45,7 +45,7 @@ namespace PASRI.API.Controllers
             if (referenceSuffixName == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<ReferenceSuffixName, ReferenceBaseDto>(referenceSuffixName));
+            return Ok(_mapper.Map<ReferenceSuffixName, ReferenceSuffixNameDto>(referenceSuffixName));
         }
 
         /// <summary>
@@ -55,13 +55,10 @@ namespace PASRI.API.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [ProducesResponseType(409, Type = typeof(ReferenceBaseDto))]
-        public IActionResult CreateReferenceSuffixName(ReferenceBaseDto payload)
+        [ProducesResponseType(409, Type = typeof(ReferenceSuffixNameDto))]
+        public IActionResult CreateReferenceSuffixName(ReferenceSuffixNameDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var referenceSuffixName = _mapper.Map<ReferenceBaseDto, ReferenceSuffixName>(payload);
+            var referenceSuffixName = _mapper.Map<ReferenceSuffixNameDto, ReferenceSuffixName>(payload);
 
             var referenceSuffixNameInDb = _unitOfWork.ReferenceSuffixNames.Get(payload.Code);
             if (referenceSuffixNameInDb != null)
@@ -88,11 +85,8 @@ namespace PASRI.API.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceSuffixName(string code, ReferenceBaseDto payload)
+        public IActionResult UpdateReferenceSuffixName(string code, ReferenceSuffixNameDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             var referenceSuffixNameInDb = _unitOfWork.ReferenceSuffixNames.Get(code);
             if (referenceSuffixNameInDb == null)
                 return NotFound();

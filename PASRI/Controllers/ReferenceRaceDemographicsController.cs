@@ -26,17 +26,17 @@ namespace PASRI.API.Controllers
         /// Get a list of all race demographics
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceBaseDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceRaceDemographicDto>))]
         public IActionResult GetReferenceRaceDemographic()
         {
-            return Ok(_unitOfWork.ReferenceRaceDemographics.GetAll().Select(_mapper.Map<ReferenceRaceDemographic, ReferenceBaseDto>));
+            return Ok(_unitOfWork.ReferenceRaceDemographics.GetAll().Select(_mapper.Map<ReferenceRaceDemographic, ReferenceRaceDemographicDto>));
         }
 
         /// <summary>
         /// Get a single race demographic by its unique race demographic code
         /// </summary>
         [HttpGet("{code}")]
-        [ProducesResponseType(200, Type = typeof(ReferenceBaseDto))]
+        [ProducesResponseType(200, Type = typeof(ReferenceRaceDemographicDto))]
         [ProducesResponseType(404)]
         public IActionResult GetReferenceRaceDemographic(string code)
         {
@@ -45,7 +45,7 @@ namespace PASRI.API.Controllers
             if (referenceRaceDemographic == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<ReferenceRaceDemographic, ReferenceBaseDto>(referenceRaceDemographic));
+            return Ok(_mapper.Map<ReferenceRaceDemographic, ReferenceRaceDemographicDto>(referenceRaceDemographic));
         }
 
         /// <summary>
@@ -55,13 +55,10 @@ namespace PASRI.API.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [ProducesResponseType(409, Type = typeof(ReferenceBaseDto))]
-        public IActionResult CreateReferenceRaceDemographic(ReferenceBaseDto payload)
+        [ProducesResponseType(409, Type = typeof(ReferenceRaceDemographicDto))]
+        public IActionResult CreateReferenceRaceDemographic(ReferenceRaceDemographicDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var referenceRaceDemographic = _mapper.Map<ReferenceBaseDto, ReferenceRaceDemographic>(payload);
+            var referenceRaceDemographic = _mapper.Map<ReferenceRaceDemographicDto, ReferenceRaceDemographic>(payload);
 
             var referenceRaceDemographicInDb = _unitOfWork.ReferenceRaceDemographics.Get(payload.Code);
             if (referenceRaceDemographicInDb != null)
@@ -88,11 +85,8 @@ namespace PASRI.API.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceRaceDemographic(string code, ReferenceBaseDto payload)
+        public IActionResult UpdateReferenceRaceDemographic(string code, ReferenceRaceDemographicDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             var referenceRaceDemographicInDb = _unitOfWork.ReferenceRaceDemographics.Get(code);
             if (referenceRaceDemographicInDb == null)
                 return NotFound();

@@ -15,18 +15,18 @@ using System.Threading.Tasks;
 namespace PASRI.API.IntegrationTests.Controllers
 {
     /// <summary>
-    /// Integration test class for the <see cref="ReferenceCountriesController"/> methods.
+    /// Integration test class for the <see cref="ReferenceRaceDemographicsController"/> methods.
     /// Method names should reflect the following pattern:
     /// MethodBeingTested_Scenario_ExpectedBehavior
     /// </summary>
     [TestFixture]
-    public class ReferenceCountriesControllerTests : BaseIntegrationTestProvider
+    public class ReferenceRaceDemographicsControllerTests : BaseIntegrationTestProvider
     {
         [Test]
         public async Task GetAll_WhenCalled_HttpOkAndReturnsMatchingCollection()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController));
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController));
 
             // Act
             var response = await Client.GetAsync(path);
@@ -38,22 +38,22 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            IEnumerable<ReferenceCountryDto> apiReturnedCollection = 
-                JsonConvert.DeserializeObject<IEnumerable<ReferenceCountryDto>>(responseString);
-            IEnumerable<ReferenceCountryDto> preDefinedCollection =
-                PreDefinedData.ReferenceCountries.Select(Mapper.Map<ReferenceCountry, ReferenceCountryDto>).ToList().AsEnumerable<ReferenceCountryDto>();
-            ((List<ReferenceCountryDto>)apiReturnedCollection).Sort();
-            ((List<ReferenceCountryDto>)preDefinedCollection).Sort();
+            IEnumerable<ReferenceRaceDemographicDto> apiReturnedCollection =
+                JsonConvert.DeserializeObject<IEnumerable<ReferenceRaceDemographicDto>>(responseString);
+            IEnumerable<ReferenceRaceDemographicDto> preDefinedCollection =
+                PreDefinedData.ReferenceRaceDemographics.Select(Mapper.Map<ReferenceRaceDemographic, ReferenceRaceDemographicDto>).ToList().AsEnumerable<ReferenceRaceDemographicDto>();
+            ((List<ReferenceRaceDemographicDto>)apiReturnedCollection).Sort();
+            ((List<ReferenceRaceDemographicDto>)preDefinedCollection).Sort();
 
             AssertHelper.AreObjectsEqual(apiReturnedCollection, preDefinedCollection);
         }
 
         [Test]
-        public async Task Get_ValidCountryCode_HttpOkAndReturnsSingleCountry()
+        public async Task Get_ValidRaceDemographicCode_HttpOkAndReturnsSingleRaceDemographic()
         {
             // Arrange
-            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryCode);
+            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicCode);
 
             // Act
             var response = await Client.GetAsync(path);
@@ -65,23 +65,23 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            ReferenceCountryDto apiReturnedObject =
-                JsonConvert.DeserializeObject<ReferenceCountryDto>(responseString);
+            ReferenceRaceDemographicDto apiReturnedObject =
+                JsonConvert.DeserializeObject<ReferenceRaceDemographicDto>(responseString);
 
-            ReferenceCountry preDefinedObject =
-                PreDefinedData.ReferenceCountries
-                    .SingleOrDefault(c => c.Code == randomCountryCode);
+            ReferenceRaceDemographic preDefinedObject =
+                PreDefinedData.ReferenceRaceDemographics
+                    .SingleOrDefault(c => c.Code == randomRaceDemographicCode);
 
-            AssertHelper.AreObjectsEqual(apiReturnedObject, 
-                Mapper.Map<ReferenceCountry, ReferenceCountryDto>(preDefinedObject));
+            AssertHelper.AreObjectsEqual(apiReturnedObject,
+                Mapper.Map<ReferenceRaceDemographic, ReferenceRaceDemographicDto>(preDefinedObject));
         }
 
         [Test]
-        public async Task Get_InvalidCountryCode_HttpNotFound()
+        public async Task Get_InvalidRaceDemographicCode_HttpNotFound()
         {
             // Arrange
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), notExistsCountryCode);
+            var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), notExistsRaceDemographicCode);
 
             // Act
             var response = await Client.GetAsync(path);
@@ -91,22 +91,22 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Create_ValidPayload_HttpCreatedAndReturnsNewCountry()
+        public async Task Create_ValidPayload_HttpCreatedAndReturnsNewRaceDemographic()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController));
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var newCountryDto = new ReferenceCountryDto()
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController));
+            var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
+            var newRaceDemographicDto = new ReferenceRaceDemographicDto()
             {
-                Code = notExistsCountryCode,
-                DisplayText = "New Country",
+                Code = notExistsRaceDemographicCode,
+                DisplayText = "New RaceDemographic",
                 StartDate = DateTime.UtcNow
             };
 
             // Act
             var response = await Client.PostAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(newCountryDto), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(newRaceDemographicDto),
+                    Encoding.UTF8,
                     JsonMediaType));
             var responseString = await response.Content.ReadAsStringAsync();
 
@@ -116,17 +116,17 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
 
-            ReferenceCountryDto apiReturnedObject =
-                JsonConvert.DeserializeObject<ReferenceCountryDto>(responseString);
+            ReferenceRaceDemographicDto apiReturnedObject =
+                JsonConvert.DeserializeObject<ReferenceRaceDemographicDto>(responseString);
 
-            AssertHelper.AreObjectsEqual(apiReturnedObject, newCountryDto);
+            AssertHelper.AreObjectsEqual(apiReturnedObject, newRaceDemographicDto);
         }
 
         [Test]
         public async Task Create_EmptyPayload_HttpBadRequest()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController));
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController));
 
             // Act
             var response = await Client.PostAsync(path,
@@ -140,19 +140,19 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Create_MalformedPayload_HttpBadRequest()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController));
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var newCountryDto = new ReferenceCountryDto()
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController));
+            var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
+            var newRaceDemographicDto = new ReferenceRaceDemographicDto()
             {
-                Code = notExistsCountryCode,
+                Code = notExistsRaceDemographicCode,
                 // Display text is required, keep it missing
                 StartDate = DateTime.UtcNow
             };
 
             // Act
             var response = await Client.PostAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(newCountryDto), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(newRaceDemographicDto),
+                    Encoding.UTF8,
                     JsonMediaType));
 
             // Assert
@@ -160,21 +160,21 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Create_ExistingCountry_HttpConflict()
+        public async Task Create_ExistingRaceDemographic_HttpConflict()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController));
-            var newCountryDto = new ReferenceCountryDto()
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController));
+            var newRaceDemographicDto = new ReferenceRaceDemographicDto()
             {
-                Code = PreDefinedData.GetRandomCountryCode(),
+                Code = PreDefinedData.GetRandomRaceDemographicCode(),
                 DisplayText = "Create Test",
                 StartDate = DateTime.UtcNow
             };
 
             // Act
             var response = await Client.PostAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(newCountryDto), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(newRaceDemographicDto),
+                    Encoding.UTF8,
                     JsonMediaType));
 
             // Assert
@@ -182,18 +182,18 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Update_ValidCountry_HttpNoContent()
+        public async Task Update_ValidRaceDemographic_HttpNoContent()
         {
             // Arrange
-            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
-            ReferenceCountry apiUpdatingCountry = UnitOfWork.ReferenceCountries.Get(randomCountryCode);
-            apiUpdatingCountry.DisplayText = "Update Test";
-            var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryCode);
+            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
+            ReferenceRaceDemographic apiUpdatingRaceDemographic = UnitOfWork.ReferenceRaceDemographics.Get(randomRaceDemographicCode);
+            apiUpdatingRaceDemographic.DisplayText = "Update Test";
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicCode);
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(apiUpdatingCountry), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(apiUpdatingRaceDemographic),
+                    Encoding.UTF8,
                     JsonMediaType));
             var responseString = await response.Content.ReadAsStringAsync();
 
@@ -203,16 +203,16 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
-            ReferenceCountry dbUpdatedCountry = UnitOfWork.ReferenceCountries.Get(apiUpdatingCountry.Code);
-            AssertHelper.AreObjectsEqual(apiUpdatingCountry, dbUpdatedCountry);
+            ReferenceRaceDemographic dbUpdatedRaceDemographic = UnitOfWork.ReferenceRaceDemographics.Get(apiUpdatingRaceDemographic.Code);
+            AssertHelper.AreObjectsEqual(apiUpdatingRaceDemographic, dbUpdatedRaceDemographic);
         }
 
         [Test]
         public async Task Update_EmptyPayload_HttpBadRequest()
         {
             // Arrange
-            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryCode);
+            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicCode);
 
             // Act
             var response = await Client.PutAsync(path,
@@ -226,18 +226,18 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_MalformedPayload_HttpBadRequest()
         {
             // Arrange
-            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryCode);
-            var apiUpdatingCountry = new ReferenceCountryDto()
+            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicCode);
+            var apiUpdatingRaceDemographic = new ReferenceRaceDemographicDto()
             {
-                Code = randomCountryCode,
+                Code = randomRaceDemographicCode,
                 // Display text is required, keep it missing
             };
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(apiUpdatingCountry), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(apiUpdatingRaceDemographic),
+                    Encoding.UTF8,
                     JsonMediaType));
 
             // Assert
@@ -245,21 +245,21 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Update_InvalidCountry_HttpNotFound()
+        public async Task Update_InvalidRaceDemographic_HttpNotFound()
         {
             // Arrange
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), notExistsCountryCode);
-            var apiUpdatingCountry = new ReferenceCountryDto()
+            var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), notExistsRaceDemographicCode);
+            var apiUpdatingRaceDemographic = new ReferenceRaceDemographicDto()
             {
-                Code = notExistsCountryCode,
+                Code = notExistsRaceDemographicCode,
                 DisplayText = "Update Test"
             };
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(apiUpdatingCountry), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(apiUpdatingRaceDemographic),
+                    Encoding.UTF8,
                     JsonMediaType));
 
             // Assert
@@ -267,11 +267,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Delete_ValidCountry_HttpNoContent()
+        public async Task Delete_ValidRaceDemographic_HttpNoContent()
         {
             // Arrange
-            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryCode);
+            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicCode);
 
             // Act
             var response = await Client.DeleteAsync(path);
@@ -285,11 +285,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Delete_InvalidCountry_HttpNotFound()
+        public async Task Delete_InvalidRaceDemographic_HttpNotFound()
         {
             // Arrange
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), notExistsCountryCode);
+            var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), notExistsRaceDemographicCode);
 
             // Act
             var response = await Client.DeleteAsync(path);

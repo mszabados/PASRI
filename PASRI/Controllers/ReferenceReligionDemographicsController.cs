@@ -26,17 +26,17 @@ namespace PASRI.API.Controllers
         /// Get a list of all religion demographics
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceBaseDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceReligionDemographicDto>))]
         public IActionResult GetReferenceReligionDemographic()
         {
-            return Ok(_unitOfWork.ReferenceReligionDemographics.GetAll().Select(_mapper.Map<ReferenceReligionDemographic, ReferenceBaseDto>));
+            return Ok(_unitOfWork.ReferenceReligionDemographics.GetAll().Select(_mapper.Map<ReferenceReligionDemographic, ReferenceReligionDemographicDto>));
         }
 
         /// <summary>
         /// Get a single religion demographic by its unique religion demographic code
         /// </summary>
         [HttpGet("{code}")]
-        [ProducesResponseType(200, Type = typeof(ReferenceBaseDto))]
+        [ProducesResponseType(200, Type = typeof(ReferenceReligionDemographicDto))]
         [ProducesResponseType(404)]
         public IActionResult GetReferenceReligionDemographic(string code)
         {
@@ -45,7 +45,7 @@ namespace PASRI.API.Controllers
             if (referenceReligionDemographic == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<ReferenceReligionDemographic, ReferenceBaseDto>(referenceReligionDemographic));
+            return Ok(_mapper.Map<ReferenceReligionDemographic, ReferenceReligionDemographicDto>(referenceReligionDemographic));
         }
 
         /// <summary>
@@ -55,13 +55,10 @@ namespace PASRI.API.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [ProducesResponseType(409, Type = typeof(ReferenceBaseDto))]
-        public IActionResult CreateReferenceReligionDemographic(ReferenceBaseDto payload)
+        [ProducesResponseType(409, Type = typeof(ReferenceReligionDemographicDto))]
+        public IActionResult CreateReferenceReligionDemographic(ReferenceReligionDemographicDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var referenceReligionDemographic = _mapper.Map<ReferenceBaseDto, ReferenceReligionDemographic>(payload);
+            var referenceReligionDemographic = _mapper.Map<ReferenceReligionDemographicDto, ReferenceReligionDemographic>(payload);
 
             var referenceReligionDemographicInDb = _unitOfWork.ReferenceReligionDemographics.Get(payload.Code);
             if (referenceReligionDemographicInDb != null)
@@ -88,11 +85,8 @@ namespace PASRI.API.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceReligionDemographic(string code, ReferenceBaseDto payload)
+        public IActionResult UpdateReferenceReligionDemographic(string code, ReferenceReligionDemographicDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             var referenceReligionDemographicInDb = _unitOfWork.ReferenceReligionDemographics.Get(code);
             if (referenceReligionDemographicInDb == null)
                 return NotFound();

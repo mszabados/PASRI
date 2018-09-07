@@ -15,18 +15,18 @@ using System.Threading.Tasks;
 namespace PASRI.API.IntegrationTests.Controllers
 {
     /// <summary>
-    /// Integration test class for the <see cref="ReferenceCountriesController"/> methods.
+    /// Integration test class for the <see cref="ReferenceHairColorsController"/> methods.
     /// Method names should reflect the following pattern:
     /// MethodBeingTested_Scenario_ExpectedBehavior
     /// </summary>
     [TestFixture]
-    public class ReferenceCountriesControllerTests : BaseIntegrationTestProvider
+    public class ReferenceHairColorsControllerTests : BaseIntegrationTestProvider
     {
         [Test]
         public async Task GetAll_WhenCalled_HttpOkAndReturnsMatchingCollection()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController));
+            var path = GetRelativePath(nameof(ReferenceHairColorsController));
 
             // Act
             var response = await Client.GetAsync(path);
@@ -38,22 +38,22 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            IEnumerable<ReferenceCountryDto> apiReturnedCollection = 
-                JsonConvert.DeserializeObject<IEnumerable<ReferenceCountryDto>>(responseString);
-            IEnumerable<ReferenceCountryDto> preDefinedCollection =
-                PreDefinedData.ReferenceCountries.Select(Mapper.Map<ReferenceCountry, ReferenceCountryDto>).ToList().AsEnumerable<ReferenceCountryDto>();
-            ((List<ReferenceCountryDto>)apiReturnedCollection).Sort();
-            ((List<ReferenceCountryDto>)preDefinedCollection).Sort();
+            IEnumerable<ReferenceHairColorDto> apiReturnedCollection =
+                JsonConvert.DeserializeObject<IEnumerable<ReferenceHairColorDto>>(responseString);
+            IEnumerable<ReferenceHairColorDto> preDefinedCollection =
+                PreDefinedData.ReferenceHairColors.Select(Mapper.Map<ReferenceHairColor, ReferenceHairColorDto>).ToList().AsEnumerable<ReferenceHairColorDto>();
+            ((List<ReferenceHairColorDto>)apiReturnedCollection).Sort();
+            ((List<ReferenceHairColorDto>)preDefinedCollection).Sort();
 
             AssertHelper.AreObjectsEqual(apiReturnedCollection, preDefinedCollection);
         }
 
         [Test]
-        public async Task Get_ValidCountryCode_HttpOkAndReturnsSingleCountry()
+        public async Task Get_ValidHairColorCode_HttpOkAndReturnsSingleHairColor()
         {
             // Arrange
-            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryCode);
+            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorCode);
 
             // Act
             var response = await Client.GetAsync(path);
@@ -65,23 +65,23 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            ReferenceCountryDto apiReturnedObject =
-                JsonConvert.DeserializeObject<ReferenceCountryDto>(responseString);
+            ReferenceHairColorDto apiReturnedObject =
+                JsonConvert.DeserializeObject<ReferenceHairColorDto>(responseString);
 
-            ReferenceCountry preDefinedObject =
-                PreDefinedData.ReferenceCountries
-                    .SingleOrDefault(c => c.Code == randomCountryCode);
+            ReferenceHairColor preDefinedObject =
+                PreDefinedData.ReferenceHairColors
+                    .SingleOrDefault(c => c.Code == randomHairColorCode);
 
-            AssertHelper.AreObjectsEqual(apiReturnedObject, 
-                Mapper.Map<ReferenceCountry, ReferenceCountryDto>(preDefinedObject));
+            AssertHelper.AreObjectsEqual(apiReturnedObject,
+                Mapper.Map<ReferenceHairColor, ReferenceHairColorDto>(preDefinedObject));
         }
 
         [Test]
-        public async Task Get_InvalidCountryCode_HttpNotFound()
+        public async Task Get_InvalidHairColorCode_HttpNotFound()
         {
             // Arrange
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), notExistsCountryCode);
+            var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), notExistsHairColorCode);
 
             // Act
             var response = await Client.GetAsync(path);
@@ -91,22 +91,22 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Create_ValidPayload_HttpCreatedAndReturnsNewCountry()
+        public async Task Create_ValidPayload_HttpCreatedAndReturnsNewHairColor()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController));
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var newCountryDto = new ReferenceCountryDto()
+            var path = GetRelativePath(nameof(ReferenceHairColorsController));
+            var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
+            var newHairColorDto = new ReferenceHairColorDto()
             {
-                Code = notExistsCountryCode,
-                DisplayText = "New Country",
+                Code = notExistsHairColorCode,
+                DisplayText = "New HairColor",
                 StartDate = DateTime.UtcNow
             };
 
             // Act
             var response = await Client.PostAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(newCountryDto), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(newHairColorDto),
+                    Encoding.UTF8,
                     JsonMediaType));
             var responseString = await response.Content.ReadAsStringAsync();
 
@@ -116,17 +116,17 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
 
-            ReferenceCountryDto apiReturnedObject =
-                JsonConvert.DeserializeObject<ReferenceCountryDto>(responseString);
+            ReferenceHairColorDto apiReturnedObject =
+                JsonConvert.DeserializeObject<ReferenceHairColorDto>(responseString);
 
-            AssertHelper.AreObjectsEqual(apiReturnedObject, newCountryDto);
+            AssertHelper.AreObjectsEqual(apiReturnedObject, newHairColorDto);
         }
 
         [Test]
         public async Task Create_EmptyPayload_HttpBadRequest()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController));
+            var path = GetRelativePath(nameof(ReferenceHairColorsController));
 
             // Act
             var response = await Client.PostAsync(path,
@@ -140,19 +140,19 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Create_MalformedPayload_HttpBadRequest()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController));
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var newCountryDto = new ReferenceCountryDto()
+            var path = GetRelativePath(nameof(ReferenceHairColorsController));
+            var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
+            var newHairColorDto = new ReferenceHairColorDto()
             {
-                Code = notExistsCountryCode,
+                Code = notExistsHairColorCode,
                 // Display text is required, keep it missing
                 StartDate = DateTime.UtcNow
             };
 
             // Act
             var response = await Client.PostAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(newCountryDto), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(newHairColorDto),
+                    Encoding.UTF8,
                     JsonMediaType));
 
             // Assert
@@ -160,21 +160,21 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Create_ExistingCountry_HttpConflict()
+        public async Task Create_ExistingHairColor_HttpConflict()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController));
-            var newCountryDto = new ReferenceCountryDto()
+            var path = GetRelativePath(nameof(ReferenceHairColorsController));
+            var newHairColorDto = new ReferenceHairColorDto()
             {
-                Code = PreDefinedData.GetRandomCountryCode(),
+                Code = PreDefinedData.GetRandomHairColorCode(),
                 DisplayText = "Create Test",
                 StartDate = DateTime.UtcNow
             };
 
             // Act
             var response = await Client.PostAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(newCountryDto), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(newHairColorDto),
+                    Encoding.UTF8,
                     JsonMediaType));
 
             // Assert
@@ -182,18 +182,18 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Update_ValidCountry_HttpNoContent()
+        public async Task Update_ValidHairColor_HttpNoContent()
         {
             // Arrange
-            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
-            ReferenceCountry apiUpdatingCountry = UnitOfWork.ReferenceCountries.Get(randomCountryCode);
-            apiUpdatingCountry.DisplayText = "Update Test";
-            var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryCode);
+            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
+            ReferenceHairColor apiUpdatingHairColor = UnitOfWork.ReferenceHairColors.Get(randomHairColorCode);
+            apiUpdatingHairColor.DisplayText = "Update Test";
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorCode);
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(apiUpdatingCountry), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(apiUpdatingHairColor),
+                    Encoding.UTF8,
                     JsonMediaType));
             var responseString = await response.Content.ReadAsStringAsync();
 
@@ -203,16 +203,16 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
-            ReferenceCountry dbUpdatedCountry = UnitOfWork.ReferenceCountries.Get(apiUpdatingCountry.Code);
-            AssertHelper.AreObjectsEqual(apiUpdatingCountry, dbUpdatedCountry);
+            ReferenceHairColor dbUpdatedHairColor = UnitOfWork.ReferenceHairColors.Get(apiUpdatingHairColor.Code);
+            AssertHelper.AreObjectsEqual(apiUpdatingHairColor, dbUpdatedHairColor);
         }
 
         [Test]
         public async Task Update_EmptyPayload_HttpBadRequest()
         {
             // Arrange
-            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryCode);
+            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorCode);
 
             // Act
             var response = await Client.PutAsync(path,
@@ -226,18 +226,18 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_MalformedPayload_HttpBadRequest()
         {
             // Arrange
-            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryCode);
-            var apiUpdatingCountry = new ReferenceCountryDto()
+            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorCode);
+            var apiUpdatingHairColor = new ReferenceHairColorDto()
             {
-                Code = randomCountryCode,
+                Code = randomHairColorCode,
                 // Display text is required, keep it missing
             };
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(apiUpdatingCountry), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(apiUpdatingHairColor),
+                    Encoding.UTF8,
                     JsonMediaType));
 
             // Assert
@@ -245,21 +245,21 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Update_InvalidCountry_HttpNotFound()
+        public async Task Update_InvalidHairColor_HttpNotFound()
         {
             // Arrange
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), notExistsCountryCode);
-            var apiUpdatingCountry = new ReferenceCountryDto()
+            var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), notExistsHairColorCode);
+            var apiUpdatingHairColor = new ReferenceHairColorDto()
             {
-                Code = notExistsCountryCode,
+                Code = notExistsHairColorCode,
                 DisplayText = "Update Test"
             };
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(apiUpdatingCountry), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(apiUpdatingHairColor),
+                    Encoding.UTF8,
                     JsonMediaType));
 
             // Assert
@@ -267,11 +267,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Delete_ValidCountry_HttpNoContent()
+        public async Task Delete_ValidHairColor_HttpNoContent()
         {
             // Arrange
-            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryCode);
+            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorCode);
 
             // Act
             var response = await Client.DeleteAsync(path);
@@ -285,11 +285,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Delete_InvalidCountry_HttpNotFound()
+        public async Task Delete_InvalidHairColor_HttpNotFound()
         {
             // Arrange
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), notExistsCountryCode);
+            var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), notExistsHairColorCode);
 
             // Act
             var response = await Client.DeleteAsync(path);

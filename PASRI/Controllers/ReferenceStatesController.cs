@@ -26,17 +26,17 @@ namespace PASRI.API.Controllers
         /// Get a list of all states
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceBaseDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceStateDto>))]
         public IActionResult GetReferenceState()
         {
-            return Ok(_unitOfWork.ReferenceStates.GetAll().Select(_mapper.Map<ReferenceState, ReferenceBaseDto>));
+            return Ok(_unitOfWork.ReferenceStates.GetAll().Select(_mapper.Map<ReferenceState, ReferenceStateDto>));
         }
 
         /// <summary>
         /// Get a single state by its unique state code
         /// </summary>
         [HttpGet("{code}")]
-        [ProducesResponseType(200, Type = typeof(ReferenceBaseDto))]
+        [ProducesResponseType(200, Type = typeof(ReferenceStateDto))]
         [ProducesResponseType(404)]
         public IActionResult GetReferenceState(string code)
         {
@@ -45,7 +45,7 @@ namespace PASRI.API.Controllers
             if (referenceState == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<ReferenceState, ReferenceBaseDto>(referenceState));
+            return Ok(_mapper.Map<ReferenceState, ReferenceStateDto>(referenceState));
         }
 
         /// <summary>
@@ -55,13 +55,10 @@ namespace PASRI.API.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [ProducesResponseType(409, Type = typeof(ReferenceBaseDto))]
-        public IActionResult CreateReferenceState(ReferenceBaseDto payload)
+        [ProducesResponseType(409, Type = typeof(ReferenceStateDto))]
+        public IActionResult CreateReferenceState(ReferenceStateDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var referenceState = _mapper.Map<ReferenceBaseDto, ReferenceState>(payload);
+            var referenceState = _mapper.Map<ReferenceStateDto, ReferenceState>(payload);
 
             var referenceStateInDb = _unitOfWork.ReferenceStates.Get(payload.Code);
             if (referenceStateInDb != null)
@@ -88,11 +85,8 @@ namespace PASRI.API.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceState(string code, ReferenceBaseDto payload)
+        public IActionResult UpdateReferenceState(string code, ReferenceStateDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             var referenceStateInDb = _unitOfWork.ReferenceStates.Get(code);
             if (referenceStateInDb == null)
                 return NotFound();

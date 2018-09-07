@@ -26,17 +26,17 @@ namespace PASRI.API.Controllers
         /// Get a list of all hair colors
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceBaseDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceHairColorDto>))]
         public IActionResult GetReferenceHairColor()
         {
-            return Ok(_unitOfWork.ReferenceHairColors.GetAll().Select(_mapper.Map<ReferenceHairColor, ReferenceBaseDto>));
+            return Ok(_unitOfWork.ReferenceHairColors.GetAll().Select(_mapper.Map<ReferenceHairColor, ReferenceHairColorDto>));
         }
 
         /// <summary>
         /// Get a single hair color by its unique hair color code
         /// </summary>
         [HttpGet("{code}")]
-        [ProducesResponseType(200, Type = typeof(ReferenceBaseDto))]
+        [ProducesResponseType(200, Type = typeof(ReferenceHairColorDto))]
         [ProducesResponseType(404)]
         public IActionResult GetReferenceHairColor(string code)
         {
@@ -45,7 +45,7 @@ namespace PASRI.API.Controllers
             if (referenceHairColor == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<ReferenceHairColor, ReferenceBaseDto>(referenceHairColor));
+            return Ok(_mapper.Map<ReferenceHairColor, ReferenceHairColorDto>(referenceHairColor));
         }
 
         /// <summary>
@@ -55,13 +55,10 @@ namespace PASRI.API.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [ProducesResponseType(409, Type = typeof(ReferenceBaseDto))]
-        public IActionResult CreateReferenceHairColor(ReferenceBaseDto payload)
+        [ProducesResponseType(409, Type = typeof(ReferenceHairColorDto))]
+        public IActionResult CreateReferenceHairColor(ReferenceHairColorDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var referenceHairColor = _mapper.Map<ReferenceBaseDto, ReferenceHairColor>(payload);
+            var referenceHairColor = _mapper.Map<ReferenceHairColorDto, ReferenceHairColor>(payload);
 
             var referenceHairColorInDb = _unitOfWork.ReferenceHairColors.Get(payload.Code);
             if (referenceHairColorInDb != null)
@@ -88,11 +85,8 @@ namespace PASRI.API.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceHairColor(string code, ReferenceBaseDto payload)
+        public IActionResult UpdateReferenceHairColor(string code, ReferenceHairColorDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             var referenceHairColorInDb = _unitOfWork.ReferenceHairColors.Get(code);
             if (referenceHairColorInDb == null)
                 return NotFound();

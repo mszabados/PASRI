@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PASRI.API.Persistence;
 
 namespace PASRI.API.Migrations
 {
     [DbContext(typeof(PasriDbContext))]
-    partial class PasriDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180907120034_AddIdToReferenceBloodTypeAndSetAsPrimaryKey")]
+    partial class AddIdToReferenceBloodTypeAndSetAsPrimaryKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,9 +103,13 @@ namespace PASRI.API.Migrations
 
             modelBuilder.Entity("PASRI.API.Core.Domain.ReferenceBloodType", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(2)");
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("char(1)");
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
@@ -115,7 +121,7 @@ namespace PASRI.API.Migrations
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
                     b.ToTable("ReferenceTypeBlood");
                 });

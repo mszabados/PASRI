@@ -26,17 +26,17 @@ namespace PASRI.API.Controllers
         /// Get a list of all countries
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceBaseDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceCountryDto>))]
         public IActionResult GetReferenceCountries()
         {
-            return Ok(_unitOfWork.ReferenceCountries.GetAll().Select(_mapper.Map<ReferenceCountry, ReferenceBaseDto>));
+            return Ok(_unitOfWork.ReferenceCountries.GetAll().Select(_mapper.Map<ReferenceCountry, ReferenceCountryDto>));
         }
 
         /// <summary>
         /// Get a single country by its unique country code
         /// </summary>
         [HttpGet("{code}")]
-        [ProducesResponseType(200, Type = typeof(ReferenceBaseDto))]
+        [ProducesResponseType(200, Type = typeof(ReferenceCountryDto))]
         [ProducesResponseType(404)]
         public IActionResult GetReferenceCountry(string code)
         {
@@ -45,7 +45,7 @@ namespace PASRI.API.Controllers
             if (referenceCountry == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<ReferenceCountry, ReferenceBaseDto>(referenceCountry));
+            return Ok(_mapper.Map<ReferenceCountry, ReferenceCountryDto>(referenceCountry));
         }
 
         /// <summary>
@@ -55,13 +55,10 @@ namespace PASRI.API.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [ProducesResponseType(409, Type = typeof(ReferenceBaseDto))]
-        public IActionResult CreateReferenceCountry(ReferenceBaseDto payload)
+        [ProducesResponseType(409, Type = typeof(ReferenceCountryDto))]
+        public IActionResult CreateReferenceCountry(ReferenceCountryDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var referenceCountry = _mapper.Map<ReferenceBaseDto, ReferenceCountry>(payload);
+            var referenceCountry = _mapper.Map<ReferenceCountryDto, ReferenceCountry>(payload);
 
             var referenceCountryInDb = _unitOfWork.ReferenceCountries.Get(payload.Code);
             if (referenceCountryInDb != null)
@@ -88,11 +85,8 @@ namespace PASRI.API.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceCountry(string code, ReferenceBaseDto payload)
+        public IActionResult UpdateReferenceCountry(string code, ReferenceCountryDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             var referenceCountryInDb = _unitOfWork.ReferenceCountries.Get(code);
             if (referenceCountryInDb == null)
                 return NotFound();

@@ -42,6 +42,7 @@ namespace PASRI.API.Persistence
             modelBuilder.ApplyConfiguration(new PersonIdentificationConfiguration());
             modelBuilder.ApplyConfiguration(new PersonNameIdentificationConfiguration());
             modelBuilder.ApplyConfiguration(new PersonLegalNameIdentificationConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceBloodTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceCountryConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceEthnicGroupDemographicConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceEyeColorConfiguration());
@@ -51,7 +52,6 @@ namespace PASRI.API.Persistence
             modelBuilder.ApplyConfiguration(new ReferenceReligionDemographicConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceStateConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceSuffixNameConfiguration());
-            modelBuilder.ApplyConfiguration(new ReferenceBloodTypeConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

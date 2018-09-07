@@ -26,17 +26,17 @@ namespace PASRI.API.Controllers
         /// Get a list of all ethnic group demographics
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceBaseDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceEthnicGroupDemographicDto>))]
         public IActionResult GetReferenceEthnicGroupDemographics()
         {
-            return Ok(_unitOfWork.ReferenceEthnicGroupDemographics.GetAll().Select(_mapper.Map<ReferenceEthnicGroupDemographic, ReferenceBaseDto>));
+            return Ok(_unitOfWork.ReferenceEthnicGroupDemographics.GetAll().Select(_mapper.Map<ReferenceEthnicGroupDemographic, ReferenceEthnicGroupDemographicDto>));
         }
 
         /// <summary>
         /// Get a single ethnic group demographic by its unique ethnic group demographic code
         /// </summary>
         [HttpGet("{code}")]
-        [ProducesResponseType(200, Type = typeof(ReferenceBaseDto))]
+        [ProducesResponseType(200, Type = typeof(ReferenceEthnicGroupDemographicDto))]
         [ProducesResponseType(404)]
         public IActionResult GetReferenceEthnicGroupDemographic(string code)
         {
@@ -45,7 +45,7 @@ namespace PASRI.API.Controllers
             if (referenceEthnicGroupDemographic == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<ReferenceEthnicGroupDemographic, ReferenceBaseDto>(referenceEthnicGroupDemographic));
+            return Ok(_mapper.Map<ReferenceEthnicGroupDemographic, ReferenceEthnicGroupDemographicDto>(referenceEthnicGroupDemographic));
         }
 
         /// <summary>
@@ -55,13 +55,10 @@ namespace PASRI.API.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [ProducesResponseType(409, Type = typeof(ReferenceBaseDto))]
-        public IActionResult CreateReferenceEthnicGroupDemographic(ReferenceBaseDto payload)
+        [ProducesResponseType(409, Type = typeof(ReferenceEthnicGroupDemographicDto))]
+        public IActionResult CreateReferenceEthnicGroupDemographic(ReferenceEthnicGroupDemographicDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var referenceEthnicGroupDemographic = _mapper.Map<ReferenceBaseDto, ReferenceEthnicGroupDemographic>(payload);
+            var referenceEthnicGroupDemographic = _mapper.Map<ReferenceEthnicGroupDemographicDto, ReferenceEthnicGroupDemographic>(payload);
 
             var referenceEthnicGroupDemographicInDb = _unitOfWork.ReferenceEthnicGroupDemographics.Get(payload.Code);
             if (referenceEthnicGroupDemographicInDb != null)
@@ -88,11 +85,8 @@ namespace PASRI.API.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceEthnicGroupDemographic(string code, ReferenceBaseDto payload)
+        public IActionResult UpdateReferenceEthnicGroupDemographic(string code, ReferenceEthnicGroupDemographicDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             var referenceEthnicGroupDemographicInDb = _unitOfWork.ReferenceEthnicGroupDemographics.Get(code);
             if (referenceEthnicGroupDemographicInDb == null)
                 return NotFound();

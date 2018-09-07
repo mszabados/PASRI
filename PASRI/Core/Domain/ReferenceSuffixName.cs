@@ -1,7 +1,13 @@
-﻿namespace PASRI.API.Core.Domain
+﻿using System;
+
+namespace PASRI.API.Core.Domain
 {
-    public class ReferenceSuffixName : ReferenceBase
+    public class ReferenceSuffixName
     {
-        public virtual PersonLegalNameIdentification PersonLegalNameIdentification { get; set; }
+        public string Code { get; set; }
+        public string DisplayText { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public virtual PersonLegalNameIdentification PersonLegalNameIdentification { get; private set; }
     }
 }

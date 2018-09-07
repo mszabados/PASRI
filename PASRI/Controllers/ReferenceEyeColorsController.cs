@@ -26,17 +26,17 @@ namespace PASRI.API.Controllers
         /// Get a list of all eye colors
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceBaseDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceEyeColorDto>))]
         public IActionResult GetReferenceEyeColor()
         {
-            return Ok(_unitOfWork.ReferenceEyeColors.GetAll().Select(_mapper.Map<ReferenceEyeColor, ReferenceBaseDto>));
+            return Ok(_unitOfWork.ReferenceEyeColors.GetAll().Select(_mapper.Map<ReferenceEyeColor, ReferenceEyeColorDto>));
         }
 
         /// <summary>
         /// Get a single eye color by its unique eye color code
         /// </summary>
         [HttpGet("{code}")]
-        [ProducesResponseType(200, Type = typeof(ReferenceBaseDto))]
+        [ProducesResponseType(200, Type = typeof(ReferenceEyeColorDto))]
         [ProducesResponseType(404)]
         public IActionResult GetReferenceEyeColor(string code)
         {
@@ -45,7 +45,7 @@ namespace PASRI.API.Controllers
             if (referenceEyeColor == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<ReferenceEyeColor, ReferenceBaseDto>(referenceEyeColor));
+            return Ok(_mapper.Map<ReferenceEyeColor, ReferenceEyeColorDto>(referenceEyeColor));
         }
 
         /// <summary>
@@ -55,13 +55,10 @@ namespace PASRI.API.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [ProducesResponseType(409, Type = typeof(ReferenceBaseDto))]
-        public IActionResult CreateReferenceEyeColor(ReferenceBaseDto payload)
+        [ProducesResponseType(409, Type = typeof(ReferenceEyeColorDto))]
+        public IActionResult CreateReferenceEyeColor(ReferenceEyeColorDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var referenceEyeColor = _mapper.Map<ReferenceBaseDto, ReferenceEyeColor>(payload);
+            var referenceEyeColor = _mapper.Map<ReferenceEyeColorDto, ReferenceEyeColor>(payload);
 
             var referenceEyeColorInDb = _unitOfWork.ReferenceEyeColors.Get(payload.Code);
             if (referenceEyeColorInDb != null)
@@ -88,11 +85,8 @@ namespace PASRI.API.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceEyeColor(string code, ReferenceBaseDto payload)
+        public IActionResult UpdateReferenceEyeColor(string code, ReferenceEyeColorDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             var referenceEyeColorInDb = _unitOfWork.ReferenceEyeColors.Get(code);
             if (referenceEyeColorInDb == null)
                 return NotFound();

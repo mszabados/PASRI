@@ -7,6 +7,7 @@ using PASRI.API.TestHelper;
 using System;
 using System.IO;
 using System.Net.Http;
+using System.Text;
 using AutoMapper;
 using PASRI.API.Core;
 
@@ -48,6 +49,27 @@ namespace PASRI.API.IntegrationTests
 
             var config = new MapperConfiguration(cfg => new MappingProfile());
             Mapper = config.CreateMapper();
+        }
+
+        /// <summary>
+        /// Builds a relative path to call the API endpoint.  Requires
+        /// the Controller name to use the default route of /api/[controller]/[id]
+        /// </summary>
+        /// <param name="controllerName">Name of the controller class</param>
+        /// <param name="identifier"></param>
+        /// <returns></returns>
+        public string GetRelativePath(string controllerName, string identifier = "")
+        {
+            var path = new StringBuilder();
+            path.Append("/api/");
+            path.Append(controllerName.ToLower().Replace("controller", string.Empty));
+            if (!String.IsNullOrWhiteSpace(identifier))
+            {
+                path.Append("/");
+                path.Append(identifier);
+            }
+
+            return path.ToString();
         }
 
         public void Dispose()

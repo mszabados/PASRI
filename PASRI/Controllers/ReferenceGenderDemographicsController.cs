@@ -26,17 +26,17 @@ namespace PASRI.API.Controllers
         /// Get a list of all gender demographics
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceBaseDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceGenderDemographicDto>))]
         public IActionResult GetReferenceGenderDemographic()
         {
-            return Ok(_unitOfWork.ReferenceGenderDemographics.GetAll().Select(_mapper.Map<ReferenceGenderDemographic, ReferenceBaseDto>));
+            return Ok(_unitOfWork.ReferenceGenderDemographics.GetAll().Select(_mapper.Map<ReferenceGenderDemographic, ReferenceGenderDemographicDto>));
         }
 
         /// <summary>
         /// Get a single gender demographic by its unique gender demographic code
         /// </summary>
         [HttpGet("{code}")]
-        [ProducesResponseType(200, Type = typeof(ReferenceBaseDto))]
+        [ProducesResponseType(200, Type = typeof(ReferenceGenderDemographicDto))]
         [ProducesResponseType(404)]
         public IActionResult GetReferenceGenderDemographic(string code)
         {
@@ -45,7 +45,7 @@ namespace PASRI.API.Controllers
             if (referenceGenderDemographic == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<ReferenceGenderDemographic, ReferenceBaseDto>(referenceGenderDemographic));
+            return Ok(_mapper.Map<ReferenceGenderDemographic, ReferenceGenderDemographicDto>(referenceGenderDemographic));
         }
 
         /// <summary>
@@ -55,13 +55,10 @@ namespace PASRI.API.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [ProducesResponseType(409, Type = typeof(ReferenceBaseDto))]
-        public IActionResult CreateReferenceGenderDemographic(ReferenceBaseDto payload)
+        [ProducesResponseType(409, Type = typeof(ReferenceGenderDemographicDto))]
+        public IActionResult CreateReferenceGenderDemographic(ReferenceGenderDemographicDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var referenceGenderDemographic = _mapper.Map<ReferenceBaseDto, ReferenceGenderDemographic>(payload);
+            var referenceGenderDemographic = _mapper.Map<ReferenceGenderDemographicDto, ReferenceGenderDemographic>(payload);
 
             var referenceGenderDemographicInDb = _unitOfWork.ReferenceGenderDemographics.Get(payload.Code);
             if (referenceGenderDemographicInDb != null)
@@ -88,11 +85,8 @@ namespace PASRI.API.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceGenderDemographic(string code, ReferenceBaseDto payload)
+        public IActionResult UpdateReferenceGenderDemographic(string code, ReferenceGenderDemographicDto payload)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             var referenceGenderDemographicInDb = _unitOfWork.ReferenceGenderDemographics.Get(code);
             if (referenceGenderDemographicInDb == null)
                 return NotFound();

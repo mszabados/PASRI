@@ -15,18 +15,18 @@ using System.Threading.Tasks;
 namespace PASRI.API.IntegrationTests.Controllers
 {
     /// <summary>
-    /// Integration test class for the <see cref="ReferenceCountriesController"/> methods.
+    /// Integration test class for the <see cref="ReferenceEyeColorsController"/> methods.
     /// Method names should reflect the following pattern:
     /// MethodBeingTested_Scenario_ExpectedBehavior
     /// </summary>
     [TestFixture]
-    public class ReferenceCountriesControllerTests : BaseIntegrationTestProvider
+    public class ReferenceEyeColorsControllerTests : BaseIntegrationTestProvider
     {
         [Test]
         public async Task GetAll_WhenCalled_HttpOkAndReturnsMatchingCollection()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController));
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController));
 
             // Act
             var response = await Client.GetAsync(path);
@@ -38,22 +38,22 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            IEnumerable<ReferenceCountryDto> apiReturnedCollection = 
-                JsonConvert.DeserializeObject<IEnumerable<ReferenceCountryDto>>(responseString);
-            IEnumerable<ReferenceCountryDto> preDefinedCollection =
-                PreDefinedData.ReferenceCountries.Select(Mapper.Map<ReferenceCountry, ReferenceCountryDto>).ToList().AsEnumerable<ReferenceCountryDto>();
-            ((List<ReferenceCountryDto>)apiReturnedCollection).Sort();
-            ((List<ReferenceCountryDto>)preDefinedCollection).Sort();
+            IEnumerable<ReferenceEyeColorDto> apiReturnedCollection =
+                JsonConvert.DeserializeObject<IEnumerable<ReferenceEyeColorDto>>(responseString);
+            IEnumerable<ReferenceEyeColorDto> preDefinedCollection =
+                PreDefinedData.ReferenceEyeColors.Select(Mapper.Map<ReferenceEyeColor, ReferenceEyeColorDto>).ToList().AsEnumerable<ReferenceEyeColorDto>();
+            ((List<ReferenceEyeColorDto>)apiReturnedCollection).Sort();
+            ((List<ReferenceEyeColorDto>)preDefinedCollection).Sort();
 
             AssertHelper.AreObjectsEqual(apiReturnedCollection, preDefinedCollection);
         }
 
         [Test]
-        public async Task Get_ValidCountryCode_HttpOkAndReturnsSingleCountry()
+        public async Task Get_ValidEyeColorCode_HttpOkAndReturnsSingleEyeColor()
         {
             // Arrange
-            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryCode);
+            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorCode);
 
             // Act
             var response = await Client.GetAsync(path);
@@ -65,23 +65,23 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            ReferenceCountryDto apiReturnedObject =
-                JsonConvert.DeserializeObject<ReferenceCountryDto>(responseString);
+            ReferenceEyeColorDto apiReturnedObject =
+                JsonConvert.DeserializeObject<ReferenceEyeColorDto>(responseString);
 
-            ReferenceCountry preDefinedObject =
-                PreDefinedData.ReferenceCountries
-                    .SingleOrDefault(c => c.Code == randomCountryCode);
+            ReferenceEyeColor preDefinedObject =
+                PreDefinedData.ReferenceEyeColors
+                    .SingleOrDefault(c => c.Code == randomEyeColorCode);
 
-            AssertHelper.AreObjectsEqual(apiReturnedObject, 
-                Mapper.Map<ReferenceCountry, ReferenceCountryDto>(preDefinedObject));
+            AssertHelper.AreObjectsEqual(apiReturnedObject,
+                Mapper.Map<ReferenceEyeColor, ReferenceEyeColorDto>(preDefinedObject));
         }
 
         [Test]
-        public async Task Get_InvalidCountryCode_HttpNotFound()
+        public async Task Get_InvalidEyeColorCode_HttpNotFound()
         {
             // Arrange
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), notExistsCountryCode);
+            var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), notExistsEyeColorCode);
 
             // Act
             var response = await Client.GetAsync(path);
@@ -91,22 +91,22 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Create_ValidPayload_HttpCreatedAndReturnsNewCountry()
+        public async Task Create_ValidPayload_HttpCreatedAndReturnsNewEyeColor()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController));
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var newCountryDto = new ReferenceCountryDto()
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController));
+            var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
+            var newEyeColorDto = new ReferenceEyeColorDto()
             {
-                Code = notExistsCountryCode,
-                DisplayText = "New Country",
+                Code = notExistsEyeColorCode,
+                DisplayText = "New EyeColor",
                 StartDate = DateTime.UtcNow
             };
 
             // Act
             var response = await Client.PostAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(newCountryDto), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(newEyeColorDto),
+                    Encoding.UTF8,
                     JsonMediaType));
             var responseString = await response.Content.ReadAsStringAsync();
 
@@ -116,17 +116,17 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
 
-            ReferenceCountryDto apiReturnedObject =
-                JsonConvert.DeserializeObject<ReferenceCountryDto>(responseString);
+            ReferenceEyeColorDto apiReturnedObject =
+                JsonConvert.DeserializeObject<ReferenceEyeColorDto>(responseString);
 
-            AssertHelper.AreObjectsEqual(apiReturnedObject, newCountryDto);
+            AssertHelper.AreObjectsEqual(apiReturnedObject, newEyeColorDto);
         }
 
         [Test]
         public async Task Create_EmptyPayload_HttpBadRequest()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController));
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController));
 
             // Act
             var response = await Client.PostAsync(path,
@@ -140,19 +140,19 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Create_MalformedPayload_HttpBadRequest()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController));
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var newCountryDto = new ReferenceCountryDto()
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController));
+            var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
+            var newEyeColorDto = new ReferenceEyeColorDto()
             {
-                Code = notExistsCountryCode,
+                Code = notExistsEyeColorCode,
                 // Display text is required, keep it missing
                 StartDate = DateTime.UtcNow
             };
 
             // Act
             var response = await Client.PostAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(newCountryDto), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(newEyeColorDto),
+                    Encoding.UTF8,
                     JsonMediaType));
 
             // Assert
@@ -160,21 +160,21 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Create_ExistingCountry_HttpConflict()
+        public async Task Create_ExistingEyeColor_HttpConflict()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController));
-            var newCountryDto = new ReferenceCountryDto()
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController));
+            var newEyeColorDto = new ReferenceEyeColorDto()
             {
-                Code = PreDefinedData.GetRandomCountryCode(),
+                Code = PreDefinedData.GetRandomEyeColorCode(),
                 DisplayText = "Create Test",
                 StartDate = DateTime.UtcNow
             };
 
             // Act
             var response = await Client.PostAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(newCountryDto), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(newEyeColorDto),
+                    Encoding.UTF8,
                     JsonMediaType));
 
             // Assert
@@ -182,18 +182,18 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Update_ValidCountry_HttpNoContent()
+        public async Task Update_ValidEyeColor_HttpNoContent()
         {
             // Arrange
-            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
-            ReferenceCountry apiUpdatingCountry = UnitOfWork.ReferenceCountries.Get(randomCountryCode);
-            apiUpdatingCountry.DisplayText = "Update Test";
-            var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryCode);
+            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
+            ReferenceEyeColor apiUpdatingEyeColor = UnitOfWork.ReferenceEyeColors.Get(randomEyeColorCode);
+            apiUpdatingEyeColor.DisplayText = "Update Test";
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorCode);
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(apiUpdatingCountry), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(apiUpdatingEyeColor),
+                    Encoding.UTF8,
                     JsonMediaType));
             var responseString = await response.Content.ReadAsStringAsync();
 
@@ -203,16 +203,16 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
-            ReferenceCountry dbUpdatedCountry = UnitOfWork.ReferenceCountries.Get(apiUpdatingCountry.Code);
-            AssertHelper.AreObjectsEqual(apiUpdatingCountry, dbUpdatedCountry);
+            ReferenceEyeColor dbUpdatedEyeColor = UnitOfWork.ReferenceEyeColors.Get(apiUpdatingEyeColor.Code);
+            AssertHelper.AreObjectsEqual(apiUpdatingEyeColor, dbUpdatedEyeColor);
         }
 
         [Test]
         public async Task Update_EmptyPayload_HttpBadRequest()
         {
             // Arrange
-            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryCode);
+            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorCode);
 
             // Act
             var response = await Client.PutAsync(path,
@@ -226,18 +226,18 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_MalformedPayload_HttpBadRequest()
         {
             // Arrange
-            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryCode);
-            var apiUpdatingCountry = new ReferenceCountryDto()
+            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorCode);
+            var apiUpdatingEyeColor = new ReferenceEyeColorDto()
             {
-                Code = randomCountryCode,
+                Code = randomEyeColorCode,
                 // Display text is required, keep it missing
             };
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(apiUpdatingCountry), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(apiUpdatingEyeColor),
+                    Encoding.UTF8,
                     JsonMediaType));
 
             // Assert
@@ -245,21 +245,21 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Update_InvalidCountry_HttpNotFound()
+        public async Task Update_InvalidEyeColor_HttpNotFound()
         {
             // Arrange
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), notExistsCountryCode);
-            var apiUpdatingCountry = new ReferenceCountryDto()
+            var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), notExistsEyeColorCode);
+            var apiUpdatingEyeColor = new ReferenceEyeColorDto()
             {
-                Code = notExistsCountryCode,
+                Code = notExistsEyeColorCode,
                 DisplayText = "Update Test"
             };
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(apiUpdatingCountry), 
-                    Encoding.UTF8, 
+                    JsonConvert.SerializeObject(apiUpdatingEyeColor),
+                    Encoding.UTF8,
                     JsonMediaType));
 
             // Assert
@@ -267,11 +267,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Delete_ValidCountry_HttpNoContent()
+        public async Task Delete_ValidEyeColor_HttpNoContent()
         {
             // Arrange
-            var randomCountryCode = PreDefinedData.GetRandomCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryCode);
+            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorCode);
 
             // Act
             var response = await Client.DeleteAsync(path);
@@ -285,11 +285,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         }
 
         [Test]
-        public async Task Delete_InvalidCountry_HttpNotFound()
+        public async Task Delete_InvalidEyeColor_HttpNotFound()
         {
             // Arrange
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), notExistsCountryCode);
+            var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), notExistsEyeColorCode);
 
             // Act
             var response = await Client.DeleteAsync(path);
