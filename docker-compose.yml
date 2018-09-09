@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  pasri.api:
+    image: ${DOCKER_REGISTRY}pasriapi
+    build:
+      context: .
+      dockerfile: PASRI/Dockerfile

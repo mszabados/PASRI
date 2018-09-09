@@ -1,20 +1,24 @@
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
+#Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
+#For more information, please see https://aka.ms/containercompat
+
+FROM microsoft/dotnet:2.1-aspnetcore-runtime-nanoserver-1803 AS base
 WORKDIR /app
 EXPOSE 50606
 EXPOSE 44309
+EXPOSE 1433
 
-FROM microsoft/dotnet:2.1-sdk AS build
+FROM microsoft/dotnet:2.1-sdk-nanoserver-1803 AS build
 WORKDIR /src
-COPY ["PASRI/PASRI.csproj", "PASRI/"]
-RUN dotnet restore "PASRI/PASRI.csproj"
+COPY ["PASRI/PASRI.API.csproj", "PASRI/"]
+RUN dotnet restore "PASRI/PASRI.API.csproj"
 COPY . .
 WORKDIR "/src/PASRI"
-RUN dotnet build "PASRI.csproj" -c Release -o /app
+RUN dotnet build "PASRI.API.csproj" -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish "PASRI.csproj" -c Release -o /app
+RUN dotnet publish "PASRI.API.csproj" -c Release -o /app
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "PASRI.dll"]
+ENTRYPOINT ["dotnet", "PASRI.API.dll"]
