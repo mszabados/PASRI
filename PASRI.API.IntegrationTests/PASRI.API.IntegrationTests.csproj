@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="microsoft.aspnetcore" Version="2.1.1" />
     <PackageReference Include="microsoft.aspnetcore.diagnostics" Version="2.1.1" />
     <PackageReference Include="microsoft.aspnetcore.hostfiltering" Version="2.1.1" />
     <PackageReference Include="microsoft.aspnetcore.httpspolicy" Version="2.1.1" />
@@ -31,6 +32,7 @@
     <PackageReference Include="microsoft.aspnetcore.server.kestrel" Version="2.1.1" />
     <PackageReference Include="microsoft.aspnetcore.server.kestrel.core" Version="2.1.1" />
     <PackageReference Include="microsoft.aspnetcore.testhost" Version="2.1.1" />
+    <PackageReference Include="microsoft.data.sqlite" Version="2.1.0" />
     <PackageReference Include="microsoft.entityframeworkcore" Version="2.1.2" />
     <PackageReference Include="microsoft.extensions.configuration.commandline" Version="2.1.1" />
     <PackageReference Include="microsoft.extensions.configuration.json" Version="2.1.1" />
@@ -38,6 +40,7 @@
     <PackageReference Include="microsoft.extensions.logging.configuration" Version="2.1.1" />
     <PackageReference Include="microsoft.extensions.logging.console" Version="2.1.1" />
     <PackageReference Include="microsoft.extensions.logging.debug" Version="2.1.1" />
+    <PackageReference Include="microsoft.extensions.platformabstractions" Version="1.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
     <PackageReference Include="newtonsoft.json" Version="11.0.2" />
     <PackageReference Include="NUnit" Version="3.10.1" />
@@ -47,18 +50,6 @@
   <ItemGroup>
     <ProjectReference Include="..\PASRI.API.TestHelper\PASRI.API.TestHelper.csproj" />
     <ProjectReference Include="..\PASRI\PASRI.API.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.AspNetCore">
-      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Data.Sqlite">
-      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.data.sqlite.core\2.1.0\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.PlatformAbstractions">
-      <HintPath>..\..\..\..\.nuget\packages\microsoft.extensions.platformabstractions\1.0.0\lib\netstandard1.3\Microsoft.Extensions.PlatformAbstractions.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
