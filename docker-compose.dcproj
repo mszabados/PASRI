@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>cdf86b16-3f43-4994-9d04-9eb3e17887be</ProjectGuid>
+    <ProjectGuid>39c7face-b08b-4927-9886-f447ae436068</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>pasri.api</DockerServiceName>

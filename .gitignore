@@ -260,3 +260,7 @@ paket-files/
 __pycache__/
 *.pyc
 /PASRI.sln.DotSettings
+
+# Docker
+.env
+./docker-sync

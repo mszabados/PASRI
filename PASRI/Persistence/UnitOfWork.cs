@@ -1,4 +1,6 @@
-﻿using PASRI.API.Core;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using PASRI.API.Core;
 using PASRI.API.Core.Repositories;
 using PASRI.API.Persistence.Repositories;
 
@@ -27,6 +29,12 @@ namespace PASRI.API.Persistence
         {
             _context = context;
 
+            if (Environment.GetEnvironmentVariable("DOCKER_ENVIRONMENT") == "Development")
+            {
+                _context.Database.OpenConnection();
+                _context.Database.Migrate();
+            }
+
             InitializeTestDatabaseInMemory();
 
             Persons = new PersonRepository(_context);
@@ -41,6 +49,7 @@ namespace PASRI.API.Persistence
             ReferenceSuffixNames = new ReferenceSuffixNameRepository(_context);
             ReferenceBloodTypes = new ReferenceBloodTypeRepository(_context);
         }
+
 
         public IPersonRepository Persons { get; protected set; }
         public IReferenceCountryRepository ReferenceCountries { get; protected set; }

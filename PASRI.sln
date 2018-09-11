@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PASRI.API.TestHelper", "PAS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4B959F23-C684-473C-B99A-6CD4A9D1C63D}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{39C7FACE-B08B-4927-9886-F447AE436068}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{D234A534-FA21-4F81-A5CF-4DDA2AB95D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D234A534-FA21-4F81-A5CF-4DDA2AB95D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D234A534-FA21-4F81-A5CF-4DDA2AB95D95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39C7FACE-B08B-4927-9886-F447AE436068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39C7FACE-B08B-4927-9886-F447AE436068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39C7FACE-B08B-4927-9886-F447AE436068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39C7FACE-B08B-4927-9886-F447AE436068}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
