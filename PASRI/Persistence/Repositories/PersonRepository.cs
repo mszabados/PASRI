@@ -31,13 +31,16 @@ namespace PASRI.API.Persistence.Repositories
             get { return Context as PasriDbContext; }
         }
 
+        /* TODO: Rewrite with new domain models
         public Person GetByIdentificationNumber(int personIdentificationId)
-        {
+        {            
             return PasriDbContext.Persons
                 .Include(p => p.PersonIdentifications)
                     .ThenInclude(pi => pi.PersonNameIdentifications)
                         .ThenInclude(pni => pni.PersonLegalNameIdentifications)
                 .SingleOrDefault(pi => pi.Id == personIdentificationId);
+            
         }
+        */
     }
 }

@@ -23,8 +23,6 @@ namespace PASRI.API.Persistence
         {
         }
 
-        public virtual DbSet<Person> Persons { get; set; }
-        public virtual DbSet<PersonIdentification> PersonIdentifications { get; set; }
         public virtual DbSet<ReferenceCountry> ReferenceCountries{ get; set; }
         public virtual DbSet<ReferenceEthnicGroupDemographic> ReferenceEthnicGroupDemographics { get; set; }
         public virtual DbSet<ReferenceGenderDemographic> ReferenceGenderDemographics { get; set; }
@@ -38,10 +36,6 @@ namespace PASRI.API.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new PersonConfiguration());
-            modelBuilder.ApplyConfiguration(new PersonIdentificationConfiguration());
-            modelBuilder.ApplyConfiguration(new PersonNameIdentificationConfiguration());
-            modelBuilder.ApplyConfiguration(new PersonLegalNameIdentificationConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceBloodTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceCountryConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceEthnicGroupDemographicConfiguration());

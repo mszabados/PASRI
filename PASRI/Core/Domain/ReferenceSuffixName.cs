@@ -8,6 +8,5 @@ namespace PASRI.API.Core.Domain
         public string DisplayText { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public virtual PersonLegalNameIdentification PersonLegalNameIdentification { get; private set; }
     }
 }
