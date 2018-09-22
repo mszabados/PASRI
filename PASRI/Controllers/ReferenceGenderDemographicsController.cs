@@ -10,7 +10,7 @@ namespace PASRI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiExplorerSettings(GroupName = "Reference Genders")]
+    [ApiExplorerSettings(GroupName = "Reference GenderDemographics")]
     public class ReferenceGenderDemographicsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -23,24 +23,24 @@ namespace PASRI.API.Controllers
         }
 
         /// <summary>
-        /// Get a list of all gender demographics
+        /// Get a list of all genders
         /// </summary>
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceGenderDemographicDto>))]
-        public IActionResult GetReferenceGenderDemographic()
+        public IActionResult GetReferenceGenderDemographics()
         {
             return Ok(_unitOfWork.ReferenceGenderDemographics.GetAll().Select(_mapper.Map<ReferenceGenderDemographic, ReferenceGenderDemographicDto>));
         }
 
         /// <summary>
-        /// Get a single gender demographic by its unique gender demographic code
+        /// Get a single gender by its unique gender id
         /// </summary>
-        [HttpGet("{code}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(ReferenceGenderDemographicDto))]
         [ProducesResponseType(404)]
-        public IActionResult GetReferenceGenderDemographic(string code)
+        public IActionResult GetReferenceGenderDemographic(int id)
         {
-            var referenceGenderDemographic = _unitOfWork.ReferenceGenderDemographics.Get(code);
+            var referenceGenderDemographic = _unitOfWork.ReferenceGenderDemographics.Get(id);
 
             if (referenceGenderDemographic == null)
                 return NotFound();
@@ -49,9 +49,9 @@ namespace PASRI.API.Controllers
         }
 
         /// <summary>
-        /// Create a new gender demographic
+        /// Create a new gender
         /// </summary>
-        /// <param name="payload">A data transformation object representing the gender demographic</param>
+        /// <param name="payload">A data transformation object representing the gender</param>
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -60,34 +60,36 @@ namespace PASRI.API.Controllers
         {
             var referenceGenderDemographic = _mapper.Map<ReferenceGenderDemographicDto, ReferenceGenderDemographic>(payload);
 
-            var referenceGenderDemographicInDb = _unitOfWork.ReferenceGenderDemographics.Get(payload.Code);
-            if (referenceGenderDemographicInDb != null)
+            var referenceGenderDemographicInDb = _unitOfWork.ReferenceGenderDemographics.Find(p => p.Code == payload.Code);
+            if (referenceGenderDemographicInDb.Count() > 0)
                 return new ConflictResult();
 
             _unitOfWork.ReferenceGenderDemographics.Add(referenceGenderDemographic);
             _unitOfWork.Complete();
 
+            payload.Id = referenceGenderDemographic.Id;
+
             return CreatedAtAction(nameof(GetReferenceGenderDemographic),
                 new
                 {
-                    code = payload.Code
+                    id = payload.Id
                 },
                 payload);
         }
 
         /// <summary>
-        /// Update an existing gender demographic
+        /// Update an existing gender
         /// </summary>
-        /// <param name="code">Unique gender demographic code to be updated</param>
-        /// <param name="payload">A data transformation object representing the gender demographic</param>
+        /// <param name="id">Unique gender to be updated</param>
+        /// <param name="payload">A data transformation object representing the gender</param>
         /// <returns></returns>
-        [HttpPut("{code}")]
+        [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceGenderDemographic(string code, ReferenceGenderDemographicDto payload)
+        public IActionResult UpdateReferenceGenderDemographic(int id, ReferenceGenderDemographicDto payload)
         {
-            var referenceGenderDemographicInDb = _unitOfWork.ReferenceGenderDemographics.Get(code);
+            var referenceGenderDemographicInDb = _unitOfWork.ReferenceGenderDemographics.Get(id);
             if (referenceGenderDemographicInDb == null)
                 return NotFound();
 
@@ -98,15 +100,15 @@ namespace PASRI.API.Controllers
         }
 
         /// <summary>
-        /// Delete an existing gender demographic
+        /// Delete an existing gender
         /// </summary>
-        /// <param name="code">Unique gender demographic code to be deleted</param>
-        [HttpDelete("{code}")]
+        /// <param name="id">Unique gender to be deleted</param>
+        [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteReferenceGenderDemographic(string code)
+        public IActionResult DeleteReferenceGenderDemographic(int id)
         {
-            var referenceGenderDemographicInDb = _unitOfWork.ReferenceGenderDemographics.Get(code);
+            var referenceGenderDemographicInDb = _unitOfWork.ReferenceGenderDemographics.Get(id);
 
             if (referenceGenderDemographicInDb == null)
                 return NotFound();

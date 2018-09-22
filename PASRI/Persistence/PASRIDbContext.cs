@@ -22,7 +22,6 @@ namespace PASRI.API.Persistence
             : base(options)
         {
         }
-
         public virtual DbSet<ReferenceCountry> ReferenceCountries{ get; set; }
         public virtual DbSet<ReferenceEthnicGroupDemographic> ReferenceEthnicGroupDemographics { get; set; }
         public virtual DbSet<ReferenceGenderDemographic> ReferenceGenderDemographics { get; set; }
@@ -30,8 +29,8 @@ namespace PASRI.API.Persistence
         public virtual DbSet<ReferenceHairColor> ReferenceHairColors { get; set; }
         public virtual DbSet<ReferenceRaceDemographic> ReferenceRaceDemographics { get; set; }
         public virtual DbSet<ReferenceReligionDemographic> ReferenceReligionDemographics { get; set; }
-        public virtual DbSet<ReferenceState> ReferenceStates { get; set; }
-        public virtual DbSet<ReferenceSuffixName> ReferenceSuffixNames { get; set; }
+        public virtual DbSet<ReferenceStateProvince> ReferenceStates { get; set; }
+        public virtual DbSet<ReferenceNameSuffix> ReferenceSuffixNames { get; set; }
         public virtual DbSet<ReferenceBloodType> ReferenceBloodTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -44,8 +43,8 @@ namespace PASRI.API.Persistence
             modelBuilder.ApplyConfiguration(new ReferenceHairColorConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceRaceDemographicConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceReligionDemographicConfiguration());
-            modelBuilder.ApplyConfiguration(new ReferenceStateConfiguration());
-            modelBuilder.ApplyConfiguration(new ReferenceSuffixNameConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceStateProvinceConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceNameSuffixConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

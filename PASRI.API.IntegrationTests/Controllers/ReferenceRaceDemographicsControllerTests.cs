@@ -52,8 +52,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Get_ValidRaceDemographicCode_HttpOkAndReturnsSingleRaceDemographic()
         {
             // Arrange
-            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicCode);
+            var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicId.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -70,18 +70,18 @@ namespace PASRI.API.IntegrationTests.Controllers
 
             ReferenceRaceDemographic preDefinedObject =
                 PreDefinedData.ReferenceRaceDemographics
-                    .SingleOrDefault(c => c.Code == randomRaceDemographicCode);
+                    .SingleOrDefault(c => c.Id == randomRaceDemographicId);
 
             AssertHelper.AreObjectsEqual(apiReturnedObject,
                 Mapper.Map<ReferenceRaceDemographic, ReferenceRaceDemographicDto>(preDefinedObject));
         }
 
         [Test]
-        public async Task Get_InvalidRaceDemographicCode_HttpNotFound()
+        public async Task Get_InvalidRaceDemographicId_HttpNotFound()
         {
             // Arrange
             var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), notExistsRaceDemographicCode);
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), Int32.MaxValue.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -99,8 +99,8 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newRaceDemographicDto = new ReferenceRaceDemographicDto()
             {
                 Code = notExistsRaceDemographicCode,
-                DisplayText = "New RaceDemographic",
-                StartDate = DateTime.UtcNow
+                Description = "New RaceDemographic",
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -119,6 +119,9 @@ namespace PASRI.API.IntegrationTests.Controllers
             ReferenceRaceDemographicDto apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceRaceDemographicDto>(responseString);
 
+            Assert.That(apiReturnedObject.Id, Is.GreaterThan(0));
+
+            newRaceDemographicDto.Id = apiReturnedObject.Id;
             AssertHelper.AreObjectsEqual(apiReturnedObject, newRaceDemographicDto);
         }
 
@@ -141,12 +144,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var path = GetRelativePath(nameof(ReferenceRaceDemographicsController));
-            var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
+
             var newRaceDemographicDto = new ReferenceRaceDemographicDto()
             {
-                Code = notExistsRaceDemographicCode,
-                // Display text is required, keep it missing
-                StartDate = DateTime.UtcNow
+                // Code is required, keep it missing
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -164,11 +166,14 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var path = GetRelativePath(nameof(ReferenceRaceDemographicsController));
+            var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
+            var randomRaceDemographic = PreDefinedData.ReferenceRaceDemographics[randomRaceDemographicId - 1];
+
             var newRaceDemographicDto = new ReferenceRaceDemographicDto()
             {
-                Code = PreDefinedData.GetRandomRaceDemographicCode(),
-                DisplayText = "Create Test",
-                StartDate = DateTime.UtcNow
+                Code = randomRaceDemographic.Code,
+                Description = "Create Test",
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -185,10 +190,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_ValidRaceDemographic_HttpNoContent()
         {
             // Arrange
-            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
-            ReferenceRaceDemographic apiUpdatingRaceDemographic = UnitOfWork.ReferenceRaceDemographics.Get(randomRaceDemographicCode);
-            apiUpdatingRaceDemographic.DisplayText = "Update Test";
-            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicCode);
+            var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
+
+            ReferenceRaceDemographic apiUpdatingRaceDemographic = UnitOfWork.ReferenceRaceDemographics.Get(randomRaceDemographicId);
+            apiUpdatingRaceDemographic.Description = "Update Test";
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicId.ToString());
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
@@ -203,7 +209,7 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
-            ReferenceRaceDemographic dbUpdatedRaceDemographic = UnitOfWork.ReferenceRaceDemographics.Get(apiUpdatingRaceDemographic.Code);
+            ReferenceRaceDemographic dbUpdatedRaceDemographic = UnitOfWork.ReferenceRaceDemographics.Get(apiUpdatingRaceDemographic.Id);
             AssertHelper.AreObjectsEqual(apiUpdatingRaceDemographic, dbUpdatedRaceDemographic);
         }
 
@@ -211,8 +217,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_EmptyPayload_HttpBadRequest()
         {
             // Arrange
-            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicCode);
+            var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicId.ToString());
 
             // Act
             var response = await Client.PutAsync(path,
@@ -226,12 +232,12 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_MalformedPayload_HttpBadRequest()
         {
             // Arrange
-            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicCode);
+            var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicId.ToString());
             var apiUpdatingRaceDemographic = new ReferenceRaceDemographicDto()
             {
-                Code = randomRaceDemographicCode,
-                // Display text is required, keep it missing
+                Id = randomRaceDemographicId
+                // Code is required, keep it missing
             };
 
             // Act
@@ -249,11 +255,12 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), notExistsRaceDemographicCode);
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), Int32.MaxValue.ToString());
             var apiUpdatingRaceDemographic = new ReferenceRaceDemographicDto()
             {
+                Id = Int32.MaxValue,
                 Code = notExistsRaceDemographicCode,
-                DisplayText = "Update Test"
+                Description = "Update Test"
             };
 
             // Act
@@ -270,8 +277,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_ValidRaceDemographic_HttpNoContent()
         {
             // Arrange
-            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicCode);
+            var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicId.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);
@@ -288,8 +295,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_InvalidRaceDemographic_HttpNotFound()
         {
             // Arrange
-            var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), notExistsRaceDemographicCode);
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), Int32.MaxValue.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);

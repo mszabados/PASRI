@@ -10,7 +10,7 @@ namespace PASRI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiExplorerSettings(GroupName = "Reference Eye Colors")]
+    [ApiExplorerSettings(GroupName = "Reference EyeColors")]
     public class ReferenceEyeColorsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -27,20 +27,20 @@ namespace PASRI.API.Controllers
         /// </summary>
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceEyeColorDto>))]
-        public IActionResult GetReferenceEyeColor()
+        public IActionResult GetReferenceEyeColors()
         {
             return Ok(_unitOfWork.ReferenceEyeColors.GetAll().Select(_mapper.Map<ReferenceEyeColor, ReferenceEyeColorDto>));
         }
 
         /// <summary>
-        /// Get a single eye color by its unique eye color code
+        /// Get a single eye color by its unique eye color id
         /// </summary>
-        [HttpGet("{code}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(ReferenceEyeColorDto))]
         [ProducesResponseType(404)]
-        public IActionResult GetReferenceEyeColor(string code)
+        public IActionResult GetReferenceEyeColor(int id)
         {
-            var referenceEyeColor = _unitOfWork.ReferenceEyeColors.Get(code);
+            var referenceEyeColor = _unitOfWork.ReferenceEyeColors.Get(id);
 
             if (referenceEyeColor == null)
                 return NotFound();
@@ -60,17 +60,19 @@ namespace PASRI.API.Controllers
         {
             var referenceEyeColor = _mapper.Map<ReferenceEyeColorDto, ReferenceEyeColor>(payload);
 
-            var referenceEyeColorInDb = _unitOfWork.ReferenceEyeColors.Get(payload.Code);
-            if (referenceEyeColorInDb != null)
+            var referenceEyeColorInDb = _unitOfWork.ReferenceEyeColors.Find(p => p.Code == payload.Code);
+            if (referenceEyeColorInDb.Count() > 0)
                 return new ConflictResult();
 
             _unitOfWork.ReferenceEyeColors.Add(referenceEyeColor);
             _unitOfWork.Complete();
 
+            payload.Id = referenceEyeColor.Id;
+
             return CreatedAtAction(nameof(GetReferenceEyeColor),
                 new
                 {
-                    code = payload.Code
+                    id = payload.Id
                 },
                 payload);
         }
@@ -78,16 +80,16 @@ namespace PASRI.API.Controllers
         /// <summary>
         /// Update an existing eye color
         /// </summary>
-        /// <param name="code">Unique eye color code to be updated</param>
+        /// <param name="id">Unique eye color to be updated</param>
         /// <param name="payload">A data transformation object representing the eye color</param>
         /// <returns></returns>
-        [HttpPut("{code}")]
+        [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceEyeColor(string code, ReferenceEyeColorDto payload)
+        public IActionResult UpdateReferenceEyeColor(int id, ReferenceEyeColorDto payload)
         {
-            var referenceEyeColorInDb = _unitOfWork.ReferenceEyeColors.Get(code);
+            var referenceEyeColorInDb = _unitOfWork.ReferenceEyeColors.Get(id);
             if (referenceEyeColorInDb == null)
                 return NotFound();
 
@@ -100,13 +102,13 @@ namespace PASRI.API.Controllers
         /// <summary>
         /// Delete an existing eye color
         /// </summary>
-        /// <param name="code">Unique eye color code to be deleted</param>
-        [HttpDelete("{code}")]
+        /// <param name="id">Unique eye color to be deleted</param>
+        [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteReferenceEyeColor(string code)
+        public IActionResult DeleteReferenceEyeColor(int id)
         {
-            var referenceEyeColorInDb = _unitOfWork.ReferenceEyeColors.Get(code);
+            var referenceEyeColorInDb = _unitOfWork.ReferenceEyeColors.Get(id);
 
             if (referenceEyeColorInDb == null)
                 return NotFound();

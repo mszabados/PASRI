@@ -10,7 +10,7 @@ namespace PASRI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiExplorerSettings(GroupName = "Reference Religions")]
+    [ApiExplorerSettings(GroupName = "Reference ReligionDemographics")]
     public class ReferenceReligionDemographicsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -23,24 +23,24 @@ namespace PASRI.API.Controllers
         }
 
         /// <summary>
-        /// Get a list of all religion demographics
+        /// Get a list of all religions
         /// </summary>
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceReligionDemographicDto>))]
-        public IActionResult GetReferenceReligionDemographic()
+        public IActionResult GetReferenceReligionDemographics()
         {
             return Ok(_unitOfWork.ReferenceReligionDemographics.GetAll().Select(_mapper.Map<ReferenceReligionDemographic, ReferenceReligionDemographicDto>));
         }
 
         /// <summary>
-        /// Get a single religion demographic by its unique religion demographic code
+        /// Get a single religion by its unique religion id
         /// </summary>
-        [HttpGet("{code}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(ReferenceReligionDemographicDto))]
         [ProducesResponseType(404)]
-        public IActionResult GetReferenceReligionDemographic(string code)
+        public IActionResult GetReferenceReligionDemographic(int id)
         {
-            var referenceReligionDemographic = _unitOfWork.ReferenceReligionDemographics.Get(code);
+            var referenceReligionDemographic = _unitOfWork.ReferenceReligionDemographics.Get(id);
 
             if (referenceReligionDemographic == null)
                 return NotFound();
@@ -49,9 +49,9 @@ namespace PASRI.API.Controllers
         }
 
         /// <summary>
-        /// Create a new religion demographic
+        /// Create a new religion
         /// </summary>
-        /// <param name="payload">A data transformation object representing the religion demographic</param>
+        /// <param name="payload">A data transformation object representing the religion</param>
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -60,34 +60,36 @@ namespace PASRI.API.Controllers
         {
             var referenceReligionDemographic = _mapper.Map<ReferenceReligionDemographicDto, ReferenceReligionDemographic>(payload);
 
-            var referenceReligionDemographicInDb = _unitOfWork.ReferenceReligionDemographics.Get(payload.Code);
-            if (referenceReligionDemographicInDb != null)
+            var referenceReligionDemographicInDb = _unitOfWork.ReferenceReligionDemographics.Find(p => p.Code == payload.Code);
+            if (referenceReligionDemographicInDb.Count() > 0)
                 return new ConflictResult();
 
             _unitOfWork.ReferenceReligionDemographics.Add(referenceReligionDemographic);
             _unitOfWork.Complete();
 
+            payload.Id = referenceReligionDemographic.Id;
+
             return CreatedAtAction(nameof(GetReferenceReligionDemographic),
                 new
                 {
-                    code = payload.Code
+                    id = payload.Id
                 },
                 payload);
         }
 
         /// <summary>
-        /// Update an existing religion demographic
+        /// Update an existing religion
         /// </summary>
-        /// <param name="code">Unique religion demographic code to be updated</param>
-        /// <param name="payload">A data transformation object representing the religion demographic</param>
+        /// <param name="id">Unique religion to be updated</param>
+        /// <param name="payload">A data transformation object representing the religion</param>
         /// <returns></returns>
-        [HttpPut("{code}")]
+        [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceReligionDemographic(string code, ReferenceReligionDemographicDto payload)
+        public IActionResult UpdateReferenceReligionDemographic(int id, ReferenceReligionDemographicDto payload)
         {
-            var referenceReligionDemographicInDb = _unitOfWork.ReferenceReligionDemographics.Get(code);
+            var referenceReligionDemographicInDb = _unitOfWork.ReferenceReligionDemographics.Get(id);
             if (referenceReligionDemographicInDb == null)
                 return NotFound();
 
@@ -98,15 +100,15 @@ namespace PASRI.API.Controllers
         }
 
         /// <summary>
-        /// Delete an existing religion demographic
+        /// Delete an existing religion
         /// </summary>
-        /// <param name="code">Unique religion demographic code to be deleted</param>
-        [HttpDelete("{code}")]
+        /// <param name="id">Unique religion to be deleted</param>
+        [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteReferenceReligionDemographic(string code)
+        public IActionResult DeleteReferenceReligionDemographic(int id)
         {
-            var referenceReligionDemographicInDb = _unitOfWork.ReferenceReligionDemographics.Get(code);
+            var referenceReligionDemographicInDb = _unitOfWork.ReferenceReligionDemographics.Get(id);
 
             if (referenceReligionDemographicInDb == null)
                 return NotFound();

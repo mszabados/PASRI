@@ -10,7 +10,7 @@ namespace PASRI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiExplorerSettings(GroupName = "Reference Hair Colors")]
+    [ApiExplorerSettings(GroupName = "Reference HairColors")]
     public class ReferenceHairColorsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -27,20 +27,20 @@ namespace PASRI.API.Controllers
         /// </summary>
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceHairColorDto>))]
-        public IActionResult GetReferenceHairColor()
+        public IActionResult GetReferenceHairColors()
         {
             return Ok(_unitOfWork.ReferenceHairColors.GetAll().Select(_mapper.Map<ReferenceHairColor, ReferenceHairColorDto>));
         }
 
         /// <summary>
-        /// Get a single hair color by its unique hair color code
+        /// Get a single hair color by its unique hair color id
         /// </summary>
-        [HttpGet("{code}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(ReferenceHairColorDto))]
         [ProducesResponseType(404)]
-        public IActionResult GetReferenceHairColor(string code)
+        public IActionResult GetReferenceHairColor(int id)
         {
-            var referenceHairColor = _unitOfWork.ReferenceHairColors.Get(code);
+            var referenceHairColor = _unitOfWork.ReferenceHairColors.Get(id);
 
             if (referenceHairColor == null)
                 return NotFound();
@@ -60,17 +60,19 @@ namespace PASRI.API.Controllers
         {
             var referenceHairColor = _mapper.Map<ReferenceHairColorDto, ReferenceHairColor>(payload);
 
-            var referenceHairColorInDb = _unitOfWork.ReferenceHairColors.Get(payload.Code);
-            if (referenceHairColorInDb != null)
+            var referenceHairColorInDb = _unitOfWork.ReferenceHairColors.Find(p => p.Code == payload.Code);
+            if (referenceHairColorInDb.Count() > 0)
                 return new ConflictResult();
 
             _unitOfWork.ReferenceHairColors.Add(referenceHairColor);
             _unitOfWork.Complete();
 
+            payload.Id = referenceHairColor.Id;
+
             return CreatedAtAction(nameof(GetReferenceHairColor),
                 new
                 {
-                    code = payload.Code
+                    id = payload.Id
                 },
                 payload);
         }
@@ -78,16 +80,16 @@ namespace PASRI.API.Controllers
         /// <summary>
         /// Update an existing hair color
         /// </summary>
-        /// <param name="code">Unique hair color code to be updated</param>
+        /// <param name="id">Unique hair color to be updated</param>
         /// <param name="payload">A data transformation object representing the hair color</param>
         /// <returns></returns>
-        [HttpPut("{code}")]
+        [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceHairColor(string code, ReferenceHairColorDto payload)
+        public IActionResult UpdateReferenceHairColor(int id, ReferenceHairColorDto payload)
         {
-            var referenceHairColorInDb = _unitOfWork.ReferenceHairColors.Get(code);
+            var referenceHairColorInDb = _unitOfWork.ReferenceHairColors.Get(id);
             if (referenceHairColorInDb == null)
                 return NotFound();
 
@@ -100,13 +102,13 @@ namespace PASRI.API.Controllers
         /// <summary>
         /// Delete an existing hair color
         /// </summary>
-        /// <param name="code">Unique hair color code to be deleted</param>
-        [HttpDelete("{code}")]
+        /// <param name="id">Unique hair color to be deleted</param>
+        [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteReferenceHairColor(string code)
+        public IActionResult DeleteReferenceHairColor(int id)
         {
-            var referenceHairColorInDb = _unitOfWork.ReferenceHairColors.Get(code);
+            var referenceHairColorInDb = _unitOfWork.ReferenceHairColors.Get(id);
 
             if (referenceHairColorInDb == null)
                 return NotFound();

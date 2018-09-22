@@ -45,8 +45,8 @@ namespace PASRI.API.Persistence
             ReferenceHairColors = new ReferenceHairColorRepository(_context);
             ReferenceRaceDemographics = new ReferenceRaceDemographicRepository(_context);
             ReferenceReligionDemographics = new ReferenceReligionDemographicRepository(_context);
-            ReferenceStates = new ReferenceStateRepository(_context);
-            ReferenceSuffixNames = new ReferenceSuffixNameRepository(_context);
+            ReferenceStateProvinces = new ReferenceStateProvinceRepository(_context);
+            ReferenceNameSuffixes = new ReferenceNameSuffixRepository(_context);
             ReferenceBloodTypes = new ReferenceBloodTypeRepository(_context);
         }
 
@@ -59,8 +59,8 @@ namespace PASRI.API.Persistence
         public IReferenceHairColorRepository ReferenceHairColors { get; protected set; }
         public IReferenceRaceDemographicRepository ReferenceRaceDemographics { get; protected set; }
         public IReferenceReligionDemographicRepository ReferenceReligionDemographics { get; protected set; }
-        public IReferenceStateRepository ReferenceStates { get; protected set; }
-        public IReferenceSuffixNameRepository ReferenceSuffixNames { get; protected set; }
+        public IReferenceStateProvinceRepository ReferenceStateProvinces { get; protected set; }
+        public IReferenceNameSuffixRepository ReferenceNameSuffixes { get; protected set; }
         public IReferenceBloodTypeRepository ReferenceBloodTypes { get; protected set; }
 
         /// <summary>

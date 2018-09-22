@@ -31,8 +31,8 @@ namespace PASRI.API.TestHelper
             _context.ReferenceHairColors.AddRange(PreDefinedData.ReferenceHairColors);
             _context.ReferenceRaceDemographics.AddRange(PreDefinedData.ReferenceRaceDemographics);
             _context.ReferenceReligionDemographics.AddRange(PreDefinedData.ReferenceReligionDemographics);
-            _context.ReferenceStates.AddRange(PreDefinedData.ReferenceStates);
-            _context.ReferenceSuffixNames.AddRange(PreDefinedData.ReferenceSuffixNames);
+            _context.ReferenceStates.AddRange(PreDefinedData.ReferenceStateProvinces);
+            _context.ReferenceSuffixNames.AddRange(PreDefinedData.ReferenceNameSuffixes);
 
             _context.SaveChanges();
         }

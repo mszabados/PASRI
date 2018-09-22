@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using PASRI.API.Core.Domain;
-using PASRI.API.TestHelper;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
+using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -23,11 +23,12 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Get_ValidRaceDemographicCode_ReturnsSingleRaceDemographic()
         {
-            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
-            var result = UnitOfWork.ReferenceRaceDemographics.Get(randomRaceDemographicCode);
+            var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
+
+            var result = UnitOfWork.ReferenceRaceDemographics.Get(randomRaceDemographicId);
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Code, Is.EqualTo(randomRaceDemographicCode));
+            Assert.That(result.Id, Is.EqualTo(randomRaceDemographicId));
         }
 
         [Test]
@@ -36,42 +37,35 @@ namespace PASRI.API.UnitTests.Repositories
         [TestCase(AssertHelper.Alphabet)]
         public void Get_InvalidRaceDemographicCode_ReturnsNull(string invalidRaceDemographicCode)
         {
-            var result = UnitOfWork.ReferenceRaceDemographics.Get(invalidRaceDemographicCode);
+            var result = UnitOfWork.ReferenceRaceDemographics.Find(p => p.Code == invalidRaceDemographicCode);
 
-            Assert.That(result, Is.Null);
+            Assert.That(result.Count, Is.EqualTo(0));
         }
 
         [Test]
         public void Find_PredicateUsedToFindOneRaceDemographic_ReturnsCollection()
         {
-            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
-            Expression<Func<ReferenceRaceDemographic, bool>> predicate =
-                (p => p.Code == randomRaceDemographicCode);
-            var result = UnitOfWork.ReferenceRaceDemographics.Find(predicate);
+            var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
+
+            var result = UnitOfWork.ReferenceRaceDemographics.Find(p => p.Id == randomRaceDemographicId);
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.ToList()[0].Code == randomRaceDemographicCode);
+            Assert.That(result.ElementAt(0).Id == randomRaceDemographicId);
         }
 
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneRaceDemographic_ReturnsCollection()
         {
-            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
-            Expression<Func<ReferenceRaceDemographic, bool>> predicate =
-                (p => p.Code != randomRaceDemographicCode);
-            var result = UnitOfWork.ReferenceRaceDemographics.Find(predicate);
+            var result = UnitOfWork.ReferenceRaceDemographics.Find(p => p.Id != Int32.MaxValue);
 
-            Assert.That(result.Count, Is.EqualTo(
-                PreDefinedData.ReferenceRaceDemographics.Length - 1));
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Count, Is.GreaterThan(0));
         }
 
         [Test]
         public void Find_PredicateUsedToFindNoRaceDemographics_ReturnsEmptyCollection()
         {
-            var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
-            Expression<Func<ReferenceRaceDemographic, bool>> predicate =
-                (p => p.Code == notExistsRaceDemographicCode);
-            var result = UnitOfWork.ReferenceRaceDemographics.Find(predicate);
+            var result = UnitOfWork.ReferenceRaceDemographics.Find(p => p.Id == Int32.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(0));
@@ -80,10 +74,9 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindOneRaceDemographic_ReturnsOneRaceDemographic()
         {
-            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
-            Expression<Func<ReferenceRaceDemographic, bool>> predicate =
-                (p => p.Code == randomRaceDemographicCode);
-            var result = UnitOfWork.ReferenceRaceDemographics.SingleOrDefault(predicate);
+            var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
+
+            var result = UnitOfWork.ReferenceRaceDemographics.SingleOrDefault(p => p.Id == randomRaceDemographicId);
 
             Assert.That(result, Is.Not.Null);
         }
@@ -91,22 +84,17 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindMoreOneRaceDemographic_ThrowsInvalidOperationException()
         {
-            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
-            Expression<Func<ReferenceRaceDemographic, bool>> predicate =
-                (p => p.Code != randomRaceDemographicCode);
+            var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
 
             Assert.That(() =>
-                UnitOfWork.ReferenceRaceDemographics.SingleOrDefault(predicate),
+                UnitOfWork.ReferenceRaceDemographics.SingleOrDefault(p => p.Id != randomRaceDemographicId),
                 Throws.InvalidOperationException);
         }
 
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoRaceDemographics_ReturnsNull()
         {
-            var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
-            Expression<Func<ReferenceRaceDemographic, bool>> predicate =
-                (p => p.Code == notExistsRaceDemographicCode);
-            var result = UnitOfWork.ReferenceRaceDemographics.SingleOrDefault(predicate);
+            var result = UnitOfWork.ReferenceRaceDemographics.SingleOrDefault(p => p.Id == Int32.MaxValue);
 
             Assert.That(result, Is.Null);
         }
@@ -118,26 +106,30 @@ namespace PASRI.API.UnitTests.Repositories
             var newReferenceRaceDemographic = new ReferenceRaceDemographic()
             {
                 Code = notExistsRaceDemographicCode,
-                DisplayText = notExistsRaceDemographicCode
+                Description = notExistsRaceDemographicCode
             };
 
             UnitOfWork.ReferenceRaceDemographics.Add(newReferenceRaceDemographic);
             UnitOfWork.Complete();
 
-            var result = UnitOfWork.ReferenceRaceDemographics.Get(notExistsRaceDemographicCode);
+            var result = UnitOfWork.ReferenceRaceDemographics.Get(newReferenceRaceDemographic.Id);
 
             Assert.That(result, Is.Not.Null);
+
             AssertHelper.AreObjectsEqual(newReferenceRaceDemographic, result);
         }
 
         [Test]
         public void Add_ValidRaceDemographicExists_ThrowsInvalidOperationException()
         {
-            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
+            var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
+            var randomRaceDemographic = UnitOfWork.ReferenceRaceDemographics.Get(randomRaceDemographicId);
+
             Assert.That(() => UnitOfWork.ReferenceRaceDemographics.Add(
                 new ReferenceRaceDemographic()
                 {
-                    Code = randomRaceDemographicCode
+                    Id = randomRaceDemographic.Id,
+                    Code = randomRaceDemographic.Code
                 }),
                 Throws.InvalidOperationException);
         }
@@ -162,8 +154,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newRaceDemographics = new Collection<ReferenceRaceDemographic>
             {
-                new ReferenceRaceDemographic() { Code = notExistsRaceDemographicCode1, DisplayText = "" },
-                new ReferenceRaceDemographic() { Code = notExistsRaceDemographicCode2, DisplayText = "" }
+                new ReferenceRaceDemographic() { Code = notExistsRaceDemographicCode1, Description = "" },
+                new ReferenceRaceDemographic() { Code = notExistsRaceDemographicCode2, Description = "" }
             };
             UnitOfWork.ReferenceRaceDemographics.AddRange(newRaceDemographics);
             UnitOfWork.Complete();
@@ -179,8 +171,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
             var newRaceDemographics = new Collection<ReferenceRaceDemographic>
             {
-                new ReferenceRaceDemographic() { Code = notExistsRaceDemographicCode, DisplayText = "" },
-                new ReferenceRaceDemographic() { Code = notExistsRaceDemographicCode, DisplayText = "" }
+                new ReferenceRaceDemographic() { Id = Int32.MaxValue, Code = notExistsRaceDemographicCode, Description = "" },
+                new ReferenceRaceDemographic() { Id = Int32.MaxValue, Code = notExistsRaceDemographicCode, Description = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceRaceDemographics.AddRange(newRaceDemographics),
@@ -205,11 +197,10 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidRaceDemographicNotExists_ThrowsDbUpdateConcurrencyException()
         {
-            var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
             UnitOfWork.ReferenceRaceDemographics.Remove(
                 new ReferenceRaceDemographic()
                 {
-                    Code = notExistsRaceDemographicCode
+                    Id = Int32.MaxValue
                 });
 
             Assert.That(() => UnitOfWork.Complete(),
@@ -219,23 +210,21 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidRaceDemographicExists_RaceDemographicCannotBeFetched()
         {
-            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
-            var removeReferenceRaceDemographic = UnitOfWork.ReferenceRaceDemographics.Get(randomRaceDemographicCode);
+            var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
+            var removeReferenceRaceDemographic = UnitOfWork.ReferenceRaceDemographics.Get(randomRaceDemographicId);
             UnitOfWork.ReferenceRaceDemographics.Remove(removeReferenceRaceDemographic);
             UnitOfWork.Complete();
 
-            var result = UnitOfWork.ReferenceRaceDemographics.Get(randomRaceDemographicCode);
+            var result = UnitOfWork.ReferenceRaceDemographics.Get(removeReferenceRaceDemographic.Id);
 
             Assert.That(result, Is.Null);
         }
 
         [Test]
-        public void Remove_InvalidRaceDemographic_ThrowsDbUpdateConcurrencyException()
+        public void Remove_InvalidRaceDemographic_ThrowsInvalidOperationException()
         {
-            UnitOfWork.ReferenceRaceDemographics.Remove(new ReferenceRaceDemographic());
-
-            Assert.That(() => UnitOfWork.Complete(),
-                Throws.TypeOf<DbUpdateConcurrencyException>());
+            Assert.That(() => UnitOfWork.ReferenceRaceDemographics.Remove(new ReferenceRaceDemographic()),
+                Throws.InvalidOperationException);
         }
 
         [Test]
@@ -261,19 +250,21 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void RemoveRange_TwoValidRaceDemographicsDuplicated_ThrowsInvalidOperationException()
         {
-            var randomRaceDemographicCode = PreDefinedData.GetRandomRaceDemographicCode();
-            var newRaceDemographics = new Collection<ReferenceRaceDemographic>
+            var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
+            var randomRaceDemographic = UnitOfWork.ReferenceRaceDemographics.Get(randomRaceDemographicId);
+
+            var existingRaceDemographics = new Collection<ReferenceRaceDemographic>
             {
-                new ReferenceRaceDemographic() { Code = randomRaceDemographicCode },
-                new ReferenceRaceDemographic() { Code = randomRaceDemographicCode }
+                new ReferenceRaceDemographic() { Id = randomRaceDemographic.Id, Code = randomRaceDemographic.Code },
+                new ReferenceRaceDemographic() { Id = randomRaceDemographic.Id, Code = randomRaceDemographic.Code }
             };
 
-            Assert.That(() => UnitOfWork.ReferenceRaceDemographics.RemoveRange(newRaceDemographics),
+            Assert.That(() => UnitOfWork.ReferenceRaceDemographics.RemoveRange(existingRaceDemographics),
                 Throws.InvalidOperationException);
         }
 
         [Test]
-        public void RemoveRange_TwoMalformedRaceDemographics_DbUpdateConcurrencyException()
+        public void RemoveRange_TwoMalformedRaceDemographics_InvalidOperationException()
         {
             var removeReferenceRaceDemographics = new Collection<ReferenceRaceDemographic>
             {
@@ -281,11 +272,8 @@ namespace PASRI.API.UnitTests.Repositories
                 new ReferenceRaceDemographic()
             };
 
-            UnitOfWork.ReferenceRaceDemographics.RemoveRange(removeReferenceRaceDemographics);
-
-            Assert.That(() =>
-                UnitOfWork.Complete(),
-                Throws.TypeOf<DbUpdateConcurrencyException>());
+            Assert.That(() => UnitOfWork.ReferenceRaceDemographics.RemoveRange(removeReferenceRaceDemographics),
+                Throws.InvalidOperationException);
         }
     }
 }

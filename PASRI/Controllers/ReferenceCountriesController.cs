@@ -33,14 +33,14 @@ namespace PASRI.API.Controllers
         }
 
         /// <summary>
-        /// Get a single country by its unique country code
+        /// Get a single country by its unique country id
         /// </summary>
-        [HttpGet("{code}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(ReferenceCountryDto))]
         [ProducesResponseType(404)]
-        public IActionResult GetReferenceCountry(string code)
+        public IActionResult GetReferenceCountry(int id)
         {
-            var referenceCountry = _unitOfWork.ReferenceCountries.Get(code);
+            var referenceCountry = _unitOfWork.ReferenceCountries.Get(id);
 
             if (referenceCountry == null)
                 return NotFound();
@@ -60,17 +60,19 @@ namespace PASRI.API.Controllers
         {
             var referenceCountry = _mapper.Map<ReferenceCountryDto, ReferenceCountry>(payload);
 
-            var referenceCountryInDb = _unitOfWork.ReferenceCountries.Get(payload.Code);
-            if (referenceCountryInDb != null)
+            var referenceCountryInDb = _unitOfWork.ReferenceCountries.Find(p => p.Code == payload.Code);
+            if (referenceCountryInDb.Count() > 0)
                 return new ConflictResult();
 
             _unitOfWork.ReferenceCountries.Add(referenceCountry);
             _unitOfWork.Complete();
 
+            payload.Id = referenceCountry.Id;
+
             return CreatedAtAction(nameof(GetReferenceCountry),
                 new
                 {
-                    code = payload.Code
+                    id = payload.Id
                 },
                 payload);
         }
@@ -78,16 +80,16 @@ namespace PASRI.API.Controllers
         /// <summary>
         /// Update an existing country
         /// </summary>
-        /// <param name="code">Unique country code to be updated</param>
+        /// <param name="id">Unique country to be updated</param>
         /// <param name="payload">A data transformation object representing the country</param>
         /// <returns></returns>
-        [HttpPut("{code}")]
+        [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceCountry(string code, ReferenceCountryDto payload)
+        public IActionResult UpdateReferenceCountry(int id, ReferenceCountryDto payload)
         {
-            var referenceCountryInDb = _unitOfWork.ReferenceCountries.Get(code);
+            var referenceCountryInDb = _unitOfWork.ReferenceCountries.Get(id);
             if (referenceCountryInDb == null)
                 return NotFound();
 
@@ -100,13 +102,13 @@ namespace PASRI.API.Controllers
         /// <summary>
         /// Delete an existing country
         /// </summary>
-        /// <param name="code">Unique country code to be deleted</param>
-        [HttpDelete("{code}")]
+        /// <param name="id">Unique country to be deleted</param>
+        [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteReferenceCountry(string code)
+        public IActionResult DeleteReferenceCountry(int id)
         {
-            var referenceCountryInDb = _unitOfWork.ReferenceCountries.Get(code);
+            var referenceCountryInDb = _unitOfWork.ReferenceCountries.Get(id);
 
             if (referenceCountryInDb == null)
                 return NotFound();

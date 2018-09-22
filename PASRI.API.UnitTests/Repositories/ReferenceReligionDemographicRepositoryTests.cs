@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using PASRI.API.Core.Domain;
-using PASRI.API.TestHelper;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
+using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -23,11 +23,12 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Get_ValidReligionDemographicCode_ReturnsSingleReligionDemographic()
         {
-            var randomReligionDemographicCode = PreDefinedData.GetRandomReligionDemographicCode();
-            var result = UnitOfWork.ReferenceReligionDemographics.Get(randomReligionDemographicCode);
+            var randomReligionDemographicId = PreDefinedData.GetRandomReligionDemographicId();
+
+            var result = UnitOfWork.ReferenceReligionDemographics.Get(randomReligionDemographicId);
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Code, Is.EqualTo(randomReligionDemographicCode));
+            Assert.That(result.Id, Is.EqualTo(randomReligionDemographicId));
         }
 
         [Test]
@@ -36,42 +37,35 @@ namespace PASRI.API.UnitTests.Repositories
         [TestCase(AssertHelper.Alphabet)]
         public void Get_InvalidReligionDemographicCode_ReturnsNull(string invalidReligionDemographicCode)
         {
-            var result = UnitOfWork.ReferenceReligionDemographics.Get(invalidReligionDemographicCode);
+            var result = UnitOfWork.ReferenceReligionDemographics.Find(p => p.Code == invalidReligionDemographicCode);
 
-            Assert.That(result, Is.Null);
+            Assert.That(result.Count, Is.EqualTo(0));
         }
 
         [Test]
         public void Find_PredicateUsedToFindOneReligionDemographic_ReturnsCollection()
         {
-            var randomReligionDemographicCode = PreDefinedData.GetRandomReligionDemographicCode();
-            Expression<Func<ReferenceReligionDemographic, bool>> predicate =
-                (p => p.Code == randomReligionDemographicCode);
-            var result = UnitOfWork.ReferenceReligionDemographics.Find(predicate);
+            var randomReligionDemographicId = PreDefinedData.GetRandomReligionDemographicId();
+
+            var result = UnitOfWork.ReferenceReligionDemographics.Find(p => p.Id == randomReligionDemographicId);
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.ToList()[0].Code == randomReligionDemographicCode);
+            Assert.That(result.ElementAt(0).Id == randomReligionDemographicId);
         }
 
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneReligionDemographic_ReturnsCollection()
         {
-            var randomReligionDemographicCode = PreDefinedData.GetRandomReligionDemographicCode();
-            Expression<Func<ReferenceReligionDemographic, bool>> predicate =
-                (p => p.Code != randomReligionDemographicCode);
-            var result = UnitOfWork.ReferenceReligionDemographics.Find(predicate);
+            var result = UnitOfWork.ReferenceReligionDemographics.Find(p => p.Id != Int32.MaxValue);
 
-            Assert.That(result.Count, Is.EqualTo(
-                PreDefinedData.ReferenceReligionDemographics.Length - 1));
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Count, Is.GreaterThan(0));
         }
 
         [Test]
         public void Find_PredicateUsedToFindNoReligionDemographics_ReturnsEmptyCollection()
         {
-            var notExistsReligionDemographicCode = PreDefinedData.GetNotExistsReligionDemographicCode();
-            Expression<Func<ReferenceReligionDemographic, bool>> predicate =
-                (p => p.Code == notExistsReligionDemographicCode);
-            var result = UnitOfWork.ReferenceReligionDemographics.Find(predicate);
+            var result = UnitOfWork.ReferenceReligionDemographics.Find(p => p.Id == Int32.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(0));
@@ -80,10 +74,9 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindOneReligionDemographic_ReturnsOneReligionDemographic()
         {
-            var randomReligionDemographicCode = PreDefinedData.GetRandomReligionDemographicCode();
-            Expression<Func<ReferenceReligionDemographic, bool>> predicate =
-                (p => p.Code == randomReligionDemographicCode);
-            var result = UnitOfWork.ReferenceReligionDemographics.SingleOrDefault(predicate);
+            var randomReligionDemographicId = PreDefinedData.GetRandomReligionDemographicId();
+
+            var result = UnitOfWork.ReferenceReligionDemographics.SingleOrDefault(p => p.Id == randomReligionDemographicId);
 
             Assert.That(result, Is.Not.Null);
         }
@@ -91,22 +84,17 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindMoreOneReligionDemographic_ThrowsInvalidOperationException()
         {
-            var randomReligionDemographicCode = PreDefinedData.GetRandomReligionDemographicCode();
-            Expression<Func<ReferenceReligionDemographic, bool>> predicate =
-                (p => p.Code != randomReligionDemographicCode);
+            var randomReligionDemographicId = PreDefinedData.GetRandomReligionDemographicId();
 
             Assert.That(() =>
-                UnitOfWork.ReferenceReligionDemographics.SingleOrDefault(predicate),
+                UnitOfWork.ReferenceReligionDemographics.SingleOrDefault(p => p.Id != randomReligionDemographicId),
                 Throws.InvalidOperationException);
         }
 
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoReligionDemographics_ReturnsNull()
         {
-            var notExistsReligionDemographicCode = PreDefinedData.GetNotExistsReligionDemographicCode();
-            Expression<Func<ReferenceReligionDemographic, bool>> predicate =
-                (p => p.Code == notExistsReligionDemographicCode);
-            var result = UnitOfWork.ReferenceReligionDemographics.SingleOrDefault(predicate);
+            var result = UnitOfWork.ReferenceReligionDemographics.SingleOrDefault(p => p.Id == Int32.MaxValue);
 
             Assert.That(result, Is.Null);
         }
@@ -118,26 +106,30 @@ namespace PASRI.API.UnitTests.Repositories
             var newReferenceReligionDemographic = new ReferenceReligionDemographic()
             {
                 Code = notExistsReligionDemographicCode,
-                DisplayText = notExistsReligionDemographicCode
+                Description = notExistsReligionDemographicCode
             };
 
             UnitOfWork.ReferenceReligionDemographics.Add(newReferenceReligionDemographic);
             UnitOfWork.Complete();
 
-            var result = UnitOfWork.ReferenceReligionDemographics.Get(notExistsReligionDemographicCode);
+            var result = UnitOfWork.ReferenceReligionDemographics.Get(newReferenceReligionDemographic.Id);
 
             Assert.That(result, Is.Not.Null);
+
             AssertHelper.AreObjectsEqual(newReferenceReligionDemographic, result);
         }
 
         [Test]
         public void Add_ValidReligionDemographicExists_ThrowsInvalidOperationException()
         {
-            var randomReligionDemographicCode = PreDefinedData.GetRandomReligionDemographicCode();
+            var randomReligionDemographicId = PreDefinedData.GetRandomReligionDemographicId();
+            var randomReligionDemographic = UnitOfWork.ReferenceReligionDemographics.Get(randomReligionDemographicId);
+
             Assert.That(() => UnitOfWork.ReferenceReligionDemographics.Add(
                 new ReferenceReligionDemographic()
                 {
-                    Code = randomReligionDemographicCode
+                    Id = randomReligionDemographic.Id,
+                    Code = randomReligionDemographic.Code
                 }),
                 Throws.InvalidOperationException);
         }
@@ -162,8 +154,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newReligionDemographics = new Collection<ReferenceReligionDemographic>
             {
-                new ReferenceReligionDemographic() { Code = notExistsReligionDemographicCode1, DisplayText = "" },
-                new ReferenceReligionDemographic() { Code = notExistsReligionDemographicCode2, DisplayText = "" }
+                new ReferenceReligionDemographic() { Code = notExistsReligionDemographicCode1, Description = "" },
+                new ReferenceReligionDemographic() { Code = notExistsReligionDemographicCode2, Description = "" }
             };
             UnitOfWork.ReferenceReligionDemographics.AddRange(newReligionDemographics);
             UnitOfWork.Complete();
@@ -179,8 +171,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsReligionDemographicCode = PreDefinedData.GetNotExistsReligionDemographicCode();
             var newReligionDemographics = new Collection<ReferenceReligionDemographic>
             {
-                new ReferenceReligionDemographic() { Code = notExistsReligionDemographicCode, DisplayText = "" },
-                new ReferenceReligionDemographic() { Code = notExistsReligionDemographicCode, DisplayText = "" }
+                new ReferenceReligionDemographic() { Id = Int32.MaxValue, Code = notExistsReligionDemographicCode, Description = "" },
+                new ReferenceReligionDemographic() { Id = Int32.MaxValue, Code = notExistsReligionDemographicCode, Description = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceReligionDemographics.AddRange(newReligionDemographics),
@@ -205,11 +197,10 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidReligionDemographicNotExists_ThrowsDbUpdateConcurrencyException()
         {
-            var notExistsReligionDemographicCode = PreDefinedData.GetNotExistsReligionDemographicCode();
             UnitOfWork.ReferenceReligionDemographics.Remove(
                 new ReferenceReligionDemographic()
                 {
-                    Code = notExistsReligionDemographicCode
+                    Id = Int32.MaxValue
                 });
 
             Assert.That(() => UnitOfWork.Complete(),
@@ -219,23 +210,21 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidReligionDemographicExists_ReligionDemographicCannotBeFetched()
         {
-            var randomReligionDemographicCode = PreDefinedData.GetRandomReligionDemographicCode();
-            var removeReferenceReligionDemographic = UnitOfWork.ReferenceReligionDemographics.Get(randomReligionDemographicCode);
+            var randomReligionDemographicId = PreDefinedData.GetRandomReligionDemographicId();
+            var removeReferenceReligionDemographic = UnitOfWork.ReferenceReligionDemographics.Get(randomReligionDemographicId);
             UnitOfWork.ReferenceReligionDemographics.Remove(removeReferenceReligionDemographic);
             UnitOfWork.Complete();
 
-            var result = UnitOfWork.ReferenceReligionDemographics.Get(randomReligionDemographicCode);
+            var result = UnitOfWork.ReferenceReligionDemographics.Get(removeReferenceReligionDemographic.Id);
 
             Assert.That(result, Is.Null);
         }
 
         [Test]
-        public void Remove_InvalidReligionDemographic_ThrowsDbUpdateConcurrencyException()
+        public void Remove_InvalidReligionDemographic_ThrowsInvalidOperationException()
         {
-            UnitOfWork.ReferenceReligionDemographics.Remove(new ReferenceReligionDemographic());
-
-            Assert.That(() => UnitOfWork.Complete(),
-                Throws.TypeOf<DbUpdateConcurrencyException>());
+            Assert.That(() => UnitOfWork.ReferenceReligionDemographics.Remove(new ReferenceReligionDemographic()),
+                Throws.InvalidOperationException);
         }
 
         [Test]
@@ -261,19 +250,21 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void RemoveRange_TwoValidReligionDemographicsDuplicated_ThrowsInvalidOperationException()
         {
-            var randomReligionDemographicCode = PreDefinedData.GetRandomReligionDemographicCode();
-            var newReligionDemographics = new Collection<ReferenceReligionDemographic>
+            var randomReligionDemographicId = PreDefinedData.GetRandomReligionDemographicId();
+            var randomReligionDemographic = UnitOfWork.ReferenceReligionDemographics.Get(randomReligionDemographicId);
+
+            var existingReligionDemographics = new Collection<ReferenceReligionDemographic>
             {
-                new ReferenceReligionDemographic() { Code = randomReligionDemographicCode },
-                new ReferenceReligionDemographic() { Code = randomReligionDemographicCode }
+                new ReferenceReligionDemographic() { Id = randomReligionDemographic.Id, Code = randomReligionDemographic.Code },
+                new ReferenceReligionDemographic() { Id = randomReligionDemographic.Id, Code = randomReligionDemographic.Code }
             };
 
-            Assert.That(() => UnitOfWork.ReferenceReligionDemographics.RemoveRange(newReligionDemographics),
+            Assert.That(() => UnitOfWork.ReferenceReligionDemographics.RemoveRange(existingReligionDemographics),
                 Throws.InvalidOperationException);
         }
 
         [Test]
-        public void RemoveRange_TwoMalformedReligionDemographics_DbUpdateConcurrencyException()
+        public void RemoveRange_TwoMalformedReligionDemographics_InvalidOperationException()
         {
             var removeReferenceReligionDemographics = new Collection<ReferenceReligionDemographic>
             {
@@ -281,11 +272,8 @@ namespace PASRI.API.UnitTests.Repositories
                 new ReferenceReligionDemographic()
             };
 
-            UnitOfWork.ReferenceReligionDemographics.RemoveRange(removeReferenceReligionDemographics);
-
-            Assert.That(() =>
-                UnitOfWork.Complete(),
-                Throws.TypeOf<DbUpdateConcurrencyException>());
+            Assert.That(() => UnitOfWork.ReferenceReligionDemographics.RemoveRange(removeReferenceReligionDemographics),
+                Throws.InvalidOperationException);
         }
     }
 }

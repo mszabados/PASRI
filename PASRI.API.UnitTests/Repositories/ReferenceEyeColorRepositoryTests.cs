@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using PASRI.API.Core.Domain;
-using PASRI.API.TestHelper;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
+using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -23,11 +23,12 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Get_ValidEyeColorCode_ReturnsSingleEyeColor()
         {
-            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
-            var result = UnitOfWork.ReferenceEyeColors.Get(randomEyeColorCode);
+            var randomEyeColorId = PreDefinedData.GetRandomEyeColorId();
+
+            var result = UnitOfWork.ReferenceEyeColors.Get(randomEyeColorId);
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Code, Is.EqualTo(randomEyeColorCode));
+            Assert.That(result.Id, Is.EqualTo(randomEyeColorId));
         }
 
         [Test]
@@ -36,42 +37,35 @@ namespace PASRI.API.UnitTests.Repositories
         [TestCase(AssertHelper.Alphabet)]
         public void Get_InvalidEyeColorCode_ReturnsNull(string invalidEyeColorCode)
         {
-            var result = UnitOfWork.ReferenceEyeColors.Get(invalidEyeColorCode);
+            var result = UnitOfWork.ReferenceEyeColors.Find(p => p.Code == invalidEyeColorCode);
 
-            Assert.That(result, Is.Null);
+            Assert.That(result.Count, Is.EqualTo(0));
         }
 
         [Test]
         public void Find_PredicateUsedToFindOneEyeColor_ReturnsCollection()
         {
-            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
-            Expression<Func<ReferenceEyeColor, bool>> predicate =
-                (p => p.Code == randomEyeColorCode);
-            var result = UnitOfWork.ReferenceEyeColors.Find(predicate);
+            var randomEyeColorId = PreDefinedData.GetRandomEyeColorId();
+
+            var result = UnitOfWork.ReferenceEyeColors.Find(p => p.Id == randomEyeColorId);
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.ToList()[0].Code == randomEyeColorCode);
+            Assert.That(result.ElementAt(0).Id == randomEyeColorId);
         }
 
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneEyeColor_ReturnsCollection()
         {
-            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
-            Expression<Func<ReferenceEyeColor, bool>> predicate =
-                (p => p.Code != randomEyeColorCode);
-            var result = UnitOfWork.ReferenceEyeColors.Find(predicate);
+            var result = UnitOfWork.ReferenceEyeColors.Find(p => p.Id != Int32.MaxValue);
 
-            Assert.That(result.Count, Is.EqualTo(
-                PreDefinedData.ReferenceEyeColors.Length - 1));
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Count, Is.GreaterThan(0));
         }
 
         [Test]
         public void Find_PredicateUsedToFindNoEyeColors_ReturnsEmptyCollection()
         {
-            var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
-            Expression<Func<ReferenceEyeColor, bool>> predicate =
-                (p => p.Code == notExistsEyeColorCode);
-            var result = UnitOfWork.ReferenceEyeColors.Find(predicate);
+            var result = UnitOfWork.ReferenceEyeColors.Find(p => p.Id == Int32.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(0));
@@ -80,10 +74,9 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindOneEyeColor_ReturnsOneEyeColor()
         {
-            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
-            Expression<Func<ReferenceEyeColor, bool>> predicate =
-                (p => p.Code == randomEyeColorCode);
-            var result = UnitOfWork.ReferenceEyeColors.SingleOrDefault(predicate);
+            var randomEyeColorId = PreDefinedData.GetRandomEyeColorId();
+
+            var result = UnitOfWork.ReferenceEyeColors.SingleOrDefault(p => p.Id == randomEyeColorId);
 
             Assert.That(result, Is.Not.Null);
         }
@@ -91,22 +84,17 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedToFindMoreOneEyeColor_ThrowsInvalidOperationException()
         {
-            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
-            Expression<Func<ReferenceEyeColor, bool>> predicate =
-                (p => p.Code != randomEyeColorCode);
+            var randomEyeColorId = PreDefinedData.GetRandomEyeColorId();
 
             Assert.That(() =>
-                UnitOfWork.ReferenceEyeColors.SingleOrDefault(predicate),
+                UnitOfWork.ReferenceEyeColors.SingleOrDefault(p => p.Id != randomEyeColorId),
                 Throws.InvalidOperationException);
         }
 
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoEyeColors_ReturnsNull()
         {
-            var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
-            Expression<Func<ReferenceEyeColor, bool>> predicate =
-                (p => p.Code == notExistsEyeColorCode);
-            var result = UnitOfWork.ReferenceEyeColors.SingleOrDefault(predicate);
+            var result = UnitOfWork.ReferenceEyeColors.SingleOrDefault(p => p.Id == Int32.MaxValue);
 
             Assert.That(result, Is.Null);
         }
@@ -118,26 +106,30 @@ namespace PASRI.API.UnitTests.Repositories
             var newReferenceEyeColor = new ReferenceEyeColor()
             {
                 Code = notExistsEyeColorCode,
-                DisplayText = notExistsEyeColorCode
+                Description = notExistsEyeColorCode
             };
 
             UnitOfWork.ReferenceEyeColors.Add(newReferenceEyeColor);
             UnitOfWork.Complete();
 
-            var result = UnitOfWork.ReferenceEyeColors.Get(notExistsEyeColorCode);
+            var result = UnitOfWork.ReferenceEyeColors.Get(newReferenceEyeColor.Id);
 
             Assert.That(result, Is.Not.Null);
+
             AssertHelper.AreObjectsEqual(newReferenceEyeColor, result);
         }
 
         [Test]
         public void Add_ValidEyeColorExists_ThrowsInvalidOperationException()
         {
-            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
+            var randomEyeColorId = PreDefinedData.GetRandomEyeColorId();
+            var randomEyeColor = UnitOfWork.ReferenceEyeColors.Get(randomEyeColorId);
+
             Assert.That(() => UnitOfWork.ReferenceEyeColors.Add(
                 new ReferenceEyeColor()
                 {
-                    Code = randomEyeColorCode
+                    Id = randomEyeColor.Id,
+                    Code = randomEyeColor.Code
                 }),
                 Throws.InvalidOperationException);
         }
@@ -162,8 +154,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newEyeColors = new Collection<ReferenceEyeColor>
             {
-                new ReferenceEyeColor() { Code = notExistsEyeColorCode1, DisplayText = "" },
-                new ReferenceEyeColor() { Code = notExistsEyeColorCode2, DisplayText = "" }
+                new ReferenceEyeColor() { Code = notExistsEyeColorCode1, Description = "" },
+                new ReferenceEyeColor() { Code = notExistsEyeColorCode2, Description = "" }
             };
             UnitOfWork.ReferenceEyeColors.AddRange(newEyeColors);
             UnitOfWork.Complete();
@@ -179,8 +171,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
             var newEyeColors = new Collection<ReferenceEyeColor>
             {
-                new ReferenceEyeColor() { Code = notExistsEyeColorCode, DisplayText = "" },
-                new ReferenceEyeColor() { Code = notExistsEyeColorCode, DisplayText = "" }
+                new ReferenceEyeColor() { Id = Int32.MaxValue, Code = notExistsEyeColorCode, Description = "" },
+                new ReferenceEyeColor() { Id = Int32.MaxValue, Code = notExistsEyeColorCode, Description = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceEyeColors.AddRange(newEyeColors),
@@ -205,11 +197,10 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidEyeColorNotExists_ThrowsDbUpdateConcurrencyException()
         {
-            var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
             UnitOfWork.ReferenceEyeColors.Remove(
                 new ReferenceEyeColor()
                 {
-                    Code = notExistsEyeColorCode
+                    Id = Int32.MaxValue
                 });
 
             Assert.That(() => UnitOfWork.Complete(),
@@ -219,23 +210,21 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Remove_ValidEyeColorExists_EyeColorCannotBeFetched()
         {
-            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
-            var removeReferenceEyeColor = UnitOfWork.ReferenceEyeColors.Get(randomEyeColorCode);
+            var randomEyeColorId = PreDefinedData.GetRandomEyeColorId();
+            var removeReferenceEyeColor = UnitOfWork.ReferenceEyeColors.Get(randomEyeColorId);
             UnitOfWork.ReferenceEyeColors.Remove(removeReferenceEyeColor);
             UnitOfWork.Complete();
 
-            var result = UnitOfWork.ReferenceEyeColors.Get(randomEyeColorCode);
+            var result = UnitOfWork.ReferenceEyeColors.Get(removeReferenceEyeColor.Id);
 
             Assert.That(result, Is.Null);
         }
 
         [Test]
-        public void Remove_InvalidEyeColor_ThrowsDbUpdateConcurrencyException()
+        public void Remove_InvalidEyeColor_ThrowsInvalidOperationException()
         {
-            UnitOfWork.ReferenceEyeColors.Remove(new ReferenceEyeColor());
-
-            Assert.That(() => UnitOfWork.Complete(),
-                Throws.TypeOf<DbUpdateConcurrencyException>());
+            Assert.That(() => UnitOfWork.ReferenceEyeColors.Remove(new ReferenceEyeColor()),
+                Throws.InvalidOperationException);
         }
 
         [Test]
@@ -261,19 +250,21 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void RemoveRange_TwoValidEyeColorsDuplicated_ThrowsInvalidOperationException()
         {
-            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
-            var newEyeColors = new Collection<ReferenceEyeColor>
+            var randomEyeColorId = PreDefinedData.GetRandomEyeColorId();
+            var randomEyeColor = UnitOfWork.ReferenceEyeColors.Get(randomEyeColorId);
+
+            var existingEyeColors = new Collection<ReferenceEyeColor>
             {
-                new ReferenceEyeColor() { Code = randomEyeColorCode },
-                new ReferenceEyeColor() { Code = randomEyeColorCode }
+                new ReferenceEyeColor() { Id = randomEyeColor.Id, Code = randomEyeColor.Code },
+                new ReferenceEyeColor() { Id = randomEyeColor.Id, Code = randomEyeColor.Code }
             };
 
-            Assert.That(() => UnitOfWork.ReferenceEyeColors.RemoveRange(newEyeColors),
+            Assert.That(() => UnitOfWork.ReferenceEyeColors.RemoveRange(existingEyeColors),
                 Throws.InvalidOperationException);
         }
 
         [Test]
-        public void RemoveRange_TwoMalformedEyeColors_DbUpdateConcurrencyException()
+        public void RemoveRange_TwoMalformedEyeColors_InvalidOperationException()
         {
             var removeReferenceEyeColors = new Collection<ReferenceEyeColor>
             {
@@ -281,11 +272,8 @@ namespace PASRI.API.UnitTests.Repositories
                 new ReferenceEyeColor()
             };
 
-            UnitOfWork.ReferenceEyeColors.RemoveRange(removeReferenceEyeColors);
-
-            Assert.That(() =>
-                UnitOfWork.Complete(),
-                Throws.TypeOf<DbUpdateConcurrencyException>());
+            Assert.That(() => UnitOfWork.ReferenceEyeColors.RemoveRange(removeReferenceEyeColors),
+                Throws.InvalidOperationException);
         }
     }
 }

@@ -52,8 +52,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Get_ValidReligionDemographicCode_HttpOkAndReturnsSingleReligionDemographic()
         {
             // Arrange
-            var randomReligionDemographicCode = PreDefinedData.GetRandomReligionDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), randomReligionDemographicCode);
+            var randomReligionDemographicId = PreDefinedData.GetRandomReligionDemographicId();
+            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), randomReligionDemographicId.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -70,18 +70,18 @@ namespace PASRI.API.IntegrationTests.Controllers
 
             ReferenceReligionDemographic preDefinedObject =
                 PreDefinedData.ReferenceReligionDemographics
-                    .SingleOrDefault(c => c.Code == randomReligionDemographicCode);
+                    .SingleOrDefault(c => c.Id == randomReligionDemographicId);
 
             AssertHelper.AreObjectsEqual(apiReturnedObject,
                 Mapper.Map<ReferenceReligionDemographic, ReferenceReligionDemographicDto>(preDefinedObject));
         }
 
         [Test]
-        public async Task Get_InvalidReligionDemographicCode_HttpNotFound()
+        public async Task Get_InvalidReligionDemographicId_HttpNotFound()
         {
             // Arrange
             var notExistsReligionDemographicCode = PreDefinedData.GetNotExistsReligionDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), notExistsReligionDemographicCode);
+            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), Int32.MaxValue.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -99,8 +99,8 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newReligionDemographicDto = new ReferenceReligionDemographicDto()
             {
                 Code = notExistsReligionDemographicCode,
-                DisplayText = "New ReligionDemographic",
-                StartDate = DateTime.UtcNow
+                Description = "New ReligionDemographic",
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -119,6 +119,9 @@ namespace PASRI.API.IntegrationTests.Controllers
             ReferenceReligionDemographicDto apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceReligionDemographicDto>(responseString);
 
+            Assert.That(apiReturnedObject.Id, Is.GreaterThan(0));
+
+            newReligionDemographicDto.Id = apiReturnedObject.Id;
             AssertHelper.AreObjectsEqual(apiReturnedObject, newReligionDemographicDto);
         }
 
@@ -141,12 +144,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var path = GetRelativePath(nameof(ReferenceReligionDemographicsController));
-            var notExistsReligionDemographicCode = PreDefinedData.GetNotExistsReligionDemographicCode();
+
             var newReligionDemographicDto = new ReferenceReligionDemographicDto()
             {
-                Code = notExistsReligionDemographicCode,
-                // Display text is required, keep it missing
-                StartDate = DateTime.UtcNow
+                // Code is required, keep it missing
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -164,11 +166,14 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var path = GetRelativePath(nameof(ReferenceReligionDemographicsController));
+            var randomReligionDemographicId = PreDefinedData.GetRandomReligionDemographicId();
+            var randomReligionDemographic = PreDefinedData.ReferenceReligionDemographics[randomReligionDemographicId - 1];
+
             var newReligionDemographicDto = new ReferenceReligionDemographicDto()
             {
-                Code = PreDefinedData.GetRandomReligionDemographicCode(),
-                DisplayText = "Create Test",
-                StartDate = DateTime.UtcNow
+                Code = randomReligionDemographic.Code,
+                Description = "Create Test",
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -185,10 +190,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_ValidReligionDemographic_HttpNoContent()
         {
             // Arrange
-            var randomReligionDemographicCode = PreDefinedData.GetRandomReligionDemographicCode();
-            ReferenceReligionDemographic apiUpdatingReligionDemographic = UnitOfWork.ReferenceReligionDemographics.Get(randomReligionDemographicCode);
-            apiUpdatingReligionDemographic.DisplayText = "Update Test";
-            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), randomReligionDemographicCode);
+            var randomReligionDemographicId = PreDefinedData.GetRandomReligionDemographicId();
+
+            ReferenceReligionDemographic apiUpdatingReligionDemographic = UnitOfWork.ReferenceReligionDemographics.Get(randomReligionDemographicId);
+            apiUpdatingReligionDemographic.Description = "Update Test";
+            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), randomReligionDemographicId.ToString());
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
@@ -203,7 +209,7 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
-            ReferenceReligionDemographic dbUpdatedReligionDemographic = UnitOfWork.ReferenceReligionDemographics.Get(apiUpdatingReligionDemographic.Code);
+            ReferenceReligionDemographic dbUpdatedReligionDemographic = UnitOfWork.ReferenceReligionDemographics.Get(apiUpdatingReligionDemographic.Id);
             AssertHelper.AreObjectsEqual(apiUpdatingReligionDemographic, dbUpdatedReligionDemographic);
         }
 
@@ -211,8 +217,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_EmptyPayload_HttpBadRequest()
         {
             // Arrange
-            var randomReligionDemographicCode = PreDefinedData.GetRandomReligionDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), randomReligionDemographicCode);
+            var randomReligionDemographicId = PreDefinedData.GetRandomReligionDemographicId();
+            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), randomReligionDemographicId.ToString());
 
             // Act
             var response = await Client.PutAsync(path,
@@ -226,12 +232,12 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_MalformedPayload_HttpBadRequest()
         {
             // Arrange
-            var randomReligionDemographicCode = PreDefinedData.GetRandomReligionDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), randomReligionDemographicCode);
+            var randomReligionDemographicId = PreDefinedData.GetRandomReligionDemographicId();
+            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), randomReligionDemographicId.ToString());
             var apiUpdatingReligionDemographic = new ReferenceReligionDemographicDto()
             {
-                Code = randomReligionDemographicCode,
-                // Display text is required, keep it missing
+                Id = randomReligionDemographicId
+                // Code is required, keep it missing
             };
 
             // Act
@@ -249,11 +255,12 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var notExistsReligionDemographicCode = PreDefinedData.GetNotExistsReligionDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), notExistsReligionDemographicCode);
+            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), Int32.MaxValue.ToString());
             var apiUpdatingReligionDemographic = new ReferenceReligionDemographicDto()
             {
+                Id = Int32.MaxValue,
                 Code = notExistsReligionDemographicCode,
-                DisplayText = "Update Test"
+                Description = "Update Test"
             };
 
             // Act
@@ -270,8 +277,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_ValidReligionDemographic_HttpNoContent()
         {
             // Arrange
-            var randomReligionDemographicCode = PreDefinedData.GetRandomReligionDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), randomReligionDemographicCode);
+            var randomReligionDemographicId = PreDefinedData.GetRandomReligionDemographicId();
+            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), randomReligionDemographicId.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);
@@ -288,8 +295,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_InvalidReligionDemographic_HttpNotFound()
         {
             // Arrange
-            var notExistsReligionDemographicCode = PreDefinedData.GetNotExistsReligionDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), notExistsReligionDemographicCode);
+            var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), Int32.MaxValue.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);

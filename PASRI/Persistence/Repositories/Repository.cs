@@ -43,12 +43,6 @@ namespace PASRI.API.Persistence.Repositories
             return _entities.Find(id);
         }
 
-        public TEntity Get(string primaryKeyString)
-        {
-
-            return _entities.Find(primaryKeyString);
-        }
-
         public IEnumerable<TEntity> GetAll()
         {
             return _entities.ToList();

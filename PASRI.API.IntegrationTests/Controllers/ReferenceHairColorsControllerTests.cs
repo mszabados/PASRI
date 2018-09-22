@@ -52,8 +52,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Get_ValidHairColorCode_HttpOkAndReturnsSingleHairColor()
         {
             // Arrange
-            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
-            var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorCode);
+            var randomHairColorId = PreDefinedData.GetRandomHairColorId();
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorId.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -70,18 +70,18 @@ namespace PASRI.API.IntegrationTests.Controllers
 
             ReferenceHairColor preDefinedObject =
                 PreDefinedData.ReferenceHairColors
-                    .SingleOrDefault(c => c.Code == randomHairColorCode);
+                    .SingleOrDefault(c => c.Id == randomHairColorId);
 
             AssertHelper.AreObjectsEqual(apiReturnedObject,
                 Mapper.Map<ReferenceHairColor, ReferenceHairColorDto>(preDefinedObject));
         }
 
         [Test]
-        public async Task Get_InvalidHairColorCode_HttpNotFound()
+        public async Task Get_InvalidHairColorId_HttpNotFound()
         {
             // Arrange
             var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
-            var path = GetRelativePath(nameof(ReferenceHairColorsController), notExistsHairColorCode);
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), Int32.MaxValue.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -99,8 +99,8 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newHairColorDto = new ReferenceHairColorDto()
             {
                 Code = notExistsHairColorCode,
-                DisplayText = "New HairColor",
-                StartDate = DateTime.UtcNow
+                Description = "New",
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -119,6 +119,9 @@ namespace PASRI.API.IntegrationTests.Controllers
             ReferenceHairColorDto apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceHairColorDto>(responseString);
 
+            Assert.That(apiReturnedObject.Id, Is.GreaterThan(0));
+
+            newHairColorDto.Id = apiReturnedObject.Id;
             AssertHelper.AreObjectsEqual(apiReturnedObject, newHairColorDto);
         }
 
@@ -141,12 +144,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var path = GetRelativePath(nameof(ReferenceHairColorsController));
-            var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
+
             var newHairColorDto = new ReferenceHairColorDto()
             {
-                Code = notExistsHairColorCode,
-                // Display text is required, keep it missing
-                StartDate = DateTime.UtcNow
+                // Code is required, keep it missing
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -164,11 +166,14 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var path = GetRelativePath(nameof(ReferenceHairColorsController));
+            var randomHairColorId = PreDefinedData.GetRandomHairColorId();
+            var randomHairColor = PreDefinedData.ReferenceHairColors[randomHairColorId - 1];
+
             var newHairColorDto = new ReferenceHairColorDto()
             {
-                Code = PreDefinedData.GetRandomHairColorCode(),
-                DisplayText = "Create Test",
-                StartDate = DateTime.UtcNow
+                Code = randomHairColor.Code,
+                Description = "Create",
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -185,10 +190,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_ValidHairColor_HttpNoContent()
         {
             // Arrange
-            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
-            ReferenceHairColor apiUpdatingHairColor = UnitOfWork.ReferenceHairColors.Get(randomHairColorCode);
-            apiUpdatingHairColor.DisplayText = "Update Test";
-            var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorCode);
+            var randomHairColorId = PreDefinedData.GetRandomHairColorId();
+
+            ReferenceHairColor apiUpdatingHairColor = UnitOfWork.ReferenceHairColors.Get(randomHairColorId);
+            apiUpdatingHairColor.Description = "Update";
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorId.ToString());
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
@@ -203,7 +209,7 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
-            ReferenceHairColor dbUpdatedHairColor = UnitOfWork.ReferenceHairColors.Get(apiUpdatingHairColor.Code);
+            ReferenceHairColor dbUpdatedHairColor = UnitOfWork.ReferenceHairColors.Get(apiUpdatingHairColor.Id);
             AssertHelper.AreObjectsEqual(apiUpdatingHairColor, dbUpdatedHairColor);
         }
 
@@ -211,8 +217,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_EmptyPayload_HttpBadRequest()
         {
             // Arrange
-            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
-            var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorCode);
+            var randomHairColorId = PreDefinedData.GetRandomHairColorId();
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorId.ToString());
 
             // Act
             var response = await Client.PutAsync(path,
@@ -226,12 +232,12 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_MalformedPayload_HttpBadRequest()
         {
             // Arrange
-            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
-            var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorCode);
+            var randomHairColorId = PreDefinedData.GetRandomHairColorId();
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorId.ToString());
             var apiUpdatingHairColor = new ReferenceHairColorDto()
             {
-                Code = randomHairColorCode,
-                // Display text is required, keep it missing
+                Id = randomHairColorId
+                // Code is required, keep it missing
             };
 
             // Act
@@ -249,11 +255,12 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
-            var path = GetRelativePath(nameof(ReferenceHairColorsController), notExistsHairColorCode);
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), Int32.MaxValue.ToString());
             var apiUpdatingHairColor = new ReferenceHairColorDto()
             {
+                Id = Int32.MaxValue,
                 Code = notExistsHairColorCode,
-                DisplayText = "Update Test"
+                Description = "Update"
             };
 
             // Act
@@ -270,8 +277,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_ValidHairColor_HttpNoContent()
         {
             // Arrange
-            var randomHairColorCode = PreDefinedData.GetRandomHairColorCode();
-            var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorCode);
+            var randomHairColorId = PreDefinedData.GetRandomHairColorId();
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorId.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);
@@ -288,8 +295,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_InvalidHairColor_HttpNotFound()
         {
             // Arrange
-            var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
-            var path = GetRelativePath(nameof(ReferenceHairColorsController), notExistsHairColorCode);
+            var path = GetRelativePath(nameof(ReferenceHairColorsController), Int32.MaxValue.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);

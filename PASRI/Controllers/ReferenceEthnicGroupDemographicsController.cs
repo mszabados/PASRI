@@ -10,7 +10,7 @@ namespace PASRI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiExplorerSettings(GroupName = "Reference Ethnic Groups")]
+    [ApiExplorerSettings(GroupName = "Reference EthnicGroupDemographics")]
     public class ReferenceEthnicGroupDemographicsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -23,7 +23,7 @@ namespace PASRI.API.Controllers
         }
 
         /// <summary>
-        /// Get a list of all ethnic group demographics
+        /// Get a list of all ethnic groups
         /// </summary>
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<ReferenceEthnicGroupDemographicDto>))]
@@ -33,14 +33,14 @@ namespace PASRI.API.Controllers
         }
 
         /// <summary>
-        /// Get a single ethnic group demographic by its unique ethnic group demographic code
+        /// Get a single ethnic group by its unique ethnic group id
         /// </summary>
-        [HttpGet("{code}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(ReferenceEthnicGroupDemographicDto))]
         [ProducesResponseType(404)]
-        public IActionResult GetReferenceEthnicGroupDemographic(string code)
+        public IActionResult GetReferenceEthnicGroupDemographic(int id)
         {
-            var referenceEthnicGroupDemographic = _unitOfWork.ReferenceEthnicGroupDemographics.Get(code);
+            var referenceEthnicGroupDemographic = _unitOfWork.ReferenceEthnicGroupDemographics.Get(id);
 
             if (referenceEthnicGroupDemographic == null)
                 return NotFound();
@@ -49,9 +49,9 @@ namespace PASRI.API.Controllers
         }
 
         /// <summary>
-        /// Create a new ethnic group demographic
+        /// Create a new ethnic group
         /// </summary>
-        /// <param name="payload">A data transformation object representing the ethnic group demographic</param>
+        /// <param name="payload">A data transformation object representing the ethnic group</param>
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -60,34 +60,36 @@ namespace PASRI.API.Controllers
         {
             var referenceEthnicGroupDemographic = _mapper.Map<ReferenceEthnicGroupDemographicDto, ReferenceEthnicGroupDemographic>(payload);
 
-            var referenceEthnicGroupDemographicInDb = _unitOfWork.ReferenceEthnicGroupDemographics.Get(payload.Code);
-            if (referenceEthnicGroupDemographicInDb != null)
+            var referenceEthnicGroupDemographicInDb = _unitOfWork.ReferenceEthnicGroupDemographics.Find(p => p.Code == payload.Code);
+            if (referenceEthnicGroupDemographicInDb.Count() > 0)
                 return new ConflictResult();
 
             _unitOfWork.ReferenceEthnicGroupDemographics.Add(referenceEthnicGroupDemographic);
             _unitOfWork.Complete();
 
+            payload.Id = referenceEthnicGroupDemographic.Id;
+
             return CreatedAtAction(nameof(GetReferenceEthnicGroupDemographic),
                 new
                 {
-                    code = payload.Code
+                    id = payload.Id
                 },
                 payload);
         }
 
         /// <summary>
-        /// Update an existing ethnic group demographic
+        /// Update an existing ethnic group
         /// </summary>
-        /// <param name="code">Unique ethnic group demographic code to be updated</param>
-        /// <param name="payload">A data transformation object representing the ethnic group demographic</param>
+        /// <param name="id">Unique ethnic group to be updated</param>
+        /// <param name="payload">A data transformation object representing the ethnic group</param>
         /// <returns></returns>
-        [HttpPut("{code}")]
+        [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateReferenceEthnicGroupDemographic(string code, ReferenceEthnicGroupDemographicDto payload)
+        public IActionResult UpdateReferenceEthnicGroupDemographic(int id, ReferenceEthnicGroupDemographicDto payload)
         {
-            var referenceEthnicGroupDemographicInDb = _unitOfWork.ReferenceEthnicGroupDemographics.Get(code);
+            var referenceEthnicGroupDemographicInDb = _unitOfWork.ReferenceEthnicGroupDemographics.Get(id);
             if (referenceEthnicGroupDemographicInDb == null)
                 return NotFound();
 
@@ -98,15 +100,15 @@ namespace PASRI.API.Controllers
         }
 
         /// <summary>
-        /// Delete an existing ethnic group demographic
+        /// Delete an existing ethnic group
         /// </summary>
-        /// <param name="code">Unique ethnic group demographic code to be deleted</param>
-        [HttpDelete("{code}")]
+        /// <param name="id">Unique ethnic group to be deleted</param>
+        [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteReferenceEthnicGroupDemographic(string code)
+        public IActionResult DeleteReferenceEthnicGroupDemographic(int id)
         {
-            var referenceEthnicGroupDemographicInDb = _unitOfWork.ReferenceEthnicGroupDemographics.Get(code);
+            var referenceEthnicGroupDemographicInDb = _unitOfWork.ReferenceEthnicGroupDemographics.Get(id);
 
             if (referenceEthnicGroupDemographicInDb == null)
                 return NotFound();

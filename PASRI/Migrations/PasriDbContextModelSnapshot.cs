@@ -21,212 +21,403 @@ namespace PASRI.API.Migrations
 
             modelBuilder.Entity("PASRI.API.Core.Domain.ReferenceBloodType", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(2)");
+                        .HasColumnName("blood_type_id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DisplayText")
+                    b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnName("code")
+                        .HasColumnType("char(3)");
 
-                    b.Property<DateTime?>("EndDate")
+                    b.Property<string>("CreatedBy")
+                        .HasColumnName("created_by")
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnName("created_date")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime?>("StartDate")
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnName("description")
+                        .HasColumnType("varchar(11)");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnName("modified_by")
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnName("modified_date")
                         .HasColumnType("datetime");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
-                    b.ToTable("ReferenceTypeBlood");
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("RE_BLOOD_TYPE");
                 });
 
             modelBuilder.Entity("PASRI.API.Core.Domain.ReferenceCountry", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("country_id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnName("code")
                         .HasColumnType("char(2)");
 
-                    b.Property<string>("DisplayText")
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "created_date");
+
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(44)");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "modified_by");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "modified_date");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
-                    b.ToTable("ReferenceCountry");
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("RE_COUNTRY");
                 });
 
             modelBuilder.Entity("PASRI.API.Core.Domain.ReferenceEthnicGroupDemographic", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("country_id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnName("code")
                         .HasColumnType("char(2)");
 
-                    b.Property<string>("DisplayText")
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "created_date");
+
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(28)");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "modified_by");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "modified_date");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
-                    b.ToTable("ReferenceEthnicGroupDemographic");
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("RE_ETHNIC");
                 });
 
             modelBuilder.Entity("PASRI.API.Core.Domain.ReferenceEyeColor", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("country_id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnName("code")
                         .HasColumnType("char(2)");
 
-                    b.Property<string>("DisplayText")
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "created_date");
+
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(14)");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "modified_by");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "modified_date");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
-                    b.ToTable("ReferenceEyeColor");
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("RE_EYE_COLOR");
                 });
 
             modelBuilder.Entity("PASRI.API.Core.Domain.ReferenceGenderDemographic", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("country_id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnName("code")
                         .HasColumnType("char(1)");
 
-                    b.Property<string>("DisplayText")
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "created_date");
+
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(7)");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "modified_by");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "modified_date");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
-                    b.ToTable("ReferenceGenderDemographic");
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("RE_GENDER");
                 });
 
             modelBuilder.Entity("PASRI.API.Core.Domain.ReferenceHairColor", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("country_id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnName("code")
                         .HasColumnType("char(2)");
 
-                    b.Property<string>("DisplayText")
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "created_date");
+
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(6)");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "modified_by");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "modified_date");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
-                    b.ToTable("ReferenceHairColor");
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("RE_HAIR_COLOR");
+                });
+
+            modelBuilder.Entity("PASRI.API.Core.Domain.ReferenceNameSuffix", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("country_id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnName("code")
+                        .HasColumnType("char(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "created_date");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("varchar(15)");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "modified_by");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "modified_date");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("RE_SUFFIX");
                 });
 
             modelBuilder.Entity("PASRI.API.Core.Domain.ReferenceRaceDemographic", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("country_id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnName("code")
                         .HasColumnType("char(1)");
 
-                    b.Property<string>("DisplayText")
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "created_date");
+
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(237)");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "modified_by");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "modified_date");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
-                    b.ToTable("ReferenceRaceDemographic");
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("RE_RACE");
                 });
 
             modelBuilder.Entity("PASRI.API.Core.Domain.ReferenceReligionDemographic", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("country_id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnName("code")
                         .HasColumnType("char(2)");
 
-                    b.Property<string>("DisplayText")
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "created_date");
+
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(253)");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "modified_by");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "modified_date");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
-                    b.ToTable("ReferenceReligionDemographic");
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("RE_RELIGION");
                 });
 
-            modelBuilder.Entity("PASRI.API.Core.Domain.ReferenceState", b =>
+            modelBuilder.Entity("PASRI.API.Core.Domain.ReferenceStateProvince", b =>
                 {
-                    b.Property<string>("Code")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("country_id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnName("code")
                         .HasColumnType("char(2)");
 
-                    b.Property<string>("DisplayText")
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "created_by");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "created_date");
+
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(35)");
 
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "modified_by");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "modified_date");
 
-                    b.HasKey("Code");
+                    b.HasKey("Id");
 
-                    b.ToTable("ReferenceState");
-                });
+                    b.HasIndex("Code")
+                        .IsUnique();
 
-            modelBuilder.Entity("PASRI.API.Core.Domain.ReferenceSuffixName", b =>
-                {
-                    b.Property<string>("Code")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(4)");
-
-                    b.Property<string>("DisplayText")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime");
-
-                    b.HasKey("Code");
-
-                    b.ToTable("ReferenceSuffixName");
+                    b.ToTable("RE_STATE");
                 });
 #pragma warning restore 612, 618
         }

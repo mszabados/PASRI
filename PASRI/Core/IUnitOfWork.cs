@@ -17,7 +17,6 @@ namespace PASRI.API.Core
     /// </remarks>
     public interface IUnitOfWork : IDisposable
     {
-        IPersonRepository Persons { get; }
         IReferenceCountryRepository ReferenceCountries { get; }
         IReferenceEthnicGroupDemographicRepository ReferenceEthnicGroupDemographics { get; }
         IReferenceEyeColorRepository ReferenceEyeColors { get; }
@@ -25,8 +24,8 @@ namespace PASRI.API.Core
         IReferenceHairColorRepository ReferenceHairColors { get; }
         IReferenceRaceDemographicRepository ReferenceRaceDemographics { get; }
         IReferenceReligionDemographicRepository ReferenceReligionDemographics { get; }
-        IReferenceStateRepository ReferenceStates { get; }
-        IReferenceSuffixNameRepository ReferenceSuffixNames { get; }
+        IReferenceStateProvinceRepository ReferenceStateProvinces { get; }
+        IReferenceNameSuffixRepository ReferenceNameSuffixes { get; }
         IReferenceBloodTypeRepository ReferenceBloodTypes { get; }
 
         int Complete();

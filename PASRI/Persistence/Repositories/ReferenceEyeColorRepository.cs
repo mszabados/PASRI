@@ -24,10 +24,5 @@ namespace PASRI.API.Persistence.Repositories
             : base(context)
         {
         }
-
-        public new ReferenceEyeColor Get(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

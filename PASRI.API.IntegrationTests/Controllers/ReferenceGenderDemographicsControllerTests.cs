@@ -52,8 +52,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Get_ValidGenderDemographicCode_HttpOkAndReturnsSingleGenderDemographic()
         {
             // Arrange
-            var randomGenderDemographicCode = PreDefinedData.GetRandomGenderDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), randomGenderDemographicCode);
+            var randomGenderDemographicId = PreDefinedData.GetRandomGenderDemographicId();
+            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), randomGenderDemographicId.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -70,18 +70,18 @@ namespace PASRI.API.IntegrationTests.Controllers
 
             ReferenceGenderDemographic preDefinedObject =
                 PreDefinedData.ReferenceGenderDemographics
-                    .SingleOrDefault(c => c.Code == randomGenderDemographicCode);
+                    .SingleOrDefault(c => c.Id == randomGenderDemographicId);
 
             AssertHelper.AreObjectsEqual(apiReturnedObject,
                 Mapper.Map<ReferenceGenderDemographic, ReferenceGenderDemographicDto>(preDefinedObject));
         }
 
         [Test]
-        public async Task Get_InvalidGenderDemographicCode_HttpNotFound()
+        public async Task Get_InvalidGenderDemographicId_HttpNotFound()
         {
             // Arrange
             var notExistsGenderDemographicCode = PreDefinedData.GetNotExistsGenderDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), notExistsGenderDemographicCode);
+            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), Int32.MaxValue.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -99,8 +99,8 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newGenderDemographicDto = new ReferenceGenderDemographicDto()
             {
                 Code = notExistsGenderDemographicCode,
-                DisplayText = "New GenderDemographic",
-                StartDate = DateTime.UtcNow
+                Description = "New",
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -119,6 +119,9 @@ namespace PASRI.API.IntegrationTests.Controllers
             ReferenceGenderDemographicDto apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceGenderDemographicDto>(responseString);
 
+            Assert.That(apiReturnedObject.Id, Is.GreaterThan(0));
+
+            newGenderDemographicDto.Id = apiReturnedObject.Id;
             AssertHelper.AreObjectsEqual(apiReturnedObject, newGenderDemographicDto);
         }
 
@@ -141,12 +144,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var path = GetRelativePath(nameof(ReferenceGenderDemographicsController));
-            var notExistsGenderDemographicCode = PreDefinedData.GetNotExistsGenderDemographicCode();
+
             var newGenderDemographicDto = new ReferenceGenderDemographicDto()
             {
-                Code = notExistsGenderDemographicCode,
-                // Display text is required, keep it missing
-                StartDate = DateTime.UtcNow
+                // Code is required, keep it missing
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -164,11 +166,14 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var path = GetRelativePath(nameof(ReferenceGenderDemographicsController));
+            var randomGenderDemographicId = PreDefinedData.GetRandomGenderDemographicId();
+            var randomGenderDemographic = PreDefinedData.ReferenceGenderDemographics[randomGenderDemographicId - 1];
+
             var newGenderDemographicDto = new ReferenceGenderDemographicDto()
             {
-                Code = PreDefinedData.GetRandomGenderDemographicCode(),
-                DisplayText = "Create Test",
-                StartDate = DateTime.UtcNow
+                Code = randomGenderDemographic.Code,
+                Description = "Create",
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -185,10 +190,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_ValidGenderDemographic_HttpNoContent()
         {
             // Arrange
-            var randomGenderDemographicCode = PreDefinedData.GetRandomGenderDemographicCode();
-            ReferenceGenderDemographic apiUpdatingGenderDemographic = UnitOfWork.ReferenceGenderDemographics.Get(randomGenderDemographicCode);
-            apiUpdatingGenderDemographic.DisplayText = "Update Test";
-            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), randomGenderDemographicCode);
+            var randomGenderDemographicId = PreDefinedData.GetRandomGenderDemographicId();
+
+            ReferenceGenderDemographic apiUpdatingGenderDemographic = UnitOfWork.ReferenceGenderDemographics.Get(randomGenderDemographicId);
+            apiUpdatingGenderDemographic.Description = "Update";
+            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), randomGenderDemographicId.ToString());
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
@@ -203,7 +209,7 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
-            ReferenceGenderDemographic dbUpdatedGenderDemographic = UnitOfWork.ReferenceGenderDemographics.Get(apiUpdatingGenderDemographic.Code);
+            ReferenceGenderDemographic dbUpdatedGenderDemographic = UnitOfWork.ReferenceGenderDemographics.Get(apiUpdatingGenderDemographic.Id);
             AssertHelper.AreObjectsEqual(apiUpdatingGenderDemographic, dbUpdatedGenderDemographic);
         }
 
@@ -211,8 +217,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_EmptyPayload_HttpBadRequest()
         {
             // Arrange
-            var randomGenderDemographicCode = PreDefinedData.GetRandomGenderDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), randomGenderDemographicCode);
+            var randomGenderDemographicId = PreDefinedData.GetRandomGenderDemographicId();
+            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), randomGenderDemographicId.ToString());
 
             // Act
             var response = await Client.PutAsync(path,
@@ -226,12 +232,12 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_MalformedPayload_HttpBadRequest()
         {
             // Arrange
-            var randomGenderDemographicCode = PreDefinedData.GetRandomGenderDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), randomGenderDemographicCode);
+            var randomGenderDemographicId = PreDefinedData.GetRandomGenderDemographicId();
+            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), randomGenderDemographicId.ToString());
             var apiUpdatingGenderDemographic = new ReferenceGenderDemographicDto()
             {
-                Code = randomGenderDemographicCode,
-                // Display text is required, keep it missing
+                Id = randomGenderDemographicId
+                // Code is required, keep it missing
             };
 
             // Act
@@ -249,11 +255,12 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var notExistsGenderDemographicCode = PreDefinedData.GetNotExistsGenderDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), notExistsGenderDemographicCode);
+            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), Int32.MaxValue.ToString());
             var apiUpdatingGenderDemographic = new ReferenceGenderDemographicDto()
             {
+                Id = Int32.MaxValue,
                 Code = notExistsGenderDemographicCode,
-                DisplayText = "Update Test"
+                Description = "Update"
             };
 
             // Act
@@ -270,8 +277,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_ValidGenderDemographic_HttpNoContent()
         {
             // Arrange
-            var randomGenderDemographicCode = PreDefinedData.GetRandomGenderDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), randomGenderDemographicCode);
+            var randomGenderDemographicId = PreDefinedData.GetRandomGenderDemographicId();
+            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), randomGenderDemographicId.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);
@@ -288,8 +295,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_InvalidGenderDemographic_HttpNotFound()
         {
             // Arrange
-            var notExistsGenderDemographicCode = PreDefinedData.GetNotExistsGenderDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), notExistsGenderDemographicCode);
+            var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), Int32.MaxValue.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);

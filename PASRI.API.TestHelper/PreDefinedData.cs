@@ -9,10 +9,10 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceBloodType[] ReferenceBloodTypes = new[]
         {
-            new ReferenceBloodType() { Code = "O", DisplayText = "No antigens, A and B antibodies", StartDate = DateTime.Parse("1/1/1753"), EndDate = DateTime.MaxValue },
-            new ReferenceBloodType() { Code = "A", DisplayText = "A antigen, B antibody" },
-            new ReferenceBloodType() { Code = "B", DisplayText = "B antigen, A antibody" },
-            new ReferenceBloodType() { Code = "AB", DisplayText = "A and B antigen, no antibodies" }
+            new ReferenceBloodType() { Id = 1, Code = "O", Description = "No antigens, A and B antibodies" },
+            new ReferenceBloodType() { Id = 2, Code = "A", Description = "A antigen, B antibody" },
+            new ReferenceBloodType() { Id = 3, Code = "B", Description = "B antigen, A antibody" },
+            new ReferenceBloodType() { Id = 4, Code = "AB", Description = "A and B antigen, no antibodies" }
         };
 
         /// <summary>
@@ -31,11 +31,11 @@ namespace PASRI.API.TestHelper
         /// of the <see cref="ReferenceBloodType"/> that exists in the
         /// <see cref="PreDefinedData.ReferenceBloodTypes"/> test collection
         /// </summary>
-        public static string GetRandomBloodTypeCode()
+        public static int GetRandomBloodTypeId()
         {
             return PreDefinedData.ReferenceBloodTypes[
                 new Random().Next(0, PreDefinedData.ReferenceBloodTypes.Length)
-            ].Code;
+            ].Id;
         }
 
         #endregion
@@ -44,9 +44,9 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceCountry[] ReferenceCountries = new[]
         {
-            new ReferenceCountry() { Code = "US", DisplayText = "United States of America", StartDate = DateTime.Parse("7/4/1776 9:30 AM"), EndDate = DateTime.MaxValue },
-            new ReferenceCountry() { Code = "CA", DisplayText = "Canada" },
-            new ReferenceCountry() { Code = "MX", DisplayText = "Mexico" }
+            new ReferenceCountry() { Id = 1, Code = "US", Description = "United States of America" },
+            new ReferenceCountry() { Id = 2, Code = "CA", Description = "Canada" },
+            new ReferenceCountry() { Id = 3, Code = "MX", Description = "Mexico" }
         };
 
         /// <summary>
@@ -65,11 +65,11 @@ namespace PASRI.API.TestHelper
         /// of the <see cref="ReferenceCountry"/> that exists in the
         /// <see cref="PreDefinedData.ReferenceCountries"/> test collection
         /// </summary>
-        public static string GetRandomCountryCode()
+        public static int GetRandomCountryId()
         {
             return PreDefinedData.ReferenceCountries[
                 new Random().Next(0, PreDefinedData.ReferenceCountries.Length)
-            ].Code;
+            ].Id;
         }
 
         #endregion
@@ -78,10 +78,10 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceEthnicGroupDemographic[] ReferenceEthnicGroupDemographics = new[]
         {
-            new ReferenceEthnicGroupDemographic() { Code = "AA", DisplayText = "Asian Indian", StartDate = DateTime.Parse("1/1/1753"), EndDate = DateTime.MaxValue },
-            new ReferenceEthnicGroupDemographic() { Code = "AB", DisplayText = "Chinese" },
-            new ReferenceEthnicGroupDemographic() { Code = "AC", DisplayText = "Filipino" },
-            new ReferenceEthnicGroupDemographic() { Code = "BG", DisplayText = "Other" }
+            new ReferenceEthnicGroupDemographic() { Id = 1, Code = "AA", Description = "Asian Indian" },
+            new ReferenceEthnicGroupDemographic() { Id = 2, Code = "AB", Description = "Chinese" },
+            new ReferenceEthnicGroupDemographic() { Id = 3, Code = "AC", Description = "Filipino" },
+            new ReferenceEthnicGroupDemographic() { Id = 4, Code = "BG", Description = "Other" }
         };
 
         /// <summary>
@@ -98,10 +98,10 @@ namespace PASRI.API.TestHelper
         /// of the <see cref="ReferenceEthnicGroupDemographic"/> that exists in the
         /// <see cref="PreDefinedData.ReferenceEthnicGroupDemographics"/> test collection
         /// </summary>
-        public static string GetRandomEthnicGroupDemographicCode() =>
+        public static int GetRandomEthnicGroupDemographicId() =>
             PreDefinedData.ReferenceEthnicGroupDemographics[
                 new Random().Next(0, PreDefinedData.ReferenceEthnicGroupDemographics.Length)
-            ].Code;
+            ].Id;
 
         #endregion
 
@@ -109,9 +109,9 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceEyeColor[] ReferenceEyeColors = new[]
         {
-            new ReferenceEyeColor() { Code = "BR", DisplayText = "Brown", StartDate = DateTime.Parse("1/1/1753"), EndDate = DateTime.MaxValue },
-            new ReferenceEyeColor() { Code = "GR", DisplayText = "Green" },
-            new ReferenceEyeColor() { Code = "BL", DisplayText = "Blue" }
+            new ReferenceEyeColor() { Id = 1, Code = "BR", Description = "Brown" },
+            new ReferenceEyeColor() { Id = 2, Code = "GR", Description = "Green" },
+            new ReferenceEyeColor() { Id = 3, Code = "BL", Description = "Blue" }
         };
 
         /// <summary>
@@ -128,10 +128,10 @@ namespace PASRI.API.TestHelper
         /// of the <see cref="ReferenceEyeColor"/> that exists in the
         /// <see cref="PreDefinedData.ReferenceEyeColors"/> test collection
         /// </summary>
-        public static string GetRandomEyeColorCode() =>
+        public static int GetRandomEyeColorId() =>
             PreDefinedData.ReferenceEyeColors[
                 new Random().Next(0, PreDefinedData.ReferenceEyeColors.Length)
-            ].Code;
+            ].Id;
 
         #endregion
 
@@ -139,9 +139,9 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceGenderDemographic[] ReferenceGenderDemographics = new[]
         {
-            new ReferenceGenderDemographic() { Code = "Z", DisplayText = "Unknown", StartDate = DateTime.Parse("1/1/1753"), EndDate = DateTime.MaxValue },
-            new ReferenceGenderDemographic() { Code = "F", DisplayText = "Female" },
-            new ReferenceGenderDemographic() { Code = "M", DisplayText = "Male" }
+            new ReferenceGenderDemographic() { Id = 1, Code = "Z", Description = "Unknown" },
+            new ReferenceGenderDemographic() { Id = 2, Code = "F", Description = "Female" },
+            new ReferenceGenderDemographic() { Id = 3, Code = "M", Description = "Male" }
         };
 
         /// <summary>
@@ -158,10 +158,10 @@ namespace PASRI.API.TestHelper
         /// of the <see cref="ReferenceGenderDemographic"/> that exists in the
         /// <see cref="PreDefinedData.ReferenceGenderDemographics"/> test collection
         /// </summary>
-        public static string GetRandomGenderDemographicCode() =>
+        public static int GetRandomGenderDemographicId() =>
             PreDefinedData.ReferenceGenderDemographics[
                 new Random().Next(0, PreDefinedData.ReferenceGenderDemographics.Length)
-            ].Code;
+            ].Id;
 
         #endregion
 
@@ -169,9 +169,9 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceHairColor[] ReferenceHairColors = new[]
         {
-            new ReferenceHairColor() { Code = "BR", DisplayText = "Brown", StartDate = DateTime.Parse("1/1/1753"), EndDate = DateTime.MaxValue },
-            new ReferenceHairColor() { Code = "BK", DisplayText = "Black" },
-            new ReferenceHairColor() { Code = "BL", DisplayText = "Blond" }
+            new ReferenceHairColor() { Id = 1, Code = "BR", Description = "Brown" },
+            new ReferenceHairColor() { Id = 2, Code = "BK", Description = "Black" },
+            new ReferenceHairColor() { Id = 3, Code = "BL", Description = "Blond" }
         };
 
         /// <summary>
@@ -188,10 +188,10 @@ namespace PASRI.API.TestHelper
         /// of the <see cref="ReferenceHairColor"/> that exists in the
         /// <see cref="PreDefinedData.ReferenceHairColors"/> test collection
         /// </summary>
-        public static string GetRandomHairColorCode() =>
+        public static int GetRandomHairColorId() =>
             PreDefinedData.ReferenceHairColors[
                 new Random().Next(0, PreDefinedData.ReferenceHairColors.Length)
-            ].Code;
+            ].Id;
 
         #endregion
 
@@ -199,12 +199,12 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceRaceDemographic[] ReferenceRaceDemographics = new[]
         {
-            new ReferenceRaceDemographic() { Code = "A", DisplayText = "American Indian/Alaskan Native", StartDate = DateTime.Parse("1/1/1753"), EndDate = DateTime.MaxValue },
-            new ReferenceRaceDemographic() { Code = "B", DisplayText = "Asian" },
-            new ReferenceRaceDemographic() { Code = "C", DisplayText = "Black" },
-            new ReferenceRaceDemographic() { Code = "D", DisplayText = "Native Hawaiian or other Pacific Islander" },
-            new ReferenceRaceDemographic() { Code = "E", DisplayText = "White" },
-            new ReferenceRaceDemographic() { Code = "F", DisplayText = "Declined to Respond" }
+            new ReferenceRaceDemographic() { Id = 1, Code = "A", Description = "American Indian/Alaskan Native" },
+            new ReferenceRaceDemographic() { Id = 2, Code = "B", Description = "Asian" },
+            new ReferenceRaceDemographic() { Id = 3, Code = "C", Description = "Black" },
+            new ReferenceRaceDemographic() { Id = 4, Code = "D", Description = "Native Hawaiian or other Pacific Islander" },
+            new ReferenceRaceDemographic() { Id = 5, Code = "E", Description = "White" },
+            new ReferenceRaceDemographic() { Id = 6, Code = "F", Description = "Declined to Respond" }
         };
 
         /// <summary>
@@ -221,10 +221,10 @@ namespace PASRI.API.TestHelper
         /// of the <see cref="ReferenceRaceDemographic"/> that exists in the
         /// <see cref="PreDefinedData.ReferenceRaceDemographics"/> test collection
         /// </summary>
-        public static string GetRandomRaceDemographicCode() =>
+        public static int GetRandomRaceDemographicId() =>
             PreDefinedData.ReferenceRaceDemographics[
                 new Random().Next(0, PreDefinedData.ReferenceRaceDemographics.Length)
-            ].Code;
+            ].Id;
 
         #endregion
 
@@ -232,9 +232,9 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceReligionDemographic[] ReferenceReligionDemographics = new[]
         {
-            new ReferenceReligionDemographic() { Code = "AC", DisplayText = "Advent Christian Church", StartDate = DateTime.Parse("1/1/1753"), EndDate = DateTime.MaxValue },
-            new ReferenceReligionDemographic() { Code = "AV", DisplayText = "Adventist Churches - Excludes Adv ent Christian Church, Jehovah's Witnesses, Native American, and Seventh Day Adventist" },
-            new ReferenceReligionDemographic() { Code = "ME", DisplayText = "African Methodist Episcopal Church" }
+            new ReferenceReligionDemographic() { Id = 1, Code = "AC", Description = "Advent Christian Church" },
+            new ReferenceReligionDemographic() { Id = 2, Code = "AV", Description = "Adventist Churches - Excludes Adv ent Christian Church, Jehovah's Witnesses, Native American, and Seventh Day Adventist" },
+            new ReferenceReligionDemographic() { Id = 3, Code = "ME", Description = "African Methodist Episcopal Church" }
         };
 
         /// <summary>
@@ -251,70 +251,70 @@ namespace PASRI.API.TestHelper
         /// of the <see cref="ReferenceReligionDemographic"/> that exists in the
         /// <see cref="PreDefinedData.ReferenceReligionDemographics"/> test collection
         /// </summary>
-        public static string GetRandomReligionDemographicCode() =>
+        public static int GetRandomReligionDemographicId() =>
             PreDefinedData.ReferenceReligionDemographics[
                 new Random().Next(0, PreDefinedData.ReferenceReligionDemographics.Length)
-            ].Code;
+            ].Id;
 
         #endregion
 
-        #region ReferenceStates
+        #region ReferenceStateProvinces
 
-        public static ReferenceState[] ReferenceStates = new[]
+        public static ReferenceStateProvince[] ReferenceStateProvinces = new[]
         {
-            new ReferenceState() { Code = "TX", DisplayText = "Texas", StartDate = DateTime.Parse("12/29/1845"), EndDate = DateTime.MaxValue },
-            new ReferenceState() { Code = "KY", DisplayText = "Kentucky" },
-            new ReferenceState() { Code = "DE", DisplayText = "Delaware" }
+            new ReferenceStateProvince() { Id = 1, Code = "TX", Description = "Texas" },
+            new ReferenceStateProvince() { Id = 2, Code = "KY", Description = "Kentucky" },
+            new ReferenceStateProvince() { Id = 3, Code = "DE", Description = "Delaware" }
         };
 
         /// <summary>
         /// Helper method to retrieve a state code, which is the primary key
-        /// of the <see cref="ReferenceState"/> that does not exist in the
-        /// <see cref="PreDefinedData.ReferenceStates"/> test collection
+        /// of the <see cref="ReferenceStateProvince"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferenceStateProvinces"/> test collection
         /// </summary>
-        public static string GetNotExistsStateCode() =>
-            AssertHelper.GetValueNotInArray(PreDefinedData.ReferenceStates,
+        public static string GetNotExistsStateProvinceCode() =>
+            AssertHelper.GetValueNotInArray(PreDefinedData.ReferenceStateProvinces,
                 "Code", 2);
 
         /// <summary>
         /// Helper method to retrieve a state code, which is the primary key
-        /// of the <see cref="ReferenceState"/> that exists in the
-        /// <see cref="PreDefinedData.ReferenceStates"/> test collection
+        /// of the <see cref="ReferenceStateProvince"/> that exists in the
+        /// <see cref="PreDefinedData.ReferenceStateProvinces"/> test collection
         /// </summary>
-        public static string GetRandomStateCode() =>
-            PreDefinedData.ReferenceStates[
-                new Random().Next(0, PreDefinedData.ReferenceStates.Length)
-            ].Code;
+        public static int GetRandomStateProvinceId() =>
+            PreDefinedData.ReferenceStateProvinces[
+                new Random().Next(0, PreDefinedData.ReferenceStateProvinces.Length)
+            ].Id;
 
         #endregion
 
-        #region ReferenceSuffixNames
+        #region ReferenceNameSuffixes
 
-        public static ReferenceSuffixName[] ReferenceSuffixNames = new[]
+        public static ReferenceNameSuffix[] ReferenceNameSuffixes = new[]
         {
-            new ReferenceSuffixName() { Code = "Jr", DisplayText = "Junior", StartDate = DateTime.Parse("1/1/1753"), EndDate = DateTime.MaxValue },
-            new ReferenceSuffixName() { Code = "Sr", DisplayText = "Senior" },
-            new ReferenceSuffixName() { Code = "III", DisplayText = "The Third" }
+            new ReferenceNameSuffix() { Id = 1, Code = "Jr", Description = "Junior" },
+            new ReferenceNameSuffix() { Id = 2, Code = "Sr", Description = "Senior" },
+            new ReferenceNameSuffix() { Id = 3, Code = "III", Description = "The Third" }
         };
 
         /// <summary>
         /// Helper method to retrieve a suffix name code, which is the primary key
-        /// of the <see cref="ReferenceSuffixName"/> that does not exist in the
-        /// <see cref="PreDefinedData.ReferenceSuffixNames"/> test collection
+        /// of the <see cref="ReferenceNameSuffix"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferenceNameSuffixes"/> test collection
         /// </summary>
-        public static string GetNotExistsSuffixNameCode() =>
-            AssertHelper.GetValueNotInArray(PreDefinedData.ReferenceSuffixNames,
+        public static string GetNotExistsNameSuffixCode() =>
+            AssertHelper.GetValueNotInArray(PreDefinedData.ReferenceNameSuffixes,
                 "Code", 4);
 
         /// <summary>
         /// Helper method to retrieve a suffix name code, which is the primary key
-        /// of the <see cref="ReferenceSuffixName"/> that exists in the
-        /// <see cref="PreDefinedData.ReferenceSuffixNames"/> test collection
+        /// of the <see cref="ReferenceNameSuffix"/> that exists in the
+        /// <see cref="PreDefinedData.ReferenceNameSuffixes"/> test collection
         /// </summary>
-        public static string GetRandomSuffixNameCode() =>
-            PreDefinedData.ReferenceSuffixNames[
-                new Random().Next(0, PreDefinedData.ReferenceSuffixNames.Length)
-            ].Code;
+        public static int GetRandomNameSuffixId() =>
+            PreDefinedData.ReferenceNameSuffixes[
+                new Random().Next(0, PreDefinedData.ReferenceNameSuffixes.Length)
+            ].Id;
 
         #endregion
     }

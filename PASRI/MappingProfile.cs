@@ -26,10 +26,10 @@ namespace PASRI.API
             CreateMap<ReferenceRaceDemographicDto, ReferenceRaceDemographic>();
             CreateMap<ReferenceReligionDemographic, ReferenceReligionDemographicDto>();
             CreateMap<ReferenceReligionDemographicDto, ReferenceReligionDemographic>();
-            CreateMap<ReferenceState, ReferenceStateDto>();
-            CreateMap<ReferenceStateDto, ReferenceState>();
-            CreateMap<ReferenceSuffixName, ReferenceSuffixNameDto>();
-            CreateMap<ReferenceSuffixNameDto, ReferenceSuffixName>();
+            CreateMap<ReferenceStateProvince, ReferenceStateProvinceDto>();
+            CreateMap<ReferenceStateProvinceDto, ReferenceStateProvince>();
+            CreateMap<ReferenceNameSuffix, ReferenceNameSuffixDto>();
+            CreateMap<ReferenceNameSuffixDto, ReferenceNameSuffix>();
             CreateMap<ReferenceBloodType, ReferenceBloodTypeDto>();
             CreateMap<ReferenceBloodTypeDto, ReferenceBloodType>();
         }

@@ -24,10 +24,5 @@ namespace PASRI.API.Persistence.Repositories
             : base(context)
         {
         }
-
-        public new ReferenceCountry Get(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

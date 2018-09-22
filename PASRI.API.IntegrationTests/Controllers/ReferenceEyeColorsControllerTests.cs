@@ -52,8 +52,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Get_ValidEyeColorCode_HttpOkAndReturnsSingleEyeColor()
         {
             // Arrange
-            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
-            var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorCode);
+            var randomEyeColorId = PreDefinedData.GetRandomEyeColorId();
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorId.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -70,18 +70,18 @@ namespace PASRI.API.IntegrationTests.Controllers
 
             ReferenceEyeColor preDefinedObject =
                 PreDefinedData.ReferenceEyeColors
-                    .SingleOrDefault(c => c.Code == randomEyeColorCode);
+                    .SingleOrDefault(c => c.Id == randomEyeColorId);
 
             AssertHelper.AreObjectsEqual(apiReturnedObject,
                 Mapper.Map<ReferenceEyeColor, ReferenceEyeColorDto>(preDefinedObject));
         }
 
         [Test]
-        public async Task Get_InvalidEyeColorCode_HttpNotFound()
+        public async Task Get_InvalidEyeColorId_HttpNotFound()
         {
             // Arrange
             var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
-            var path = GetRelativePath(nameof(ReferenceEyeColorsController), notExistsEyeColorCode);
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), Int32.MaxValue.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -99,8 +99,8 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newEyeColorDto = new ReferenceEyeColorDto()
             {
                 Code = notExistsEyeColorCode,
-                DisplayText = "New EyeColor",
-                StartDate = DateTime.UtcNow
+                Description = "New EyeColor",
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -119,6 +119,9 @@ namespace PASRI.API.IntegrationTests.Controllers
             ReferenceEyeColorDto apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceEyeColorDto>(responseString);
 
+            Assert.That(apiReturnedObject.Id, Is.GreaterThan(0));
+
+            newEyeColorDto.Id = apiReturnedObject.Id;
             AssertHelper.AreObjectsEqual(apiReturnedObject, newEyeColorDto);
         }
 
@@ -141,12 +144,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var path = GetRelativePath(nameof(ReferenceEyeColorsController));
-            var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
+
             var newEyeColorDto = new ReferenceEyeColorDto()
             {
-                Code = notExistsEyeColorCode,
-                // Display text is required, keep it missing
-                StartDate = DateTime.UtcNow
+                // Code is required, keep it missing
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -164,11 +166,14 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var path = GetRelativePath(nameof(ReferenceEyeColorsController));
+            var randomEyeColorId = PreDefinedData.GetRandomEyeColorId();
+            var randomEyeColor = PreDefinedData.ReferenceEyeColors[randomEyeColorId - 1];
+
             var newEyeColorDto = new ReferenceEyeColorDto()
             {
-                Code = PreDefinedData.GetRandomEyeColorCode(),
-                DisplayText = "Create Test",
-                StartDate = DateTime.UtcNow
+                Code = randomEyeColor.Code,
+                Description = "Create Test",
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -185,10 +190,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_ValidEyeColor_HttpNoContent()
         {
             // Arrange
-            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
-            ReferenceEyeColor apiUpdatingEyeColor = UnitOfWork.ReferenceEyeColors.Get(randomEyeColorCode);
-            apiUpdatingEyeColor.DisplayText = "Update Test";
-            var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorCode);
+            var randomEyeColorId = PreDefinedData.GetRandomEyeColorId();
+
+            ReferenceEyeColor apiUpdatingEyeColor = UnitOfWork.ReferenceEyeColors.Get(randomEyeColorId);
+            apiUpdatingEyeColor.Description = "Update Test";
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorId.ToString());
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
@@ -203,7 +209,7 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
-            ReferenceEyeColor dbUpdatedEyeColor = UnitOfWork.ReferenceEyeColors.Get(apiUpdatingEyeColor.Code);
+            ReferenceEyeColor dbUpdatedEyeColor = UnitOfWork.ReferenceEyeColors.Get(apiUpdatingEyeColor.Id);
             AssertHelper.AreObjectsEqual(apiUpdatingEyeColor, dbUpdatedEyeColor);
         }
 
@@ -211,8 +217,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_EmptyPayload_HttpBadRequest()
         {
             // Arrange
-            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
-            var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorCode);
+            var randomEyeColorId = PreDefinedData.GetRandomEyeColorId();
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorId.ToString());
 
             // Act
             var response = await Client.PutAsync(path,
@@ -226,12 +232,12 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_MalformedPayload_HttpBadRequest()
         {
             // Arrange
-            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
-            var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorCode);
+            var randomEyeColorId = PreDefinedData.GetRandomEyeColorId();
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorId.ToString());
             var apiUpdatingEyeColor = new ReferenceEyeColorDto()
             {
-                Code = randomEyeColorCode,
-                // Display text is required, keep it missing
+                Id = randomEyeColorId
+                // Code is required, keep it missing
             };
 
             // Act
@@ -249,11 +255,12 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
-            var path = GetRelativePath(nameof(ReferenceEyeColorsController), notExistsEyeColorCode);
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), Int32.MaxValue.ToString());
             var apiUpdatingEyeColor = new ReferenceEyeColorDto()
             {
+                Id = Int32.MaxValue,
                 Code = notExistsEyeColorCode,
-                DisplayText = "Update Test"
+                Description = "Update Test"
             };
 
             // Act
@@ -270,8 +277,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_ValidEyeColor_HttpNoContent()
         {
             // Arrange
-            var randomEyeColorCode = PreDefinedData.GetRandomEyeColorCode();
-            var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorCode);
+            var randomEyeColorId = PreDefinedData.GetRandomEyeColorId();
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorId.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);
@@ -288,8 +295,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_InvalidEyeColor_HttpNotFound()
         {
             // Arrange
-            var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
-            var path = GetRelativePath(nameof(ReferenceEyeColorsController), notExistsEyeColorCode);
+            var path = GetRelativePath(nameof(ReferenceEyeColorsController), Int32.MaxValue.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);

@@ -52,8 +52,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Get_ValidBloodTypeCode_HttpOkAndReturnsSingleBloodType()
         {
             // Arrange
-            var randomBloodTypeCode = PreDefinedData.GetRandomBloodTypeCode();
-            var path = GetRelativePath(nameof(ReferenceBloodTypesController), randomBloodTypeCode);
+            var randomBloodTypeId = PreDefinedData.GetRandomBloodTypeId();
+            var path = GetRelativePath(nameof(ReferenceBloodTypesController), randomBloodTypeId.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -70,18 +70,18 @@ namespace PASRI.API.IntegrationTests.Controllers
 
             ReferenceBloodType preDefinedObject =
                 PreDefinedData.ReferenceBloodTypes
-                    .SingleOrDefault(c => c.Code == randomBloodTypeCode);
+                    .SingleOrDefault(c => c.Id == randomBloodTypeId);
 
             AssertHelper.AreObjectsEqual(apiReturnedObject,
                 Mapper.Map<ReferenceBloodType, ReferenceBloodTypeDto>(preDefinedObject));
         }
 
         [Test]
-        public async Task Get_InvalidBloodTypeCode_HttpNotFound()
+        public async Task Get_InvalidBloodTypeId_HttpNotFound()
         {
             // Arrange
             var notExistsBloodTypeCode = PreDefinedData.GetNotExistsBloodTypeCode();
-            var path = GetRelativePath(nameof(ReferenceBloodTypesController), notExistsBloodTypeCode);
+            var path = GetRelativePath(nameof(ReferenceBloodTypesController), Int32.MaxValue.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -99,8 +99,8 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newBloodTypeDto = new ReferenceBloodTypeDto()
             {
                 Code = notExistsBloodTypeCode,
-                DisplayText = "New BloodType",
-                StartDate = DateTime.UtcNow
+                Description = "New",
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -119,6 +119,9 @@ namespace PASRI.API.IntegrationTests.Controllers
             ReferenceBloodTypeDto apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceBloodTypeDto>(responseString);
 
+            Assert.That(apiReturnedObject.Id, Is.GreaterThan(0));
+
+            newBloodTypeDto.Id = apiReturnedObject.Id;
             AssertHelper.AreObjectsEqual(apiReturnedObject, newBloodTypeDto);
         }
 
@@ -141,12 +144,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var path = GetRelativePath(nameof(ReferenceBloodTypesController));
-            var notExistsBloodTypeCode = PreDefinedData.GetNotExistsBloodTypeCode();
+
             var newBloodTypeDto = new ReferenceBloodTypeDto()
             {
-                Code = notExistsBloodTypeCode,
-                // Display text is required, keep it missing
-                StartDate = DateTime.UtcNow
+                // Code is required, keep it missing
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -164,11 +166,14 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var path = GetRelativePath(nameof(ReferenceBloodTypesController));
+            var randomBloodTypeId = PreDefinedData.GetRandomBloodTypeId();
+            var randomBloodType = PreDefinedData.ReferenceBloodTypes[randomBloodTypeId - 1];
+
             var newBloodTypeDto = new ReferenceBloodTypeDto()
             {
-                Code = PreDefinedData.GetRandomBloodTypeCode(),
-                DisplayText = "Create Test",
-                StartDate = DateTime.UtcNow
+                Code = randomBloodType.Code,
+                Description = "Create Test",
+                CreatedDate = DateTime.UtcNow
             };
 
             // Act
@@ -185,10 +190,11 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_ValidBloodType_HttpNoContent()
         {
             // Arrange
-            var randomBloodTypeCode = PreDefinedData.GetRandomBloodTypeCode();
-            ReferenceBloodType apiUpdatingBloodType = UnitOfWork.ReferenceBloodTypes.Get(randomBloodTypeCode);
-            apiUpdatingBloodType.DisplayText = "Update Test";
-            var path = GetRelativePath(nameof(ReferenceBloodTypesController), randomBloodTypeCode);
+            var randomBloodTypeId = PreDefinedData.GetRandomBloodTypeId();
+
+            ReferenceBloodType apiUpdatingBloodType = UnitOfWork.ReferenceBloodTypes.Get(randomBloodTypeId);
+            apiUpdatingBloodType.Description = "Update Test";
+            var path = GetRelativePath(nameof(ReferenceBloodTypesController), randomBloodTypeId.ToString());
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
@@ -203,7 +209,7 @@ namespace PASRI.API.IntegrationTests.Controllers
                 String.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
-            ReferenceBloodType dbUpdatedBloodType = UnitOfWork.ReferenceBloodTypes.Get(apiUpdatingBloodType.Code);
+            ReferenceBloodType dbUpdatedBloodType = UnitOfWork.ReferenceBloodTypes.Get(apiUpdatingBloodType.Id);
             AssertHelper.AreObjectsEqual(apiUpdatingBloodType, dbUpdatedBloodType);
         }
 
@@ -211,8 +217,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_EmptyPayload_HttpBadRequest()
         {
             // Arrange
-            var randomBloodTypeCode = PreDefinedData.GetRandomBloodTypeCode();
-            var path = GetRelativePath(nameof(ReferenceBloodTypesController), randomBloodTypeCode);
+            var randomBloodTypeId = PreDefinedData.GetRandomBloodTypeId();
+            var path = GetRelativePath(nameof(ReferenceBloodTypesController), randomBloodTypeId.ToString());
 
             // Act
             var response = await Client.PutAsync(path,
@@ -226,12 +232,12 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Update_MalformedPayload_HttpBadRequest()
         {
             // Arrange
-            var randomBloodTypeCode = PreDefinedData.GetRandomBloodTypeCode();
-            var path = GetRelativePath(nameof(ReferenceBloodTypesController), randomBloodTypeCode);
+            var randomBloodTypeId = PreDefinedData.GetRandomBloodTypeId();
+            var path = GetRelativePath(nameof(ReferenceBloodTypesController), randomBloodTypeId.ToString());
             var apiUpdatingBloodType = new ReferenceBloodTypeDto()
             {
-                Code = randomBloodTypeCode,
-                // Display text is required, keep it missing
+                Id = randomBloodTypeId
+                // Code is required, keep it missing
             };
 
             // Act
@@ -249,11 +255,12 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var notExistsBloodTypeCode = PreDefinedData.GetNotExistsBloodTypeCode();
-            var path = GetRelativePath(nameof(ReferenceBloodTypesController), notExistsBloodTypeCode);
+            var path = GetRelativePath(nameof(ReferenceBloodTypesController), Int32.MaxValue.ToString());
             var apiUpdatingBloodType = new ReferenceBloodTypeDto()
             {
+                Id = Int32.MaxValue,
                 Code = notExistsBloodTypeCode,
-                DisplayText = "Update Test"
+                Description = "Update Test"
             };
 
             // Act
@@ -270,8 +277,8 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_ValidBloodType_HttpNoContent()
         {
             // Arrange
-            var randomBloodTypeCode = PreDefinedData.GetRandomBloodTypeCode();
-            var path = GetRelativePath(nameof(ReferenceBloodTypesController), randomBloodTypeCode);
+            var randomBloodTypeId = PreDefinedData.GetRandomBloodTypeId();
+            var path = GetRelativePath(nameof(ReferenceBloodTypesController), randomBloodTypeId.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);
@@ -288,8 +295,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_InvalidBloodType_HttpNotFound()
         {
             // Arrange
-            var notExistsBloodTypeCode = PreDefinedData.GetNotExistsBloodTypeCode();
-            var path = GetRelativePath(nameof(ReferenceBloodTypesController), notExistsBloodTypeCode);
+            var path = GetRelativePath(nameof(ReferenceBloodTypesController), Int32.MaxValue.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);

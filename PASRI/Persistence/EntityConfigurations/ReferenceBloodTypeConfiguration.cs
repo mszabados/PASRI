@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PASRI.API.Core.Domain;
 
@@ -16,18 +17,40 @@ namespace PASRI.API.Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<ReferenceBloodType> builder)
         {
-            builder.ToTable("ReferenceTypeBlood");
-            builder.HasKey(p => p.Code);
+            builder.ToTable("RE_BLOOD_TYPE");
+
+            builder.HasKey(p => p.Id);
+
+            builder.Property(p => p.Id)
+                .HasColumnName("blood_type_id")
+                .IsRequired();
+
             builder.Property(p => p.Code)
-                .HasColumnType("char(2)")
+                .HasColumnName("code")
+                .HasColumnType("char(3)")
                 .IsRequired();
-            builder.Property(p => p.DisplayText)
-                .HasColumnType("varchar(255)")
+            builder.HasIndex(c => c.Code).IsUnique();
+
+            builder.Property(p => p.Description)
+                .HasColumnName("description")
+                .HasColumnType("varchar(11)")
                 .IsRequired();
-            builder.Property(p => p.StartDate)
+
+            builder.Property(p => p.CreatedDate)
+                .HasColumnName("created_date")
                 .HasColumnType("datetime");
-            builder.Property(p => p.EndDate)
+
+            builder.Property(p => p.CreatedBy)
+                .HasColumnName("created_by")
+                .HasColumnType("varchar(30)");
+
+            builder.Property(p => p.ModifiedDate)
+                .HasColumnName("modified_date")
                 .HasColumnType("datetime");
+
+            builder.Property(p => p.ModifiedBy)
+                .HasColumnName("modified_by")
+                .HasColumnType("varchar(30)");
         }
     }
 }

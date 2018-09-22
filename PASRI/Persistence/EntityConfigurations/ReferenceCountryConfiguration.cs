@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PASRI.API.Core.Domain;
 
@@ -16,18 +17,39 @@ namespace PASRI.API.Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<ReferenceCountry> builder)
         {
-            builder.ToTable("ReferenceCountry");
-            builder.HasKey(p => p.Code);
+            builder.ToTable("RE_COUNTRY");
+
+            builder.HasKey(p => p.Id);
+
+            builder.Property(p => p.Id)
+                .HasColumnName("country_id")
+                .IsRequired();
+
             builder.Property(p => p.Code)
+                .HasColumnName("code")
                 .HasColumnType("char(2)")
                 .IsRequired();
-            builder.Property(p => p.DisplayText)
-                .HasColumnType("varchar(255)")
+            builder.HasIndex(c => c.Code).IsUnique();
+
+            builder.Property(p => p.Description)
+                .HasColumnType("varchar(44)")
                 .IsRequired();
-            builder.Property(p => p.StartDate)
-                .HasColumnType("datetime");
-            builder.Property(p => p.EndDate)
-                .HasColumnType("datetime");
+
+            builder.Property(p => p.CreatedDate)
+                .HasColumnType("datetime")
+                .HasAnnotation("description", "created_date");
+
+            builder.Property(p => p.CreatedBy)
+                .HasColumnType("varchar(30)")
+                .HasAnnotation("description", "created_by");
+
+            builder.Property(p => p.ModifiedDate)
+                .HasColumnType("datetime")
+                .HasAnnotation("description", "modified_date");
+
+            builder.Property(p => p.ModifiedBy)
+                .HasColumnType("varchar(30)")
+                .HasAnnotation("description", "modified_by");
         }
     }
 }
