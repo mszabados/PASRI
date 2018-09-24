@@ -15,6 +15,20 @@
     <Compile Remove="Controllers\ReferenceEthnicGroupDemographicsController - Copy.cs" />
     <Compile Remove="Migrations\20180921144503_initial.cs" />
     <Compile Remove="Migrations\20180921144503_initial.Designer.cs" />
+    <Compile Remove="Migrations\20180924114354_AddPersonTableAndRelateToSuffix.cs" />
+    <Compile Remove="Migrations\20180924114354_AddPersonTableAndRelateToSuffix.Designer.cs" />
+    <Compile Remove="Migrations\20180924115527_AddPersonAndBirthTables.cs" />
+    <Compile Remove="Migrations\20180924115527_AddPersonAndBirthTables.Designer.cs" />
+    <Compile Remove="Migrations\20180924115936_AddPersonAndBirthTables.cs" />
+    <Compile Remove="Migrations\20180924115936_AddPersonAndBirthTables.Designer.cs" />
+    <Compile Remove="Migrations\20180924120207_AddPersonAndBirthTables.cs" />
+    <Compile Remove="Migrations\20180924120207_AddPersonAndBirthTables.Designer.cs" />
+    <Compile Remove="Migrations\20180924120620_AddPersonAndBirthTables.cs" />
+    <Compile Remove="Migrations\20180924120620_AddPersonAndBirthTables.Designer.cs" />
+    <Compile Remove="Migrations\20180924120743_AddPersonAndBirthTables.cs" />
+    <Compile Remove="Migrations\20180924120743_AddPersonAndBirthTables.Designer.cs" />
+    <Compile Remove="Migrations\20180924121321_AddPersonAndBirthTables.cs" />
+    <Compile Remove="Migrations\20180924121321_AddPersonAndBirthTables.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

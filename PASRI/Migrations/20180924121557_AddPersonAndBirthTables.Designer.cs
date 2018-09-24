@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PASRI.API.Persistence;
 
 namespace PASRI.API.Migrations
 {
     [DbContext(typeof(PasriDbContext))]
-    partial class PasriDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180924121557_AddPersonAndBirthTables")]
+    partial class AddPersonAndBirthTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,20 +40,20 @@ namespace PASRI.API.Migrations
                     b.Property<int>("CountryId");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnName("created_by")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "created_by");
 
                     b.Property<DateTime?>("CreatedDate")
-                        .HasColumnName("created_date")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "created_date");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnName("modified_by")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "modified_by");
 
                     b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnName("modified_date")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "modified_date");
 
                     b.Property<int>("PersonId")
                         .HasColumnName("person_id");
@@ -80,16 +82,14 @@ namespace PASRI.API.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnName("created_by")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "created_by");
 
                     b.Property<DateTime?>("CreatedDate")
-                        .HasColumnName("created_date")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "created_date");
 
-                    b.Property<DateTime>("EffectiveDate")
-                        .HasColumnName("effect_date")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("EffectiveDate");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -106,12 +106,12 @@ namespace PASRI.API.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnName("modified_by")
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(30)")
+                        .HasAnnotation("description", "modified_by");
 
                     b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnName("modified_date")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime")
+                        .HasAnnotation("description", "modified_date");
 
                     b.Property<int?>("SuffixId")
                         .HasColumnName("suffix_id");
