@@ -32,24 +32,25 @@ namespace PASRI.API.Persistence.EntityConfigurations
             builder.HasIndex(c => c.Code).IsUnique();
 
             builder.Property(p => p.Description)
+                .HasColumnName("description")
                 .HasColumnType("varchar(44)")
                 .IsRequired();
 
             builder.Property(p => p.CreatedDate)
-                .HasColumnType("datetime")
-                .HasAnnotation("description", "created_date");
+                .HasColumnName("created_date")
+                .HasColumnType("datetime");
 
             builder.Property(p => p.CreatedBy)
-                .HasColumnType("varchar(30)")
-                .HasAnnotation("description", "created_by");
+                .HasColumnName("created_by")
+                .HasColumnType("varchar(30)");
 
             builder.Property(p => p.ModifiedDate)
-                .HasColumnType("datetime")
-                .HasAnnotation("description", "modified_date");
+                .HasColumnName("modified_date")
+                .HasColumnType("datetime");
 
             builder.Property(p => p.ModifiedBy)
-                .HasColumnType("varchar(30)")
-                .HasAnnotation("description", "modified_by");
+                .HasColumnName("modified_by")
+                .HasColumnType("varchar(30)");
         }
     }
 }

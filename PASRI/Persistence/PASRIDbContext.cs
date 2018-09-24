@@ -22,15 +22,16 @@ namespace PASRI.API.Persistence
             : base(options)
         {
         }
-        public virtual DbSet<ReferenceCountry> ReferenceCountries{ get; set; }
+
+        public virtual DbSet<ReferenceCountry> ReferenceCountries { get; set; }
         public virtual DbSet<ReferenceEthnicGroupDemographic> ReferenceEthnicGroupDemographics { get; set; }
         public virtual DbSet<ReferenceGenderDemographic> ReferenceGenderDemographics { get; set; }
         public virtual DbSet<ReferenceEyeColor> ReferenceEyeColors { get; set; }
         public virtual DbSet<ReferenceHairColor> ReferenceHairColors { get; set; }
+        public virtual DbSet<ReferenceNameSuffix> ReferenceNameSuffixes { get; set; }
         public virtual DbSet<ReferenceRaceDemographic> ReferenceRaceDemographics { get; set; }
         public virtual DbSet<ReferenceReligionDemographic> ReferenceReligionDemographics { get; set; }
         public virtual DbSet<ReferenceStateProvince> ReferenceStates { get; set; }
-        public virtual DbSet<ReferenceNameSuffix> ReferenceSuffixNames { get; set; }
         public virtual DbSet<ReferenceBloodType> ReferenceBloodTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -41,10 +42,10 @@ namespace PASRI.API.Persistence
             modelBuilder.ApplyConfiguration(new ReferenceEyeColorConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceGenderDemographicConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceHairColorConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceNameSuffixConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceRaceDemographicConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceReligionDemographicConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceStateProvinceConfiguration());
-            modelBuilder.ApplyConfiguration(new ReferenceNameSuffixConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
