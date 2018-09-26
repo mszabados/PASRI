@@ -1,5 +1,4 @@
-﻿using System;
-using PASRI.API.Core.Domain;
+﻿using PASRI.API.Core.Domain;
 using PASRI.API.Core.Repositories;
 
 namespace PASRI.API.Persistence.Repositories

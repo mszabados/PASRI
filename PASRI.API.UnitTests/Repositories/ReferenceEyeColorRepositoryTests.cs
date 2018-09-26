@@ -4,7 +4,6 @@ using PASRI.API.Core.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
 using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
@@ -106,7 +105,7 @@ namespace PASRI.API.UnitTests.Repositories
             var newReferenceEyeColor = new ReferenceEyeColor()
             {
                 Code = notExistsEyeColorCode,
-                Description = notExistsEyeColorCode
+                LongName = notExistsEyeColorCode
             };
 
             UnitOfWork.ReferenceEyeColors.Add(newReferenceEyeColor);
@@ -154,8 +153,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newEyeColors = new Collection<ReferenceEyeColor>
             {
-                new ReferenceEyeColor() { Code = notExistsEyeColorCode1, Description = "" },
-                new ReferenceEyeColor() { Code = notExistsEyeColorCode2, Description = "" }
+                new ReferenceEyeColor() { Code = notExistsEyeColorCode1, LongName = "" },
+                new ReferenceEyeColor() { Code = notExistsEyeColorCode2, LongName = "" }
             };
             UnitOfWork.ReferenceEyeColors.AddRange(newEyeColors);
             UnitOfWork.Complete();
@@ -171,8 +170,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
             var newEyeColors = new Collection<ReferenceEyeColor>
             {
-                new ReferenceEyeColor() { Id = Int32.MaxValue, Code = notExistsEyeColorCode, Description = "" },
-                new ReferenceEyeColor() { Id = Int32.MaxValue, Code = notExistsEyeColorCode, Description = "" }
+                new ReferenceEyeColor() { Id = Int32.MaxValue, Code = notExistsEyeColorCode, LongName = "" },
+                new ReferenceEyeColor() { Id = Int32.MaxValue, Code = notExistsEyeColorCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceEyeColors.AddRange(newEyeColors),

@@ -14,6 +14,10 @@ namespace PASRI.API.Persistence.EntityConfigurations
     /// </remarks>
     public class PersonConfiguration : IEntityTypeConfiguration<Person>
     {
+        public const int FirstNameLength = 80;
+        public const int MiddleNameLength = 80;
+        public const int LastNameLength = 80;
+
         public void Configure(EntityTypeBuilder<Person> builder)
         {
             builder.ToTable("PERSON", schema: "PERSON");
@@ -26,16 +30,16 @@ namespace PASRI.API.Persistence.EntityConfigurations
 
             builder.Property(p => p.FirstName)
                 .HasColumnName("first_name")
-                .HasColumnType("varchar(255)")
+                .HasColumnType($"varchar({FirstNameLength})")
                 .IsRequired();
 
             builder.Property(p => p.MiddleName)
                 .HasColumnName("middle_name")
-                .HasColumnType("varchar(255)");
+                .HasColumnType($"varchar({MiddleNameLength})");
 
             builder.Property(p => p.LastName)
                 .HasColumnName("last_name")
-                .HasColumnType("varchar(255)")
+                .HasColumnType($"varchar({LastNameLength})")
                 .IsRequired();
 
             builder.Property(p => p.SuffixId)

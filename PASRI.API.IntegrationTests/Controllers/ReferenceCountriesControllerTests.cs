@@ -99,7 +99,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newCountryDto = new ReferenceCountryDto()
             {
                 Code = notExistsCountryCode,
-                Description = "New Country",
+                LongName = "New Country",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -172,7 +172,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newCountryDto = new ReferenceCountryDto()
             {
                 Code = randomCountry.Code,
-                Description = "Create Test",
+                LongName = "Create Test",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -193,7 +193,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var randomCountryId = PreDefinedData.GetRandomCountryId();
 
             ReferenceCountry apiUpdatingCountry = UnitOfWork.ReferenceCountries.Get(randomCountryId);
-            apiUpdatingCountry.Description = "Update Test";
+            apiUpdatingCountry.LongName = "Update Test";
             var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryId.ToString());
 
             // Act
@@ -260,7 +260,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             {
                 Id = Int32.MaxValue,
                 Code = notExistsCountryCode,
-                Description = "Update Test"
+                LongName = "Update Test"
             };
 
             // Act

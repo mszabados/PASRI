@@ -4,7 +4,6 @@ using PASRI.API.Core.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
 using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
@@ -106,7 +105,7 @@ namespace PASRI.API.UnitTests.Repositories
             var newReferenceGenderDemographic = new ReferenceGenderDemographic()
             {
                 Code = notExistsGenderDemographicCode,
-                Description = notExistsGenderDemographicCode
+                LongName = notExistsGenderDemographicCode
             };
 
             UnitOfWork.ReferenceGenderDemographics.Add(newReferenceGenderDemographic);
@@ -154,8 +153,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newGenderDemographics = new Collection<ReferenceGenderDemographic>
             {
-                new ReferenceGenderDemographic() { Code = notExistsGenderDemographicCode1, Description = "" },
-                new ReferenceGenderDemographic() { Code = notExistsGenderDemographicCode2, Description = "" }
+                new ReferenceGenderDemographic() { Code = notExistsGenderDemographicCode1, LongName = "" },
+                new ReferenceGenderDemographic() { Code = notExistsGenderDemographicCode2, LongName = "" }
             };
             UnitOfWork.ReferenceGenderDemographics.AddRange(newGenderDemographics);
             UnitOfWork.Complete();
@@ -171,8 +170,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsGenderDemographicCode = PreDefinedData.GetNotExistsGenderDemographicCode();
             var newGenderDemographics = new Collection<ReferenceGenderDemographic>
             {
-                new ReferenceGenderDemographic() { Id = Int32.MaxValue, Code = notExistsGenderDemographicCode, Description = "" },
-                new ReferenceGenderDemographic() { Id = Int32.MaxValue, Code = notExistsGenderDemographicCode, Description = "" }
+                new ReferenceGenderDemographic() { Id = Int32.MaxValue, Code = notExistsGenderDemographicCode, LongName = "" },
+                new ReferenceGenderDemographic() { Id = Int32.MaxValue, Code = notExistsGenderDemographicCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceGenderDemographics.AddRange(newGenderDemographics),

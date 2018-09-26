@@ -99,7 +99,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newRaceDemographicDto = new ReferenceRaceDemographicDto()
             {
                 Code = notExistsRaceDemographicCode,
-                Description = "New RaceDemographic",
+                LongName = "New RaceDemographic",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -172,7 +172,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newRaceDemographicDto = new ReferenceRaceDemographicDto()
             {
                 Code = randomRaceDemographic.Code,
-                Description = "Create Test",
+                LongName = "Create Test",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -193,7 +193,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
 
             ReferenceRaceDemographic apiUpdatingRaceDemographic = UnitOfWork.ReferenceRaceDemographics.Get(randomRaceDemographicId);
-            apiUpdatingRaceDemographic.Description = "Update Test";
+            apiUpdatingRaceDemographic.LongName = "Update Test";
             var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicId.ToString());
 
             // Act
@@ -260,7 +260,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             {
                 Id = Int32.MaxValue,
                 Code = notExistsRaceDemographicCode,
-                Description = "Update Test"
+                LongName = "Update Test"
             };
 
             // Act

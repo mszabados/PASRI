@@ -99,7 +99,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newGenderDemographicDto = new ReferenceGenderDemographicDto()
             {
                 Code = notExistsGenderDemographicCode,
-                Description = "New",
+                LongName = "New",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -172,7 +172,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newGenderDemographicDto = new ReferenceGenderDemographicDto()
             {
                 Code = randomGenderDemographic.Code,
-                Description = "Create",
+                LongName = "Create",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -193,7 +193,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var randomGenderDemographicId = PreDefinedData.GetRandomGenderDemographicId();
 
             ReferenceGenderDemographic apiUpdatingGenderDemographic = UnitOfWork.ReferenceGenderDemographics.Get(randomGenderDemographicId);
-            apiUpdatingGenderDemographic.Description = "Update";
+            apiUpdatingGenderDemographic.LongName = "Update";
             var path = GetRelativePath(nameof(ReferenceGenderDemographicsController), randomGenderDemographicId.ToString());
 
             // Act
@@ -260,7 +260,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             {
                 Id = Int32.MaxValue,
                 Code = notExistsGenderDemographicCode,
-                Description = "Update"
+                LongName = "Update"
             };
 
             // Act

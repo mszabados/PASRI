@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PASRI.API.Core.Domain;
 
@@ -15,6 +14,9 @@ namespace PASRI.API.Persistence.EntityConfigurations
     /// </remarks>
     public class ReferenceRaceDemographicConfiguration : IEntityTypeConfiguration<ReferenceRaceDemographic>
     {
+        public const int CodeLength = 1;
+        public const int LongNameLength = 237;
+
         public void Configure(EntityTypeBuilder<ReferenceRaceDemographic> builder)
         {
             builder.ToTable("RE_RACE", schema: "PERSON");
@@ -27,13 +29,13 @@ namespace PASRI.API.Persistence.EntityConfigurations
 
             builder.Property(p => p.Code)
                 .HasColumnName("code")
-                .HasColumnType("char(1)")
+                .HasColumnType($"char({CodeLength})")
                 .IsRequired();
             builder.HasIndex(c => c.Code).IsUnique();
 
-            builder.Property(p => p.Description)
-                .HasColumnName("description")
-                .HasColumnType("varchar(237)")
+            builder.Property(p => p.LongName)
+                .HasColumnName("long_name")
+                .HasColumnType($"varchar({LongNameLength})")
                 .IsRequired();
 
             builder.Property(p => p.CreatedDate)

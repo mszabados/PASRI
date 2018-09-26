@@ -4,7 +4,6 @@ using PASRI.API.Core.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
 using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
@@ -106,7 +105,7 @@ namespace PASRI.API.UnitTests.Repositories
             var newReferenceCountry = new ReferenceCountry()
             {
                 Code = notExistsCountryCode,
-                Description = notExistsCountryCode
+                LongName = notExistsCountryCode
             };
 
             UnitOfWork.ReferenceCountries.Add(newReferenceCountry);
@@ -154,8 +153,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newCountries = new Collection<ReferenceCountry>
             {
-                new ReferenceCountry() { Code = notExistsCountryCode1, Description = "" },
-                new ReferenceCountry() { Code = notExistsCountryCode2, Description = "" }
+                new ReferenceCountry() { Code = notExistsCountryCode1, LongName = "" },
+                new ReferenceCountry() { Code = notExistsCountryCode2, LongName = "" }
             };
             UnitOfWork.ReferenceCountries.AddRange(newCountries);
             UnitOfWork.Complete();
@@ -171,8 +170,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
             var newCountries = new Collection<ReferenceCountry>
             {
-                new ReferenceCountry() { Id = Int32.MaxValue, Code = notExistsCountryCode, Description = "" },
-                new ReferenceCountry() { Id = Int32.MaxValue, Code = notExistsCountryCode, Description = "" }
+                new ReferenceCountry() { Id = Int32.MaxValue, Code = notExistsCountryCode, LongName = "" },
+                new ReferenceCountry() { Id = Int32.MaxValue, Code = notExistsCountryCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceCountries.AddRange(newCountries),

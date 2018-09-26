@@ -99,7 +99,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newNameSuffixDto = new ReferenceNameSuffixDto()
             {
                 Code = notExistsNameSuffixCode,
-                Description = "New NameSuffix",
+                LongName = "New NameSuffix",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -172,7 +172,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newNameSuffixDto = new ReferenceNameSuffixDto()
             {
                 Code = randomNameSuffix.Code,
-                Description = "Create Test",
+                LongName = "Create Test",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -193,7 +193,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var randomNameSuffixId = PreDefinedData.GetRandomNameSuffixId();
 
             ReferenceNameSuffix apiUpdatingNameSuffix = UnitOfWork.ReferenceNameSuffixes.Get(randomNameSuffixId);
-            apiUpdatingNameSuffix.Description = "Update Test";
+            apiUpdatingNameSuffix.LongName = "Update Test";
             var path = GetRelativePath(nameof(ReferenceNameSuffixesController), randomNameSuffixId.ToString());
 
             // Act
@@ -260,7 +260,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             {
                 Id = Int32.MaxValue,
                 Code = notExistsNameSuffixCode,
-                Description = "Update Test"
+                LongName = "Update Test"
             };
 
             // Act

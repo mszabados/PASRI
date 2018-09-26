@@ -99,7 +99,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newReligionDemographicDto = new ReferenceReligionDemographicDto()
             {
                 Code = notExistsReligionDemographicCode,
-                Description = "New ReligionDemographic",
+                LongName = "New ReligionDemographic",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -172,7 +172,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newReligionDemographicDto = new ReferenceReligionDemographicDto()
             {
                 Code = randomReligionDemographic.Code,
-                Description = "Create Test",
+                LongName = "Create Test",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -193,7 +193,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var randomReligionDemographicId = PreDefinedData.GetRandomReligionDemographicId();
 
             ReferenceReligionDemographic apiUpdatingReligionDemographic = UnitOfWork.ReferenceReligionDemographics.Get(randomReligionDemographicId);
-            apiUpdatingReligionDemographic.Description = "Update Test";
+            apiUpdatingReligionDemographic.LongName = "Update Test";
             var path = GetRelativePath(nameof(ReferenceReligionDemographicsController), randomReligionDemographicId.ToString());
 
             // Act
@@ -260,7 +260,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             {
                 Id = Int32.MaxValue,
                 Code = notExistsReligionDemographicCode,
-                Description = "Update Test"
+                LongName = "Update Test"
             };
 
             // Act

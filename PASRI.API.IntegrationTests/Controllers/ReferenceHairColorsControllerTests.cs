@@ -99,7 +99,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newHairColorDto = new ReferenceHairColorDto()
             {
                 Code = notExistsHairColorCode,
-                Description = "New",
+                LongName = "New",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -172,7 +172,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newHairColorDto = new ReferenceHairColorDto()
             {
                 Code = randomHairColor.Code,
-                Description = "Create",
+                LongName = "Create",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -193,7 +193,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var randomHairColorId = PreDefinedData.GetRandomHairColorId();
 
             ReferenceHairColor apiUpdatingHairColor = UnitOfWork.ReferenceHairColors.Get(randomHairColorId);
-            apiUpdatingHairColor.Description = "Update";
+            apiUpdatingHairColor.LongName = "Update";
             var path = GetRelativePath(nameof(ReferenceHairColorsController), randomHairColorId.ToString());
 
             // Act
@@ -260,7 +260,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             {
                 Id = Int32.MaxValue,
                 Code = notExistsHairColorCode,
-                Description = "Update"
+                LongName = "Update"
             };
 
             // Act

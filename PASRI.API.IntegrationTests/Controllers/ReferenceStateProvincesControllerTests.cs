@@ -99,7 +99,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newStateProvinceDto = new ReferenceStateProvinceDto()
             {
                 Code = notExistsStateProvinceCode,
-                Description = "New StateProvince",
+                LongName = "New StateProvince",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -172,7 +172,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newStateProvinceDto = new ReferenceStateProvinceDto()
             {
                 Code = randomStateProvince.Code,
-                Description = "Create Test",
+                LongName = "Create Test",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -193,7 +193,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var randomStateProvinceId = PreDefinedData.GetRandomStateProvinceId();
 
             ReferenceStateProvince apiUpdatingStateProvince = UnitOfWork.ReferenceStateProvinces.Get(randomStateProvinceId);
-            apiUpdatingStateProvince.Description = "Update Test";
+            apiUpdatingStateProvince.LongName = "Update Test";
             var path = GetRelativePath(nameof(ReferenceStateProvincesController), randomStateProvinceId.ToString());
 
             // Act
@@ -260,7 +260,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             {
                 Id = Int32.MaxValue,
                 Code = notExistsStateProvinceCode,
-                Description = "Update Test"
+                LongName = "Update Test"
             };
 
             // Act

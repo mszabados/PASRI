@@ -4,7 +4,6 @@ using PASRI.API.Core.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
 using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
@@ -106,7 +105,7 @@ namespace PASRI.API.UnitTests.Repositories
             var newReferenceBloodType = new ReferenceBloodType()
             {
                 Code = notExistsBloodTypeCode,
-                Description = notExistsBloodTypeCode
+                LongName = notExistsBloodTypeCode
             };
 
             UnitOfWork.ReferenceBloodTypes.Add(newReferenceBloodType);
@@ -154,8 +153,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newBloodTypes = new Collection<ReferenceBloodType>
             {
-                new ReferenceBloodType() { Code = notExistsBloodTypeCode1, Description = "" },
-                new ReferenceBloodType() { Code = notExistsBloodTypeCode2, Description = "" }
+                new ReferenceBloodType() { Code = notExistsBloodTypeCode1, LongName = "" },
+                new ReferenceBloodType() { Code = notExistsBloodTypeCode2, LongName = "" }
             };
             UnitOfWork.ReferenceBloodTypes.AddRange(newBloodTypes);
             UnitOfWork.Complete();
@@ -171,8 +170,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsBloodTypeCode = PreDefinedData.GetNotExistsBloodTypeCode();
             var newBloodTypes = new Collection<ReferenceBloodType>
             {
-                new ReferenceBloodType() { Id = Int32.MaxValue, Code = notExistsBloodTypeCode, Description = "" },
-                new ReferenceBloodType() { Id = Int32.MaxValue, Code = notExistsBloodTypeCode, Description = "" }
+                new ReferenceBloodType() { Id = Int32.MaxValue, Code = notExistsBloodTypeCode, LongName = "" },
+                new ReferenceBloodType() { Id = Int32.MaxValue, Code = notExistsBloodTypeCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceBloodTypes.AddRange(newBloodTypes),

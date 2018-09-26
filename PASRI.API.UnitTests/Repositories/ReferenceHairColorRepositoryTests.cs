@@ -4,7 +4,6 @@ using PASRI.API.Core.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
 using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
@@ -106,7 +105,7 @@ namespace PASRI.API.UnitTests.Repositories
             var newReferenceHairColor = new ReferenceHairColor()
             {
                 Code = notExistsHairColorCode,
-                Description = notExistsHairColorCode
+                LongName = notExistsHairColorCode
             };
 
             UnitOfWork.ReferenceHairColors.Add(newReferenceHairColor);
@@ -154,8 +153,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newHairColors = new Collection<ReferenceHairColor>
             {
-                new ReferenceHairColor() { Code = notExistsHairColorCode1, Description = "" },
-                new ReferenceHairColor() { Code = notExistsHairColorCode2, Description = "" }
+                new ReferenceHairColor() { Code = notExistsHairColorCode1, LongName = "" },
+                new ReferenceHairColor() { Code = notExistsHairColorCode2, LongName = "" }
             };
             UnitOfWork.ReferenceHairColors.AddRange(newHairColors);
             UnitOfWork.Complete();
@@ -171,8 +170,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
             var newHairColors = new Collection<ReferenceHairColor>
             {
-                new ReferenceHairColor() { Id = Int32.MaxValue, Code = notExistsHairColorCode, Description = "" },
-                new ReferenceHairColor() { Id = Int32.MaxValue, Code = notExistsHairColorCode, Description = "" }
+                new ReferenceHairColor() { Id = Int32.MaxValue, Code = notExistsHairColorCode, LongName = "" },
+                new ReferenceHairColor() { Id = Int32.MaxValue, Code = notExistsHairColorCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceHairColors.AddRange(newHairColors),

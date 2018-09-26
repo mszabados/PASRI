@@ -99,7 +99,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newEyeColorDto = new ReferenceEyeColorDto()
             {
                 Code = notExistsEyeColorCode,
-                Description = "New EyeColor",
+                LongName = "New EyeColor",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -172,7 +172,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newEyeColorDto = new ReferenceEyeColorDto()
             {
                 Code = randomEyeColor.Code,
-                Description = "Create Test",
+                LongName = "Create Test",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -193,7 +193,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var randomEyeColorId = PreDefinedData.GetRandomEyeColorId();
 
             ReferenceEyeColor apiUpdatingEyeColor = UnitOfWork.ReferenceEyeColors.Get(randomEyeColorId);
-            apiUpdatingEyeColor.Description = "Update Test";
+            apiUpdatingEyeColor.LongName = "Update Test";
             var path = GetRelativePath(nameof(ReferenceEyeColorsController), randomEyeColorId.ToString());
 
             // Act
@@ -260,7 +260,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             {
                 Id = Int32.MaxValue,
                 Code = notExistsEyeColorCode,
-                Description = "Update Test"
+                LongName = "Update Test"
             };
 
             // Act

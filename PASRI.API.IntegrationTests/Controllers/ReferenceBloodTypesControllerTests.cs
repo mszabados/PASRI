@@ -99,7 +99,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newBloodTypeDto = new ReferenceBloodTypeDto()
             {
                 Code = notExistsBloodTypeCode,
-                Description = "New",
+                LongName = "New",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -172,7 +172,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var newBloodTypeDto = new ReferenceBloodTypeDto()
             {
                 Code = randomBloodType.Code,
-                Description = "Create Test",
+                LongName = "Create Test",
                 CreatedDate = DateTime.UtcNow
             };
 
@@ -193,7 +193,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var randomBloodTypeId = PreDefinedData.GetRandomBloodTypeId();
 
             ReferenceBloodType apiUpdatingBloodType = UnitOfWork.ReferenceBloodTypes.Get(randomBloodTypeId);
-            apiUpdatingBloodType.Description = "Update Test";
+            apiUpdatingBloodType.LongName = "Update Test";
             var path = GetRelativePath(nameof(ReferenceBloodTypesController), randomBloodTypeId.ToString());
 
             // Act
@@ -260,7 +260,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             {
                 Id = Int32.MaxValue,
                 Code = notExistsBloodTypeCode,
-                Description = "Update Test"
+                LongName = "Update Test"
             };
 
             // Act

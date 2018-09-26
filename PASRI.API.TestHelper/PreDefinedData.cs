@@ -9,10 +9,10 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceBloodType[] ReferenceBloodTypes = new[]
         {
-            new ReferenceBloodType() { Id = 1, Code = "O", Description = "No antigens, A and B antibodies" },
-            new ReferenceBloodType() { Id = 2, Code = "A", Description = "A antigen, B antibody" },
-            new ReferenceBloodType() { Id = 3, Code = "B", Description = "B antigen, A antibody" },
-            new ReferenceBloodType() { Id = 4, Code = "AB", Description = "A and B antigen, no antibodies" }
+            new ReferenceBloodType() { Id = 1, Code = "O", LongName = "No antigens, A and B antibodies" },
+            new ReferenceBloodType() { Id = 2, Code = "A", LongName = "A antigen, B antibody" },
+            new ReferenceBloodType() { Id = 3, Code = "B", LongName = "B antigen, A antibody" },
+            new ReferenceBloodType() { Id = 4, Code = "AB", LongName = "A and B antigen, no antibodies" }
         };
 
         /// <summary>
@@ -44,9 +44,9 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceCountry[] ReferenceCountries = new[]
         {
-            new ReferenceCountry() { Id = 1, Code = "US", Description = "United States of America" },
-            new ReferenceCountry() { Id = 2, Code = "CA", Description = "Canada" },
-            new ReferenceCountry() { Id = 3, Code = "MX", Description = "Mexico" }
+            new ReferenceCountry() { Id = 1, Code = "US", LongName = "United States of America" },
+            new ReferenceCountry() { Id = 2, Code = "CA", LongName = "Canada" },
+            new ReferenceCountry() { Id = 3, Code = "MX", LongName = "Mexico" }
         };
 
         /// <summary>
@@ -78,10 +78,10 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceEthnicGroupDemographic[] ReferenceEthnicGroupDemographics = new[]
         {
-            new ReferenceEthnicGroupDemographic() { Id = 1, Code = "AA", Description = "Asian Indian" },
-            new ReferenceEthnicGroupDemographic() { Id = 2, Code = "AB", Description = "Chinese" },
-            new ReferenceEthnicGroupDemographic() { Id = 3, Code = "AC", Description = "Filipino" },
-            new ReferenceEthnicGroupDemographic() { Id = 4, Code = "BG", Description = "Other" }
+            new ReferenceEthnicGroupDemographic() { Id = 1, Code = "AA", LongName = "Asian Indian" },
+            new ReferenceEthnicGroupDemographic() { Id = 2, Code = "AB", LongName = "Chinese" },
+            new ReferenceEthnicGroupDemographic() { Id = 3, Code = "AC", LongName = "Filipino" },
+            new ReferenceEthnicGroupDemographic() { Id = 4, Code = "BG", LongName = "Other" }
         };
 
         /// <summary>
@@ -109,9 +109,9 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceEyeColor[] ReferenceEyeColors = new[]
         {
-            new ReferenceEyeColor() { Id = 1, Code = "BR", Description = "Brown" },
-            new ReferenceEyeColor() { Id = 2, Code = "GR", Description = "Green" },
-            new ReferenceEyeColor() { Id = 3, Code = "BL", Description = "Blue" }
+            new ReferenceEyeColor() { Id = 1, Code = "BR", LongName = "Brown" },
+            new ReferenceEyeColor() { Id = 2, Code = "GR", LongName = "Green" },
+            new ReferenceEyeColor() { Id = 3, Code = "BL", LongName = "Blue" }
         };
 
         /// <summary>
@@ -139,9 +139,9 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceGenderDemographic[] ReferenceGenderDemographics = new[]
         {
-            new ReferenceGenderDemographic() { Id = 1, Code = "Z", Description = "Unknown" },
-            new ReferenceGenderDemographic() { Id = 2, Code = "F", Description = "Female" },
-            new ReferenceGenderDemographic() { Id = 3, Code = "M", Description = "Male" }
+            new ReferenceGenderDemographic() { Id = 1, Code = "Z", LongName = "Unknown" },
+            new ReferenceGenderDemographic() { Id = 2, Code = "F", LongName = "Female" },
+            new ReferenceGenderDemographic() { Id = 3, Code = "M", LongName = "Male" }
         };
 
         /// <summary>
@@ -169,9 +169,9 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceHairColor[] ReferenceHairColors = new[]
         {
-            new ReferenceHairColor() { Id = 1, Code = "BR", Description = "Brown" },
-            new ReferenceHairColor() { Id = 2, Code = "BK", Description = "Black" },
-            new ReferenceHairColor() { Id = 3, Code = "BL", Description = "Blond" }
+            new ReferenceHairColor() { Id = 1, Code = "BR", LongName = "Brown" },
+            new ReferenceHairColor() { Id = 2, Code = "BK", LongName = "Black" },
+            new ReferenceHairColor() { Id = 3, Code = "BL", LongName = "Blond" }
         };
 
         /// <summary>
@@ -199,12 +199,12 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceRaceDemographic[] ReferenceRaceDemographics = new[]
         {
-            new ReferenceRaceDemographic() { Id = 1, Code = "A", Description = "American Indian/Alaskan Native" },
-            new ReferenceRaceDemographic() { Id = 2, Code = "B", Description = "Asian" },
-            new ReferenceRaceDemographic() { Id = 3, Code = "C", Description = "Black" },
-            new ReferenceRaceDemographic() { Id = 4, Code = "D", Description = "Native Hawaiian or other Pacific Islander" },
-            new ReferenceRaceDemographic() { Id = 5, Code = "E", Description = "White" },
-            new ReferenceRaceDemographic() { Id = 6, Code = "F", Description = "Declined to Respond" }
+            new ReferenceRaceDemographic() { Id = 1, Code = "A", LongName = "American Indian/Alaskan Native" },
+            new ReferenceRaceDemographic() { Id = 2, Code = "B", LongName = "Asian" },
+            new ReferenceRaceDemographic() { Id = 3, Code = "C", LongName = "Black" },
+            new ReferenceRaceDemographic() { Id = 4, Code = "D", LongName = "Native Hawaiian or other Pacific Islander" },
+            new ReferenceRaceDemographic() { Id = 5, Code = "E", LongName = "White" },
+            new ReferenceRaceDemographic() { Id = 6, Code = "F", LongName = "Declined to Respond" }
         };
 
         /// <summary>
@@ -232,9 +232,9 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceReligionDemographic[] ReferenceReligionDemographics = new[]
         {
-            new ReferenceReligionDemographic() { Id = 1, Code = "AC", Description = "Advent Christian Church" },
-            new ReferenceReligionDemographic() { Id = 2, Code = "AV", Description = "Adventist Churches - Excludes Adv ent Christian Church, Jehovah's Witnesses, Native American, and Seventh Day Adventist" },
-            new ReferenceReligionDemographic() { Id = 3, Code = "ME", Description = "African Methodist Episcopal Church" }
+            new ReferenceReligionDemographic() { Id = 1, Code = "AC", LongName = "Advent Christian Church" },
+            new ReferenceReligionDemographic() { Id = 2, Code = "AV", LongName = "Adventist Churches - Excludes Adv ent Christian Church, Jehovah's Witnesses, Native American, and Seventh Day Adventist" },
+            new ReferenceReligionDemographic() { Id = 3, Code = "ME", LongName = "African Methodist Episcopal Church" }
         };
 
         /// <summary>
@@ -262,9 +262,9 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceStateProvince[] ReferenceStateProvinces = new[]
         {
-            new ReferenceStateProvince() { Id = 1, Code = "TX", Description = "Texas" },
-            new ReferenceStateProvince() { Id = 2, Code = "KY", Description = "Kentucky" },
-            new ReferenceStateProvince() { Id = 3, Code = "DE", Description = "Delaware" }
+            new ReferenceStateProvince() { Id = 1, Code = "TX", LongName = "Texas" },
+            new ReferenceStateProvince() { Id = 2, Code = "KY", LongName = "Kentucky" },
+            new ReferenceStateProvince() { Id = 3, Code = "DE", LongName = "Delaware" }
         };
 
         /// <summary>
@@ -292,9 +292,9 @@ namespace PASRI.API.TestHelper
 
         public static ReferenceNameSuffix[] ReferenceNameSuffixes = new[]
         {
-            new ReferenceNameSuffix() { Id = 1, Code = "Jr", Description = "Junior" },
-            new ReferenceNameSuffix() { Id = 2, Code = "Sr", Description = "Senior" },
-            new ReferenceNameSuffix() { Id = 3, Code = "III", Description = "The Third" }
+            new ReferenceNameSuffix() { Id = 1, Code = "Jr", LongName = "Junior" },
+            new ReferenceNameSuffix() { Id = 2, Code = "Sr", LongName = "Senior" },
+            new ReferenceNameSuffix() { Id = 3, Code = "III", LongName = "The Third" }
         };
 
         /// <summary>

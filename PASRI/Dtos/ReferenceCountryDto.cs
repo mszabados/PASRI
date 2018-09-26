@@ -1,19 +1,21 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using PASRI.API.Persistence.EntityConfigurations;
 
 namespace PASRI.API.Dtos
 {
     public class ReferenceCountryDto : IComparable<ReferenceCountryDto>
     {
+
         public int? Id { get; set; }
 
         [Required]
-        [StringLength(2)]
+        [StringLength(ReferenceCountryConfiguration.CodeLength)]
         public string Code { get; set; }
 
         [Required]
-        [StringLength(44)]
-        public string Description { get; set; }
+        [StringLength(ReferenceCountryConfiguration.LongNameLength)]
+        public string LongName { get; set; }
 
         public DateTime? CreatedDate { get; set; }
         public string CreatedBy { get; set; }

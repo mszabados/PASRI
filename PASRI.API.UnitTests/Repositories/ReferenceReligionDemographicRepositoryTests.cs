@@ -4,7 +4,6 @@ using PASRI.API.Core.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
 using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
@@ -106,7 +105,7 @@ namespace PASRI.API.UnitTests.Repositories
             var newReferenceReligionDemographic = new ReferenceReligionDemographic()
             {
                 Code = notExistsReligionDemographicCode,
-                Description = notExistsReligionDemographicCode
+                LongName = notExistsReligionDemographicCode
             };
 
             UnitOfWork.ReferenceReligionDemographics.Add(newReferenceReligionDemographic);
@@ -154,8 +153,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newReligionDemographics = new Collection<ReferenceReligionDemographic>
             {
-                new ReferenceReligionDemographic() { Code = notExistsReligionDemographicCode1, Description = "" },
-                new ReferenceReligionDemographic() { Code = notExistsReligionDemographicCode2, Description = "" }
+                new ReferenceReligionDemographic() { Code = notExistsReligionDemographicCode1, LongName = "" },
+                new ReferenceReligionDemographic() { Code = notExistsReligionDemographicCode2, LongName = "" }
             };
             UnitOfWork.ReferenceReligionDemographics.AddRange(newReligionDemographics);
             UnitOfWork.Complete();
@@ -171,8 +170,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsReligionDemographicCode = PreDefinedData.GetNotExistsReligionDemographicCode();
             var newReligionDemographics = new Collection<ReferenceReligionDemographic>
             {
-                new ReferenceReligionDemographic() { Id = Int32.MaxValue, Code = notExistsReligionDemographicCode, Description = "" },
-                new ReferenceReligionDemographic() { Id = Int32.MaxValue, Code = notExistsReligionDemographicCode, Description = "" }
+                new ReferenceReligionDemographic() { Id = Int32.MaxValue, Code = notExistsReligionDemographicCode, LongName = "" },
+                new ReferenceReligionDemographic() { Id = Int32.MaxValue, Code = notExistsReligionDemographicCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceReligionDemographics.AddRange(newReligionDemographics),

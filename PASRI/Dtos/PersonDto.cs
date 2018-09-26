@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using PASRI.API.Persistence.EntityConfigurations;
 
 namespace PASRI.API.Dtos
 {
@@ -8,14 +9,14 @@ namespace PASRI.API.Dtos
         public int? Id { get; set; }
 
         [Required(AllowEmptyStrings = false)]
-        [StringLength(255)]
+        [StringLength(PersonConfiguration.FirstNameLength)]
         public string FirstName { get; set; }
 
-        [StringLength(255)]
+        [StringLength(PersonConfiguration.MiddleNameLength)]
         public string MiddleName { get; set; }
 
         [Required(AllowEmptyStrings = false)]
-        [StringLength(255)]
+        [StringLength(PersonConfiguration.LastNameLength)]
         public string LastName { get; set; }
 
         public string SuffixCode { get; set; }
@@ -26,10 +27,12 @@ namespace PASRI.API.Dtos
         #region For Birth
 
         public DateTime BirthDate { get; set; }
+
+        [StringLength(BirthConfiguration.BirthCityLength)]
         public string BirthCity { get; set; }
-        [StringLength(2)]
+        [StringLength(ReferenceStateProvinceConfiguration.CodeLength)]
         public string BirthStateProvinceCode { get; set; }
-        [StringLength(2)]
+        [StringLength(ReferenceCountryConfiguration.CodeLength)]
         public string BirthCountryCode { get; set; }
 
         #endregion

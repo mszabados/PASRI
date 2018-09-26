@@ -4,7 +4,6 @@ using PASRI.API.Core.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
 using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
@@ -106,7 +105,7 @@ namespace PASRI.API.UnitTests.Repositories
             var newReferenceNameSuffix = new ReferenceNameSuffix()
             {
                 Code = notExistsNameSuffixCode,
-                Description = notExistsNameSuffixCode
+                LongName = notExistsNameSuffixCode
             };
 
             UnitOfWork.ReferenceNameSuffixes.Add(newReferenceNameSuffix);
@@ -154,8 +153,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newNameSuffixes = new Collection<ReferenceNameSuffix>
             {
-                new ReferenceNameSuffix() { Code = notExistsNameSuffixCode1, Description = "" },
-                new ReferenceNameSuffix() { Code = notExistsNameSuffixCode2, Description = "" }
+                new ReferenceNameSuffix() { Code = notExistsNameSuffixCode1, LongName = "" },
+                new ReferenceNameSuffix() { Code = notExistsNameSuffixCode2, LongName = "" }
             };
             UnitOfWork.ReferenceNameSuffixes.AddRange(newNameSuffixes);
             UnitOfWork.Complete();
@@ -171,8 +170,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsNameSuffixCode = PreDefinedData.GetNotExistsNameSuffixCode();
             var newNameSuffixes = new Collection<ReferenceNameSuffix>
             {
-                new ReferenceNameSuffix() { Id = Int32.MaxValue, Code = notExistsNameSuffixCode, Description = "" },
-                new ReferenceNameSuffix() { Id = Int32.MaxValue, Code = notExistsNameSuffixCode, Description = "" }
+                new ReferenceNameSuffix() { Id = Int32.MaxValue, Code = notExistsNameSuffixCode, LongName = "" },
+                new ReferenceNameSuffix() { Id = Int32.MaxValue, Code = notExistsNameSuffixCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceNameSuffixes.AddRange(newNameSuffixes),

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PASRI.API.Core.Domain;
 
@@ -15,6 +14,9 @@ namespace PASRI.API.Persistence.EntityConfigurations
     /// </remarks>
     public class ReferenceBloodTypeConfiguration : IEntityTypeConfiguration<ReferenceBloodType>
     {
+        public const int CodeLength = 3;
+        public const int LongNameLength = 11;
+
         public void Configure(EntityTypeBuilder<ReferenceBloodType> builder)
         {
             builder.ToTable("RE_BLOOD_TYPE", schema: "PERSON");
@@ -27,13 +29,13 @@ namespace PASRI.API.Persistence.EntityConfigurations
 
             builder.Property(p => p.Code)
                 .HasColumnName("code")
-                .HasColumnType("char(3)")
+                .HasColumnType($"char({CodeLength})")
                 .IsRequired();
             builder.HasIndex(c => c.Code).IsUnique();
 
-            builder.Property(p => p.Description)
-                .HasColumnName("description")
-                .HasColumnType("varchar(11)")
+            builder.Property(p => p.LongName)
+                .HasColumnName("long_name")
+                .HasColumnType($"varchar({LongNameLength})")
                 .IsRequired();
 
             builder.Property(p => p.CreatedDate)

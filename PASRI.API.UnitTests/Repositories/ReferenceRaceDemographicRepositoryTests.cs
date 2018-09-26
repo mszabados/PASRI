@@ -4,7 +4,6 @@ using PASRI.API.Core.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
 using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
@@ -106,7 +105,7 @@ namespace PASRI.API.UnitTests.Repositories
             var newReferenceRaceDemographic = new ReferenceRaceDemographic()
             {
                 Code = notExistsRaceDemographicCode,
-                Description = notExistsRaceDemographicCode
+                LongName = notExistsRaceDemographicCode
             };
 
             UnitOfWork.ReferenceRaceDemographics.Add(newReferenceRaceDemographic);
@@ -154,8 +153,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newRaceDemographics = new Collection<ReferenceRaceDemographic>
             {
-                new ReferenceRaceDemographic() { Code = notExistsRaceDemographicCode1, Description = "" },
-                new ReferenceRaceDemographic() { Code = notExistsRaceDemographicCode2, Description = "" }
+                new ReferenceRaceDemographic() { Code = notExistsRaceDemographicCode1, LongName = "" },
+                new ReferenceRaceDemographic() { Code = notExistsRaceDemographicCode2, LongName = "" }
             };
             UnitOfWork.ReferenceRaceDemographics.AddRange(newRaceDemographics);
             UnitOfWork.Complete();
@@ -171,8 +170,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
             var newRaceDemographics = new Collection<ReferenceRaceDemographic>
             {
-                new ReferenceRaceDemographic() { Id = Int32.MaxValue, Code = notExistsRaceDemographicCode, Description = "" },
-                new ReferenceRaceDemographic() { Id = Int32.MaxValue, Code = notExistsRaceDemographicCode, Description = "" }
+                new ReferenceRaceDemographic() { Id = Int32.MaxValue, Code = notExistsRaceDemographicCode, LongName = "" },
+                new ReferenceRaceDemographic() { Id = Int32.MaxValue, Code = notExistsRaceDemographicCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceRaceDemographics.AddRange(newRaceDemographics),

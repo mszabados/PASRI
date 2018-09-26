@@ -4,7 +4,6 @@ using PASRI.API.Core.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
 using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
@@ -106,7 +105,7 @@ namespace PASRI.API.UnitTests.Repositories
             var newReferenceStateProvince = new ReferenceStateProvince()
             {
                 Code = notExistsStateProvinceCode,
-                Description = notExistsStateProvinceCode
+                LongName = notExistsStateProvinceCode
             };
 
             UnitOfWork.ReferenceStateProvinces.Add(newReferenceStateProvince);
@@ -154,8 +153,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newStateProvinces = new Collection<ReferenceStateProvince>
             {
-                new ReferenceStateProvince() { Code = notExistsStateProvinceCode1, Description = "" },
-                new ReferenceStateProvince() { Code = notExistsStateProvinceCode2, Description = "" }
+                new ReferenceStateProvince() { Code = notExistsStateProvinceCode1, LongName = "" },
+                new ReferenceStateProvince() { Code = notExistsStateProvinceCode2, LongName = "" }
             };
             UnitOfWork.ReferenceStateProvinces.AddRange(newStateProvinces);
             UnitOfWork.Complete();
@@ -171,8 +170,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsStateProvinceCode = PreDefinedData.GetNotExistsStateProvinceCode();
             var newStateProvinces = new Collection<ReferenceStateProvince>
             {
-                new ReferenceStateProvince() { Id = Int32.MaxValue, Code = notExistsStateProvinceCode, Description = "" },
-                new ReferenceStateProvince() { Id = Int32.MaxValue, Code = notExistsStateProvinceCode, Description = "" }
+                new ReferenceStateProvince() { Id = Int32.MaxValue, Code = notExistsStateProvinceCode, LongName = "" },
+                new ReferenceStateProvince() { Id = Int32.MaxValue, Code = notExistsStateProvinceCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceStateProvinces.AddRange(newStateProvinces),

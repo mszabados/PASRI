@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using PASRI.API.Persistence.EntityConfigurations;
 
 namespace PASRI.API.Dtos
 {
@@ -8,12 +9,12 @@ namespace PASRI.API.Dtos
         public int? Id { get; set; }
 
         [Required]
-        [StringLength(2)]
+        [StringLength(ReferenceEyeColorConfiguration.CodeLength)]
         public string Code { get; set; }
 
         [Required]
-        [StringLength(14)]
-        public string Description { get; set; }
+        [StringLength(ReferenceEyeColorConfiguration.LongNameLength)]
+        public string LongName { get; set; }
 
         public DateTime? CreatedDate { get; set; }
         public string CreatedBy { get; set; }

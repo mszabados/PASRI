@@ -4,7 +4,6 @@ using PASRI.API.Core.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
 using PASRI.API.TestHelper;
 
 namespace PASRI.API.UnitTests.Repositories
@@ -106,7 +105,7 @@ namespace PASRI.API.UnitTests.Repositories
             var newReferenceEthnicGroupDemographic = new ReferenceEthnicGroupDemographic()
             {
                 Code = notExistsEthnicGroupDemographicCode,
-                Description = notExistsEthnicGroupDemographicCode
+                LongName = notExistsEthnicGroupDemographicCode
             };
 
             UnitOfWork.ReferenceEthnicGroupDemographics.Add(newReferenceEthnicGroupDemographic);
@@ -154,8 +153,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newEthnicGroupDemographics = new Collection<ReferenceEthnicGroupDemographic>
             {
-                new ReferenceEthnicGroupDemographic() { Code = notExistsEthnicGroupDemographicCode1, Description = "" },
-                new ReferenceEthnicGroupDemographic() { Code = notExistsEthnicGroupDemographicCode2, Description = "" }
+                new ReferenceEthnicGroupDemographic() { Code = notExistsEthnicGroupDemographicCode1, LongName = "" },
+                new ReferenceEthnicGroupDemographic() { Code = notExistsEthnicGroupDemographicCode2, LongName = "" }
             };
             UnitOfWork.ReferenceEthnicGroupDemographics.AddRange(newEthnicGroupDemographics);
             UnitOfWork.Complete();
@@ -171,8 +170,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsEthnicGroupDemographicCode = PreDefinedData.GetNotExistsEthnicGroupDemographicCode();
             var newEthnicGroupDemographics = new Collection<ReferenceEthnicGroupDemographic>
             {
-                new ReferenceEthnicGroupDemographic() { Id = Int32.MaxValue, Code = notExistsEthnicGroupDemographicCode, Description = "" },
-                new ReferenceEthnicGroupDemographic() { Id = Int32.MaxValue, Code = notExistsEthnicGroupDemographicCode, Description = "" }
+                new ReferenceEthnicGroupDemographic() { Id = Int32.MaxValue, Code = notExistsEthnicGroupDemographicCode, LongName = "" },
+                new ReferenceEthnicGroupDemographic() { Id = Int32.MaxValue, Code = notExistsEthnicGroupDemographicCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceEthnicGroupDemographics.AddRange(newEthnicGroupDemographics),

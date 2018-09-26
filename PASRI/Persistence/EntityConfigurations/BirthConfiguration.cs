@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PASRI.API.Core.Domain;
-using PASRI.API.Migrations;
 
 namespace PASRI.API.Persistence.EntityConfigurations
 {
@@ -15,6 +14,8 @@ namespace PASRI.API.Persistence.EntityConfigurations
     /// </remarks>
     public class BirthConfiguration : IEntityTypeConfiguration<Birth>
     {
+        public const int BirthCityLength = 100;
+
         public void Configure(EntityTypeBuilder<Birth> builder)
         {
             builder.ToTable("BIRTH", schema: "PERSON");
@@ -35,7 +36,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
 
             builder.Property(p => p.City)
                 .HasColumnName("birth_city")
-                .HasColumnType("varchar(100)")
+                .HasColumnType($"varchar({BirthCityLength})")
                 .IsRequired();
 
             builder.Property(p => p.StateProvinceId)
