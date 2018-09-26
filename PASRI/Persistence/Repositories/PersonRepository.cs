@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using PASRI.API.Core.Domain;
+﻿using PASRI.API.Core.Domain;
 using PASRI.API.Core.Repositories;
 
 namespace PASRI.API.Persistence.Repositories
@@ -25,22 +23,5 @@ namespace PASRI.API.Persistence.Repositories
             : base(context)
         {
         }
-
-        public PasriDbContext PasriDbContext
-        {
-            get { return Context as PasriDbContext; }
-        }
-
-        /* TODO: Rewrite with new domain models
-        public Person GetByIdentificationNumber(int personIdentificationId)
-        {            
-            return PasriDbContext.Persons
-                .Include(p => p.PersonIdentifications)
-                    .ThenInclude(pi => pi.PersonNameIdentifications)
-                        .ThenInclude(pni => pni.PersonLegalNameIdentifications)
-                .SingleOrDefault(pi => pi.Id == personIdentificationId);
-            
-        }
-        */
     }
 }

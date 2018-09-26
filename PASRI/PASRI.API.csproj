@@ -29,6 +29,12 @@
     <Compile Remove="Migrations\20180924120743_AddPersonAndBirthTables.Designer.cs" />
     <Compile Remove="Migrations\20180924121321_AddPersonAndBirthTables.cs" />
     <Compile Remove="Migrations\20180924121321_AddPersonAndBirthTables.Designer.cs" />
+    <Compile Remove="Migrations\20180924122440_ChangePersonTableName.cs" />
+    <Compile Remove="Migrations\20180924122440_ChangePersonTableName.Designer.cs" />
+    <Compile Remove="Migrations\20180925102224_ChangedModifiedByOnPersonToHaveUnderstore.cs" />
+    <Compile Remove="Migrations\20180925102224_ChangedModifiedByOnPersonToHaveUnderstore.Designer.cs" />
+    <Compile Remove="Migrations\20180925115511_MoveStateProvinceIdColumnInBirthTableWithSqlStatement.cs" />
+    <Compile Remove="Migrations\20180925115511_MoveStateProvinceIdColumnInBirthTableWithSqlStatement.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

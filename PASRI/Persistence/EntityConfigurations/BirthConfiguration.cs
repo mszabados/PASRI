@@ -28,12 +28,12 @@ namespace PASRI.API.Persistence.EntityConfigurations
             builder.Property(p => p.PersonId)
                 .HasColumnName("person_id");
 
-            builder.Property(p => p.BirthDate)
+            builder.Property(p => p.Date)
                 .HasColumnName("birth_date")
                 .HasColumnType("date")
                 .IsRequired();
 
-            builder.Property(p => p.BirthCity)
+            builder.Property(p => p.City)
                 .HasColumnName("birth_city")
                 .HasColumnType("varchar(100)")
                 .IsRequired();
@@ -42,7 +42,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
                 .HasColumnName("state_province_id")
                 .HasColumnType("int");
 
-            builder.Property(p => p.StateProvinceId)
+            builder.Property(p => p.CountryId)
                 .HasColumnName("country_id")
                 .HasColumnType("int")
                 .IsRequired();

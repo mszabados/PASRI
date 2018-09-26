@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PASRI.API.Persistence;
 
 namespace PASRI.API.Migrations
 {
     [DbContext(typeof(PasriDbContext))]
-    partial class PasriDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180925114642_DropBirthToRebuildTableWithStateProvinceIdOrderedCorrectly")]
+    partial class DropBirthToRebuildTableWithStateProvinceIdOrderedCorrectly
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,44 +25,25 @@ namespace PASRI.API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("birth_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnName("birth_city")
-                        .HasColumnType("varchar(100)");
+                    b.Property<string>("City");
 
-                    b.Property<int>("CountryId")
-                        .HasColumnName("country_id")
-                        .HasColumnType("int");
+                    b.Property<int>("CountryId");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnName("created_by")
-                        .HasColumnType("varchar(30)");
+                    b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnName("created_date")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime?>("CreatedDate");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnName("birth_date")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("Date");
 
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnName("modified_by")
-                        .HasColumnType("varchar(30)");
+                    b.Property<string>("ModifiedBy");
 
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnName("modified_date")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime?>("ModifiedDate");
 
-                    b.Property<int>("PersonId")
-                        .HasColumnName("person_id");
+                    b.Property<int>("PersonId");
 
-                    b.Property<int>("StateProvinceId")
-                        .HasColumnName("state_province_id")
-                        .HasColumnType("int");
+                    b.Property<int>("StateProvinceId");
 
                     b.HasKey("Id");
 
@@ -71,7 +54,7 @@ namespace PASRI.API.Migrations
 
                     b.HasIndex("StateProvinceId");
 
-                    b.ToTable("BIRTH");
+                    b.ToTable("Birth");
                 });
 
             modelBuilder.Entity("PASRI.API.Core.Domain.Person", b =>
@@ -540,7 +523,7 @@ namespace PASRI.API.Migrations
                     b.HasOne("PASRI.API.Core.Domain.ReferenceCountry", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PASRI.API.Core.Domain.Person", "Person")
                         .WithOne("Birth")
@@ -550,7 +533,7 @@ namespace PASRI.API.Migrations
                     b.HasOne("PASRI.API.Core.Domain.ReferenceStateProvince", "StateProvince")
                         .WithMany()
                         .HasForeignKey("StateProvinceId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PASRI.API.Core.Domain.Person", b =>

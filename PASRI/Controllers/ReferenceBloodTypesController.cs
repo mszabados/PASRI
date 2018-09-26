@@ -8,13 +8,13 @@ using PASRI.API.Dtos;
 
 namespace PASRI.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    [ApiExplorerSettings(GroupName = "Reference BloodTypes")]
-    public class ReferenceBloodTypesController : ControllerBase
-    {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        [Route("api/[controller]")]
+        [ApiController]
+        [ApiExplorerSettings(GroupName = "Reference BloodTypes")]
+        public class ReferenceBloodTypesController : ControllerBase
+        {
+            private readonly IUnitOfWork _unitOfWork;
+            private readonly IMapper _mapper;
 
         public ReferenceBloodTypesController(IUnitOfWork unitOfWork, IMapper mapper)
         {

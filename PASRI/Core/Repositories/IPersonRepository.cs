@@ -15,8 +15,5 @@ namespace PASRI.API.Core.Repositories
     /// </remarks>
     public interface IPersonRepository : IRepository<Person>
     {
-        /* TODO: Rewrite with new domain models
-        Person GetByIdentificationNumber(int personIdentificationId);
-        */
     }
 }

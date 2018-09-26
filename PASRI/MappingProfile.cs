@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Linq.Expressions;
+using AutoMapper;
 using PASRI.API.Core.Domain;
 using PASRI.API.Dtos;
 
@@ -12,26 +14,29 @@ namespace PASRI.API
     {
         public MappingProfile()
         {
-            CreateMap<ReferenceCountry, ReferenceCountryDto>();
-            CreateMap<ReferenceCountryDto, ReferenceCountry>();
-            CreateMap<ReferenceEthnicGroupDemographic, ReferenceEthnicGroupDemographicDto>();
-            CreateMap<ReferenceEthnicGroupDemographicDto, ReferenceEthnicGroupDemographic>();
-            CreateMap<ReferenceEyeColor, ReferenceEyeColorDto>();
-            CreateMap<ReferenceEyeColorDto, ReferenceEyeColor>();
-            CreateMap<ReferenceGenderDemographic, ReferenceGenderDemographicDto>();
-            CreateMap<ReferenceGenderDemographicDto, ReferenceGenderDemographic>();
-            CreateMap<ReferenceHairColor, ReferenceHairColorDto>();
-            CreateMap<ReferenceHairColorDto, ReferenceHairColor>();
-            CreateMap<ReferenceRaceDemographic, ReferenceRaceDemographicDto>();
-            CreateMap<ReferenceRaceDemographicDto, ReferenceRaceDemographic>();
-            CreateMap<ReferenceReligionDemographic, ReferenceReligionDemographicDto>();
-            CreateMap<ReferenceReligionDemographicDto, ReferenceReligionDemographic>();
-            CreateMap<ReferenceStateProvince, ReferenceStateProvinceDto>();
-            CreateMap<ReferenceStateProvinceDto, ReferenceStateProvince>();
-            CreateMap<ReferenceNameSuffix, ReferenceNameSuffixDto>();
-            CreateMap<ReferenceNameSuffixDto, ReferenceNameSuffix>();
-            CreateMap<ReferenceBloodType, ReferenceBloodTypeDto>();
-            CreateMap<ReferenceBloodTypeDto, ReferenceBloodType>();
+            // Straight DTO to domain model maps
+            CreateMap<Person, PersonDto>().ReverseMap();
+            CreateMap<ReferenceBloodType, ReferenceBloodTypeDto>().ReverseMap();
+            CreateMap<ReferenceCountry, ReferenceCountryDto>().ReverseMap();
+            CreateMap<ReferenceEthnicGroupDemographic, ReferenceEthnicGroupDemographicDto>().ReverseMap();
+            CreateMap<ReferenceEyeColor, ReferenceEyeColorDto>().ReverseMap();
+            CreateMap<ReferenceGenderDemographic, ReferenceGenderDemographicDto>().ReverseMap();
+            CreateMap<ReferenceHairColor, ReferenceHairColorDto>().ReverseMap();
+            CreateMap<ReferenceNameSuffix, ReferenceNameSuffixDto>().ReverseMap();
+            CreateMap<ReferenceRaceDemographic, ReferenceRaceDemographicDto>().ReverseMap();
+            CreateMap<ReferenceReligionDemographic, ReferenceReligionDemographicDto>().ReverseMap();
+            CreateMap<ReferenceStateProvince, ReferenceStateProvinceDto>().ReverseMap();
+        }
+    }
+
+    public static class MappingHelper
+    {
+        public static IMappingExpression<TSource, TDestination> Ignore<TSource, TDestination>(
+            this IMappingExpression<TSource, TDestination> map,
+            Expression<Func<TDestination, object>> selector)
+        {
+            map.ForMember(selector, config => config.Ignore());
+            return map;
         }
     }
 }

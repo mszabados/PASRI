@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PASRI.API.Persistence;
 
 namespace PASRI.API.Migrations
 {
     [DbContext(typeof(PasriDbContext))]
-    partial class PasriDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180925102907_ChangedModifiedByOnPersonToHaveUnderscore")]
+    partial class ChangedModifiedByOnPersonToHaveUnderscore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,14 +28,16 @@ namespace PASRI.API.Migrations
                         .HasColumnName("birth_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("City")
+                    b.Property<string>("BirthCity")
                         .IsRequired()
                         .HasColumnName("birth_city")
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("CountryId")
-                        .HasColumnName("country_id")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnName("birth_date")
+                        .HasColumnType("date");
+
+                    b.Property<int>("CountryId");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnName("created_by")
@@ -42,10 +46,6 @@ namespace PASRI.API.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnName("created_date")
                         .HasColumnType("datetime");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnName("birth_date")
-                        .HasColumnType("date");
 
                     b.Property<string>("ModifiedBy")
                         .HasColumnName("modified_by")
@@ -59,7 +59,7 @@ namespace PASRI.API.Migrations
                         .HasColumnName("person_id");
 
                     b.Property<int>("StateProvinceId")
-                        .HasColumnName("state_province_id")
+                        .HasColumnName("country_id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -211,7 +211,7 @@ namespace PASRI.API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("ethnic_id")
+                        .HasColumnName("country_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
@@ -252,7 +252,7 @@ namespace PASRI.API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("eye_color_id")
+                        .HasColumnName("country_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
@@ -293,7 +293,7 @@ namespace PASRI.API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("gender_id")
+                        .HasColumnName("country_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
@@ -334,7 +334,7 @@ namespace PASRI.API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("hair_color_id")
+                        .HasColumnName("country_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
@@ -375,7 +375,7 @@ namespace PASRI.API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("suffix_id")
+                        .HasColumnName("country_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
@@ -416,7 +416,7 @@ namespace PASRI.API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("race_id")
+                        .HasColumnName("country_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
@@ -457,7 +457,7 @@ namespace PASRI.API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("religion_id")
+                        .HasColumnName("country_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")

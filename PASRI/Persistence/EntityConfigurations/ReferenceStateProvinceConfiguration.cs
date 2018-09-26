@@ -22,7 +22,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Id)
-                .HasColumnName("country_id")
+                .HasColumnName("state_id")
                 .IsRequired();
 
             builder.Property(p => p.Code)
