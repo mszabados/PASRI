@@ -17,7 +17,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<ReferenceBloodType> builder)
         {
-            builder.ToTable("RE_BLOOD_TYPE");
+            builder.ToTable("RE_BLOOD_TYPE", schema: "PERSON");
 
             builder.HasKey(p => p.Id);
 

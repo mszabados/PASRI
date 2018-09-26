@@ -17,7 +17,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<ReferenceEyeColor> builder)
         {
-            builder.ToTable("RE_EYE_COLOR");
+            builder.ToTable("RE_EYE_COLOR", schema: "PERSON");
 
             builder.HasKey(p => p.Id);
 

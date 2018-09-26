@@ -17,7 +17,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<ReferenceStateProvince> builder)
         {
-            builder.ToTable("RE_STATE");
+            builder.ToTable("STATE", schema: "RE");
 
             builder.HasKey(p => p.Id);
 

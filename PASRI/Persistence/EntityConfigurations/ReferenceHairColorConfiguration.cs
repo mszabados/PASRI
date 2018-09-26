@@ -17,7 +17,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<ReferenceHairColor> builder)
         {
-            builder.ToTable("RE_HAIR_COLOR");
+            builder.ToTable("RE_HAIR_COLOR", schema: "PERSON");
 
             builder.HasKey(p => p.Id);
 

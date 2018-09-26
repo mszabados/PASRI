@@ -17,7 +17,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<ReferenceNameSuffix> builder)
         {
-            builder.ToTable("RE_SUFFIX");
+            builder.ToTable("RE_SUFFIX", schema: "PERSON");
 
             builder.HasKey(p => p.Id);
 

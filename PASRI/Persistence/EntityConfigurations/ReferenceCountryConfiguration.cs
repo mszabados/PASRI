@@ -17,7 +17,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<ReferenceCountry> builder)
         {
-            builder.ToTable("RE_COUNTRY");
+            builder.ToTable("COUNTRY", schema: "RE");
 
             builder.HasKey(p => p.Id);
 
