@@ -72,9 +72,6 @@ namespace PASRI.API
         {
             services.AddEntityFrameworkSqlServer();
 
-            // Add the entity framework service for PostGreSQL
-            // services.AddEntityFrameworkNpgsql();
-
             // Create an EntityFramework DbContext from the configured connection string
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())

@@ -15,7 +15,6 @@ namespace PASRI.API
         public MappingProfile()
         {
             // Straight DTO to domain model maps
-            CreateMap<Person, PersonDto>().ReverseMap();
             CreateMap<ReferenceBloodType, ReferenceBloodTypeDto>().ReverseMap();
             CreateMap<ReferenceCountry, ReferenceCountryDto>().ReverseMap();
             CreateMap<ReferenceEthnicGroupDemographic, ReferenceEthnicGroupDemographicDto>().ReverseMap();
@@ -26,6 +25,9 @@ namespace PASRI.API
             CreateMap<ReferenceRaceDemographic, ReferenceRaceDemographicDto>().ReverseMap();
             CreateMap<ReferenceReligionDemographic, ReferenceReligionDemographicDto>().ReverseMap();
             CreateMap<ReferenceStateProvince, ReferenceStateProvinceDto>().ReverseMap();
+
+            // Complex mapping for nested types
+            CreateMap<Person, PersonDto>().ReverseMap();
         }
     }
 

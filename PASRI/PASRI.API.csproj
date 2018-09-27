@@ -35,6 +35,8 @@
     <Compile Remove="Migrations\20180925102224_ChangedModifiedByOnPersonToHaveUnderstore.Designer.cs" />
     <Compile Remove="Migrations\20180925115511_MoveStateProvinceIdColumnInBirthTableWithSqlStatement.cs" />
     <Compile Remove="Migrations\20180925115511_MoveStateProvinceIdColumnInBirthTableWithSqlStatement.Designer.cs" />
+    <Compile Remove="Migrations\20180926123846_RemovedUnderscoreFromModifiedByInPersonTable.cs" />
+    <Compile Remove="Migrations\20180926123846_RemovedUnderscoreFromModifiedByInPersonTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,7 +52,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.1916590" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.3" />
     <PackageReference Include="newtonsoft.json" Version="11.0.2" />
-    <PackageReference Include="npgsql.entityframeworkcore.postgresql" Version="2.1.1.1" />
     <PackageReference Include="swashbuckle.aspnetcore" Version="3.0.0" />
   </ItemGroup>
 

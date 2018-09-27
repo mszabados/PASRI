@@ -11,7 +11,7 @@ namespace PASRI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiExplorerSettings(GroupName = "Reference Persons")]
+    [ApiExplorerSettings(GroupName = "Persons")]
     public class PersonsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -138,7 +138,13 @@ namespace PASRI.API.Controllers
             return NoContent();
         }
 
-        public Person ValidatePayloadCreatePerson(PersonDto payload)
+        /// <summary>
+        /// Helper method to validate a <see cref="PersonDto"/> payload that it meets the
+        /// requirements of creating and updating a <see cref="Person"/>
+        /// </summary>
+        /// <param name="payload"><see cref="PersonDto"/> input</param>
+        /// <returns><see cref="Person"/> output</returns>
+        private Person ValidatePayloadCreatePerson(PersonDto payload)
         {
             var person = _mapper.Map<PersonDto, Person>(payload);
 
