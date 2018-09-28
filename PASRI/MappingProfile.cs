@@ -14,6 +14,10 @@ namespace PASRI.API
     {
         public MappingProfile()
         {
+            // Straight object copying without Id
+            CreateMap<Person, Person>().ForMember(d => d.Id, opt => opt.Ignore());
+            CreateMap<Birth, Birth>().ForMember(d => d.Id, opt => opt.Ignore());
+            
             // Straight DTO to domain model maps
             CreateMap<ReferenceBloodType, ReferenceBloodTypeDto>().ReverseMap();
             CreateMap<ReferenceCountry, ReferenceCountryDto>().ReverseMap();
@@ -27,7 +31,16 @@ namespace PASRI.API
             CreateMap<ReferenceStateProvince, ReferenceStateProvinceDto>().ReverseMap();
 
             // Complex mapping for nested types
-            CreateMap<Person, PersonDto>().ReverseMap();
+            CreateMap<Person, PersonDto>()
+                .ForMember(d => d.BirthDate, opt => opt.MapFrom(src => src.Birth.Date))
+                .ForMember(d => d.BirthCity, opt => opt.MapFrom(src => src.Birth.City))
+                .ForMember(d => d.BirthStateProvinceCode, opt => opt.MapFrom(src => src.Birth.StateProvince.Code))
+                .ForMember(d => d.BirthCountryCode, opt => opt.MapFrom(src => src.Birth.Country.Code))
+                .ReverseMap()
+                .ForPath(s => s.Birth.Date, opt => opt.MapFrom(src => src.BirthDate))
+                .ForPath(s => s.Birth.City, opt => opt.MapFrom(src => src.BirthCity))
+                .ForPath(s => s.Birth.StateProvince.Code, opt => opt.MapFrom(src => src.BirthStateProvinceCode))
+                .ForPath(s => s.Birth.Country.Code, opt => opt.MapFrom(src => src.BirthCountryCode));
         }
     }
 

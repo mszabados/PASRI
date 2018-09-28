@@ -1,4 +1,6 @@
-﻿using PASRI.API.Core.Domain;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using PASRI.API.Core.Domain;
 using PASRI.API.Core.Repositories;
 
 namespace PASRI.API.Persistence.Repositories
@@ -22,6 +24,20 @@ namespace PASRI.API.Persistence.Repositories
         public PersonRepository(PasriDbContext context)
             : base(context)
         {
+        }
+
+        public PasriDbContext PasriDbContext
+        {
+            get { return Context as PasriDbContext; }
+        }
+
+        public Person GetEagerLoadedPersonForUpdating(int personId)
+        {            
+            return PasriDbContext.Persons
+                .Include(p => p.Birth)
+                .Include(p => p.Suffix)
+                .SingleOrDefault(p => p.Id == personId);
+            
         }
     }
 }

@@ -108,11 +108,13 @@ namespace PASRI.API.Controllers
                 return StatusCode(new BadRequestResult().StatusCode, e.Message);
             }
 
-            var personInDb = _unitOfWork.Persons.Get(id);
+            var personInDb = _unitOfWork.Persons.GetEagerLoadedPersonForUpdating(id);
             if (personInDb == null)
                 return NotFound();
 
             _mapper.Map(person, personInDb);
+            _mapper.Map(person.Birth, personInDb.Birth);
+            _mapper.Map(person.Suffix, personInDb.Suffix);
             _unitOfWork.Complete();
 
             return NoContent();
@@ -148,26 +150,34 @@ namespace PASRI.API.Controllers
         {
             var person = _mapper.Map<PersonDto, Person>(payload);
 
-            try
+            if (!String.IsNullOrWhiteSpace(person.Suffix.Code))
             {
-                var nameSuffix = _unitOfWork.ReferenceNameSuffixes.Find(p => p.Code == person.Suffix.Code).Single();
-                person.SuffixId = nameSuffix.Id;
-                person.Suffix = nameSuffix;
-            }
-            catch (InvalidOperationException)
-            {
-                throw new ApplicationException($"The suffix \"{person.Suffix.Code}\" is invalid.");
+                try
+                {
+                    var nameSuffix = _unitOfWork.ReferenceNameSuffixes.Find(p => p.Code == person.Suffix.Code).Single();
+                    person.SuffixId = nameSuffix.Id;
+                    person.Suffix = nameSuffix;
+                }
+                catch (InvalidOperationException)
+                {
+                    throw new ApplicationException($"The suffix \"{person.Suffix.Code}\" is invalid.");
+                }
             }
 
-            try
+            if (!String.IsNullOrWhiteSpace(person.Birth.StateProvince.Code))
             {
-                var stateProvince = _unitOfWork.ReferenceStateProvinces.Find(p => p.Code == person.Birth.StateProvince.Code).Single();
-                person.Birth.StateProvinceId = stateProvince.Id;
-                person.Birth.StateProvince = stateProvince;
-            }
-            catch (InvalidOperationException)
-            {
-                throw new ApplicationException($"The birth country code \"{person.Birth.StateProvince.Code}\" is invalid.");
+                try
+                {
+                    var stateProvince = _unitOfWork.ReferenceStateProvinces
+                        .Find(p => p.Code == person.Birth.StateProvince.Code).Single();
+                    person.Birth.StateProvinceId = stateProvince.Id;
+                    person.Birth.StateProvince = stateProvince;
+                }
+                catch (InvalidOperationException)
+                {
+                    throw new ApplicationException(
+                        $"The birth state/province code \"{person.Birth.StateProvince.Code}\" is invalid.");
+                }
             }
 
             try
@@ -178,7 +188,7 @@ namespace PASRI.API.Controllers
             }
             catch (InvalidOperationException)
             {
-                throw new ApplicationException($"The birth state/province code \"{person.Birth.StateProvince.Code}\" is invalid.");
+                throw new ApplicationException($"The birth country code \"{person.Birth.Country.Code}\" is invalid.");
             }
 
             return person;

@@ -12,9 +12,6 @@ namespace PASRI.API.Dtos
         [StringLength(PersonConfiguration.FirstNameLength)]
         public string FirstName { get; set; }
 
-        [StringLength(PersonConfiguration.MiddleNameLength)]
-        public string MiddleName { get; set; }
-
         [Required(AllowEmptyStrings = false)]
         [StringLength(PersonConfiguration.LastNameLength)]
         public string LastName { get; set; }
