@@ -23,16 +23,18 @@ namespace PASRI.API.TestHelper
         public async Task Seed()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
+            _context.Persons.AddRange(PreDefinedData.Persons);
+            _context.Births.AddRange(PreDefinedData.Births);
             _context.ReferenceBloodTypes.AddRange(PreDefinedData.ReferenceBloodTypes);
             _context.ReferenceCountries.AddRange(PreDefinedData.ReferenceCountries);
             _context.ReferenceEthnicGroupDemographics.AddRange(PreDefinedData.ReferenceEthnicGroupDemographics);
             _context.ReferenceEyeColors.AddRange(PreDefinedData.ReferenceEyeColors);
             _context.ReferenceGenderDemographics.AddRange(PreDefinedData.ReferenceGenderDemographics);
             _context.ReferenceHairColors.AddRange(PreDefinedData.ReferenceHairColors);
+            _context.ReferenceNameSuffixes.AddRange(PreDefinedData.ReferenceNameSuffixes);
             _context.ReferenceRaceDemographics.AddRange(PreDefinedData.ReferenceRaceDemographics);
             _context.ReferenceReligionDemographics.AddRange(PreDefinedData.ReferenceReligionDemographics);
             _context.ReferenceStates.AddRange(PreDefinedData.ReferenceStateProvinces);
-            _context.ReferenceNameSuffixes.AddRange(PreDefinedData.ReferenceNameSuffixes);
 
             _context.SaveChanges();
         }

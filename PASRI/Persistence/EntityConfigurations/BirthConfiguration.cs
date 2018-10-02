@@ -31,13 +31,11 @@ namespace PASRI.API.Persistence.EntityConfigurations
 
             builder.Property(p => p.Date)
                 .HasColumnName("birth_date")
-                .HasColumnType("date")
-                .IsRequired();
+                .HasColumnType("date");
 
             builder.Property(p => p.City)
                 .HasColumnName("birth_city")
-                .HasColumnType($"varchar({BirthCityLength})")
-                .IsRequired();
+                .HasColumnType($"varchar({BirthCityLength})");
 
             builder.Property(p => p.StateProvinceId)
                 .HasColumnName("state_province_id")
@@ -45,8 +43,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
 
             builder.Property(p => p.CountryId)
                 .HasColumnName("country_id")
-                .HasColumnType("int")
-                .IsRequired();
+                .HasColumnType("int");
 
             builder.Property(p => p.CreatedDate)
                 .HasColumnName("created_date")
@@ -71,12 +68,12 @@ namespace PASRI.API.Persistence.EntityConfigurations
             builder.HasOne<ReferenceStateProvince>(b => b.StateProvince)
                 .WithMany()
                 .HasForeignKey(b => b.StateProvinceId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasOne<ReferenceCountry>(b => b.Country)
                 .WithMany()
                 .HasForeignKey(b => b.CountryId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

@@ -5,6 +5,53 @@ namespace PASRI.API.TestHelper
 {
     public class PreDefinedData
     {
+        #region Persons
+
+        public static Person[] Persons = new[]
+        {
+            new Person() { Id = 1, FirstName = "First", MiddleName = "Middle", LastName = "Person", SuffixId = 1, EffectiveDate = DateTime.Parse("10/1/2018") },
+            new Person() { Id = 2, FirstName = "Second", MiddleName = "Middle", LastName = "Person", SuffixId = 2, EffectiveDate = DateTime.Parse("10/1/2018") },
+            new Person() { Id = 3, FirstName = "Third", LastName = "Person", SuffixId = 3, EffectiveDate = DateTime.Parse("10/1/2018") },
+            new Person() { Id = 4, FirstName = "Fourth", LastName = "Person", EffectiveDate = DateTime.Parse("10/1/2018") }
+        };
+
+        /// <summary>
+        /// Helper method to retrieve a country code, which is the primary key
+        /// of the <see cref="Person"/> that exists in the
+        /// <see cref="PreDefinedData.Persons"/> test collection
+        /// </summary>
+        public static int GetRandomPersonId()
+        {
+            return PreDefinedData.Persons[
+                new Random().Next(0, PreDefinedData.Persons.Length)
+            ].Id;
+        }
+
+        #endregion
+
+        #region Births
+
+        public static Birth[] Births = new[]
+        {
+            new Birth() { Id = 1, PersonId = 1, Date = DateTime.Parse("10/1/2000"), City = "San Antonio", StateProvinceId = 1, CountryId = 1 },
+            new Birth() { Id = 2, PersonId = 2, Date = DateTime.Parse("10/2/2000"), City = "College Station", StateProvinceId = 1, CountryId = 1 },
+            new Birth() { Id = 3, PersonId = 3, Date = DateTime.Parse("10/3/2000"), City = "Vancouver", CountryId = 2 }
+        };
+
+        /// <summary>
+        /// Helper method to retrieve a country code, which is the primary key
+        /// of the <see cref="Birth"/> that exists in the
+        /// <see cref="PreDefinedData.Births"/> test collection
+        /// </summary>
+        public static int GetRandomBirthId()
+        {
+            return PreDefinedData.Births[
+                new Random().Next(0, PreDefinedData.Births.Length)
+            ].Id;
+        }
+
+        #endregion
+
         #region ReferenceBloodTypes
 
         public static ReferenceBloodType[] ReferenceBloodTypes = new[]
@@ -195,6 +242,36 @@ namespace PASRI.API.TestHelper
 
         #endregion
 
+        #region ReferenceNameSuffixes
+
+        public static ReferenceNameSuffix[] ReferenceNameSuffixes = new[]
+        {
+            new ReferenceNameSuffix() { Id = 1, Code = "Jr", LongName = "Junior" },
+            new ReferenceNameSuffix() { Id = 2, Code = "Sr", LongName = "Senior" },
+            new ReferenceNameSuffix() { Id = 3, Code = "III", LongName = "The Third" }
+        };
+
+        /// <summary>
+        /// Helper method to retrieve a suffix name code, which is the primary key
+        /// of the <see cref="ReferenceNameSuffix"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferenceNameSuffixes"/> test collection
+        /// </summary>
+        public static string GetNotExistsNameSuffixCode() =>
+            AssertHelper.GetValueNotInArray(PreDefinedData.ReferenceNameSuffixes,
+                "Code", 4);
+
+        /// <summary>
+        /// Helper method to retrieve a suffix name code, which is the primary key
+        /// of the <see cref="ReferenceNameSuffix"/> that exists in the
+        /// <see cref="PreDefinedData.ReferenceNameSuffixes"/> test collection
+        /// </summary>
+        public static int GetRandomNameSuffixId() =>
+            PreDefinedData.ReferenceNameSuffixes[
+                new Random().Next(0, PreDefinedData.ReferenceNameSuffixes.Length)
+            ].Id;
+
+        #endregion
+
         #region ReferenceRaceDemographics
 
         public static ReferenceRaceDemographic[] ReferenceRaceDemographics = new[]
@@ -284,36 +361,6 @@ namespace PASRI.API.TestHelper
         public static int GetRandomStateProvinceId() =>
             PreDefinedData.ReferenceStateProvinces[
                 new Random().Next(0, PreDefinedData.ReferenceStateProvinces.Length)
-            ].Id;
-
-        #endregion
-
-        #region ReferenceNameSuffixes
-
-        public static ReferenceNameSuffix[] ReferenceNameSuffixes = new[]
-        {
-            new ReferenceNameSuffix() { Id = 1, Code = "Jr", LongName = "Junior" },
-            new ReferenceNameSuffix() { Id = 2, Code = "Sr", LongName = "Senior" },
-            new ReferenceNameSuffix() { Id = 3, Code = "III", LongName = "The Third" }
-        };
-
-        /// <summary>
-        /// Helper method to retrieve a suffix name code, which is the primary key
-        /// of the <see cref="ReferenceNameSuffix"/> that does not exist in the
-        /// <see cref="PreDefinedData.ReferenceNameSuffixes"/> test collection
-        /// </summary>
-        public static string GetNotExistsNameSuffixCode() =>
-            AssertHelper.GetValueNotInArray(PreDefinedData.ReferenceNameSuffixes,
-                "Code", 4);
-
-        /// <summary>
-        /// Helper method to retrieve a suffix name code, which is the primary key
-        /// of the <see cref="ReferenceNameSuffix"/> that exists in the
-        /// <see cref="PreDefinedData.ReferenceNameSuffixes"/> test collection
-        /// </summary>
-        public static int GetRandomNameSuffixId() =>
-            PreDefinedData.ReferenceNameSuffixes[
-                new Random().Next(0, PreDefinedData.ReferenceNameSuffixes.Length)
             ].Id;
 
         #endregion

@@ -25,6 +25,7 @@
     <PackageReference Include="microsoft.aspnetcore.diagnostics" Version="2.1.1" />
     <PackageReference Include="microsoft.aspnetcore.hostfiltering" Version="2.1.1" />
     <PackageReference Include="microsoft.aspnetcore.httpspolicy" Version="2.1.1" />
+    <PackageReference Include="microsoft.aspnetcore.mvc.formatters.xml" Version="2.1.1" />
     <PackageReference Include="microsoft.aspnetcore.mvc" Version="2.1.1" />
     <PackageReference Include="microsoft.aspnetcore.mvc.core" Version="2.1.2" />
     <PackageReference Include="microsoft.aspnetcore.razor.runtime" Version="2.1.1" />

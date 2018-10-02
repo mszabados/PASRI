@@ -38,6 +38,7 @@ namespace PASRI.API.Persistence
             InitializeTestDatabaseInMemory();
 
             Persons = new PersonRepository(_context);
+            Births = new BirthRepository(_context);
             ReferenceCountries = new ReferenceCountryRepository(_context);
             ReferenceEthnicGroupDemographics = new ReferenceEthnicGroupDemographicRepository(_context);
             ReferenceEyeColors = new ReferenceEyeColorRepository(_context);
@@ -52,6 +53,7 @@ namespace PASRI.API.Persistence
 
 
         public IPersonRepository Persons { get; protected set; }
+        public IBirthRepository Births { get; protected set; }
         public IReferenceCountryRepository ReferenceCountries { get; protected set; }
         public IReferenceEthnicGroupDemographicRepository ReferenceEthnicGroupDemographics { get; protected set; }
         public IReferenceEyeColorRepository ReferenceEyeColors { get; protected set; }
