@@ -37,6 +37,8 @@
     <Compile Remove="Migrations\20180925115511_MoveStateProvinceIdColumnInBirthTableWithSqlStatement.Designer.cs" />
     <Compile Remove="Migrations\20180926123846_RemovedUnderscoreFromModifiedByInPersonTable.cs" />
     <Compile Remove="Migrations\20180926123846_RemovedUnderscoreFromModifiedByInPersonTable.Designer.cs" />
+    <Compile Remove="Migrations\20181002130220_test.cs" />
+    <Compile Remove="Migrations\20181002130220_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

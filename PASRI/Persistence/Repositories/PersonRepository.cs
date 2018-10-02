@@ -31,10 +31,17 @@ namespace PASRI.API.Persistence.Repositories
             get { return Context as PasriDbContext; }
         }
 
-        public Person GetEagerLoadedPersonForUpdating(int personId)
+        /// <summary>
+        /// Returns an eagerly loaded <see cref="Person"/> object for updating by the API controller
+        /// </summary>
+        /// <param name="personId">Unique <see cref="Person"/> identification number</param>
+        /// <returns><see cref="Person"/></returns>
+        public Person GetEagerLoadedPerson(int personId)
         {            
             return PasriDbContext.Persons
                 .Include(p => p.Birth)
+                .Include(p => p.Birth.StateProvince)
+                .Include(p => p.Birth.Country)
                 .Include(p => p.Suffix)
                 .SingleOrDefault(p => p.Id == personId);
             

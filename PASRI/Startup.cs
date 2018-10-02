@@ -11,6 +11,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Newtonsoft.Json;
 
 namespace PASRI.API
 {
@@ -37,7 +39,17 @@ namespace PASRI.API
             AddAPIDocumentationServices(services);
 
             // Add the MVC service to the ASP.NET Core 2.1 version
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options =>
+                {
+                    options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+                    options.RespectBrowserAcceptHeader = true;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    options.SerializerSettings.Formatting = Formatting.Indented;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

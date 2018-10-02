@@ -9,7 +9,7 @@ namespace PASRI.API.Core.Domain
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public int? SuffixId { get; set; }
-        public ReferenceNameSuffix Suffix { get; set; }
+        public virtual ReferenceNameSuffix Suffix { get; private set; }
         public DateTime EffectiveDate { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string CreatedBy { get; set; }
@@ -18,7 +18,7 @@ namespace PASRI.API.Core.Domain
 
         #region Relationships
 
-        public Birth Birth { get; set; }
+        public virtual Birth Birth { get; set; }
 
         #endregion
     }

@@ -48,7 +48,6 @@ namespace PASRI.API.Controllers
 
             return Ok(_mapper.Map<Person, PersonDto>(person));
         }
-
         /// <summary>
         /// Create a new person
         /// </summary>
@@ -62,7 +61,7 @@ namespace PASRI.API.Controllers
             var person = new Person();
             try
             {
-                person = ValidatePayloadCreatePerson(payload);
+                ValidateAndWritePayloadToPerson(payload, ref person);
             }
             catch (ApplicationException e)
             {
@@ -98,23 +97,19 @@ namespace PASRI.API.Controllers
         [ProducesResponseType(404)]
         public IActionResult UpdatePerson(int id, PersonDto payload)
         {
-            var person = new Person();
+            var personInDb = _unitOfWork.Persons.GetEagerLoadedPerson(id);
+            if (personInDb == null)
+                return NotFound();
+
             try
             {
-                person = ValidatePayloadCreatePerson(payload);
+                ValidateAndWritePayloadToPerson(payload, ref personInDb);
             }
             catch (ApplicationException e)
             {
                 return StatusCode(new BadRequestResult().StatusCode, e.Message);
             }
 
-            var personInDb = _unitOfWork.Persons.GetEagerLoadedPersonForUpdating(id);
-            if (personInDb == null)
-                return NotFound();
-
-            _mapper.Map(person, personInDb);
-            _mapper.Map(person.Birth, personInDb.Birth);
-            _mapper.Map(person.Suffix, personInDb.Suffix);
             _unitOfWork.Complete();
 
             return NoContent();
@@ -145,53 +140,58 @@ namespace PASRI.API.Controllers
         /// requirements of creating and updating a <see cref="Person"/>
         /// </summary>
         /// <param name="payload"><see cref="PersonDto"/> input</param>
+        /// <param name="person"><see cref="Person"/> object eagerly loaded from the database</param>
         /// <returns><see cref="Person"/> output</returns>
-        private Person ValidatePayloadCreatePerson(PersonDto payload)
+        private void ValidateAndWritePayloadToPerson(PersonDto payload, ref Person person)
         {
-            var person = _mapper.Map<PersonDto, Person>(payload);
+            _mapper.Map(payload, person);
 
-            if (!String.IsNullOrWhiteSpace(person.Suffix.Code))
+            if (!String.IsNullOrWhiteSpace(payload.SuffixCode))
             {
                 try
                 {
-                    var nameSuffix = _unitOfWork.ReferenceNameSuffixes.Find(p => p.Code == person.Suffix.Code).Single();
+                    var nameSuffix = _unitOfWork.ReferenceNameSuffixes.Find(p => p.Code == payload.SuffixCode).Single();
                     person.SuffixId = nameSuffix.Id;
-                    person.Suffix = nameSuffix;
                 }
                 catch (InvalidOperationException)
                 {
-                    throw new ApplicationException($"The suffix \"{person.Suffix.Code}\" is invalid.");
+                    throw new ApplicationException($"The suffix \"{payload.SuffixCode}\" is invalid.");
                 }
             }
+            else
+            {
+                person.SuffixId = null;
+            }
 
-            if (!String.IsNullOrWhiteSpace(person.Birth.StateProvince.Code))
+
+            if (!String.IsNullOrWhiteSpace(payload.BirthStateProvinceCode))
             {
                 try
                 {
                     var stateProvince = _unitOfWork.ReferenceStateProvinces
-                        .Find(p => p.Code == person.Birth.StateProvince.Code).Single();
+                        .Find(p => p.Code == payload.BirthStateProvinceCode).Single();
                     person.Birth.StateProvinceId = stateProvince.Id;
-                    person.Birth.StateProvince = stateProvince;
                 }
                 catch (InvalidOperationException)
                 {
                     throw new ApplicationException(
-                        $"The birth state/province code \"{person.Birth.StateProvince.Code}\" is invalid.");
+                        $"The birth state/province code \"{payload.BirthStateProvinceCode}\" is invalid.");
                 }
+            }
+            else
+            {
+                person.Birth.StateProvinceId = null;
             }
 
             try
             {
-                var country = _unitOfWork.ReferenceCountries.Find(p => p.Code == person.Birth.Country.Code).Single();
+                var country = _unitOfWork.ReferenceCountries.Find(p => p.Code == payload.BirthCountryCode).Single();
                 person.Birth.CountryId = country.Id;
-                person.Birth.Country = country;
             }
             catch (InvalidOperationException)
             {
-                throw new ApplicationException($"The birth country code \"{person.Birth.Country.Code}\" is invalid.");
+                throw new ApplicationException($"The birth country code \"{payload.BirthCountryCode}\" is invalid.");
             }
-
-            return person;
         }
     }
 }

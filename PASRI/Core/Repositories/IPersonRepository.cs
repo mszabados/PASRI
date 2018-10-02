@@ -15,6 +15,11 @@ namespace PASRI.API.Core.Repositories
     /// </remarks>
     public interface IPersonRepository : IRepository<Person>
     {
-        Person GetEagerLoadedPersonForUpdating(int personId);
+        /// <summary>
+        /// Returns an eagerly loaded <see cref="Person"/> object for updating by the API controller
+        /// </summary>
+        /// <param name="personId">Unique <see cref="Person"/> identification number</param>
+        /// <returns><see cref="Person"/></returns>
+        Person GetEagerLoadedPerson(int personId);
     }
 }
