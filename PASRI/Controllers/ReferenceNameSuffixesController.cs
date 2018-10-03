@@ -61,7 +61,7 @@ namespace PASRI.API.Controllers
             var referenceNameSuffix = _mapper.Map<ReferenceNameSuffixDto, ReferenceNameSuffix>(payload);
 
             var referenceNameSuffixInDb = _unitOfWork.ReferenceNameSuffixes.Find(p => p.Code == payload.Code);
-            if (referenceNameSuffixInDb.Count() > 0)
+            if (referenceNameSuffixInDb.Any())
                 return new ConflictResult();
 
             _unitOfWork.ReferenceNameSuffixes.Add(referenceNameSuffix);

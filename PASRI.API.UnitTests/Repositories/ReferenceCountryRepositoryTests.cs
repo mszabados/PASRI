@@ -1,10 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using PASRI.API.Core.Domain;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using PASRI.API.Core.Domain;
 using PASRI.API.TestHelper;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -55,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneCountry_ReturnsCollection()
         {
-            var result = UnitOfWork.ReferenceCountries.Find(p => p.Id != Int32.MaxValue);
+            var result = UnitOfWork.ReferenceCountries.Find(p => p.Id != int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.GreaterThan(0));
@@ -64,7 +65,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoCountries_ReturnsEmptyCollection()
         {
-            var result = UnitOfWork.ReferenceCountries.Find(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceCountries.Find(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(0));
@@ -93,7 +94,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoCountries_ReturnsNull()
         {
-            var result = UnitOfWork.ReferenceCountries.SingleOrDefault(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceCountries.SingleOrDefault(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Null);
         }
@@ -102,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         public void Add_ValidCountryNotExists_FetchNewCountry()
         {
             var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var newReferenceCountry = new ReferenceCountry()
+            var newReferenceCountry = new ReferenceCountry
             {
                 Code = notExistsCountryCode,
                 LongName = notExistsCountryCode
@@ -125,7 +126,7 @@ namespace PASRI.API.UnitTests.Repositories
             var randomCountry = UnitOfWork.ReferenceCountries.Get(randomCountryId);
 
             Assert.That(() => UnitOfWork.ReferenceCountries.Add(
-                new ReferenceCountry()
+                new ReferenceCountry
                 {
                     Id = randomCountry.Id,
                     Code = randomCountry.Code
@@ -153,8 +154,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newCountries = new Collection<ReferenceCountry>
             {
-                new ReferenceCountry() { Code = notExistsCountryCode1, LongName = "" },
-                new ReferenceCountry() { Code = notExistsCountryCode2, LongName = "" }
+                new ReferenceCountry { Code = notExistsCountryCode1, LongName = "" },
+                new ReferenceCountry { Code = notExistsCountryCode2, LongName = "" }
             };
             UnitOfWork.ReferenceCountries.AddRange(newCountries);
             UnitOfWork.Complete();
@@ -170,8 +171,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
             var newCountries = new Collection<ReferenceCountry>
             {
-                new ReferenceCountry() { Id = Int32.MaxValue, Code = notExistsCountryCode, LongName = "" },
-                new ReferenceCountry() { Id = Int32.MaxValue, Code = notExistsCountryCode, LongName = "" }
+                new ReferenceCountry { Id = int.MaxValue, Code = notExistsCountryCode, LongName = "" },
+                new ReferenceCountry { Id = int.MaxValue, Code = notExistsCountryCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceCountries.AddRange(newCountries),
@@ -197,9 +198,9 @@ namespace PASRI.API.UnitTests.Repositories
         public void Remove_ValidCountryNotExists_ThrowsDbUpdateConcurrencyException()
         {
             UnitOfWork.ReferenceCountries.Remove(
-                new ReferenceCountry()
+                new ReferenceCountry
                 {
-                    Id = Int32.MaxValue
+                    Id = int.MaxValue
                 });
 
             Assert.That(() => UnitOfWork.Complete(),
@@ -233,7 +234,7 @@ namespace PASRI.API.UnitTests.Repositories
             var removeReferenceCountries = new Collection<ReferenceCountry>();
             var removeCount = new Random().Next(1, referenceCountries.Count);
 
-            for (int i = 0; i < removeCount; i++)
+            for (var i = 0; i < removeCount; i++)
             {
                 removeReferenceCountries.Add(referenceCountries.ElementAt(i));
             }
@@ -254,8 +255,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var existingCountries = new Collection<ReferenceCountry>
             {
-                new ReferenceCountry() { Id = randomCountry.Id, Code = randomCountry.Code },
-                new ReferenceCountry() { Id = randomCountry.Id, Code = randomCountry.Code }
+                new ReferenceCountry { Id = randomCountry.Id, Code = randomCountry.Code },
+                new ReferenceCountry { Id = randomCountry.Id, Code = randomCountry.Code }
             };
 
             Assert.That(() => UnitOfWork.ReferenceCountries.RemoveRange(existingCountries),

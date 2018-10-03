@@ -1,31 +1,31 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.PlatformAbstractions;
-using NUnit.Framework;
-using PASRI.API.TestHelper;
-using System;
+﻿using System;
 using System.IO;
 using System.Net.Http;
 using System.Text;
 using AutoMapper;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.PlatformAbstractions;
+using NUnit.Framework;
 using PASRI.API.Core;
+using PASRI.API.TestHelper;
 
 namespace PASRI.API.IntegrationTests
 {
     /// <summary>
-    /// Creates a <see cref="WebHost"/> server and <see cref="HttpClient" />
+    /// Creates a <see cref="T:Microsoft.AspNetCore.WebHost" /> server and <see cref="T:System.Net.Http.HttpClient" />
     /// for integration tests on the API controllers configured using the
-    /// <see cref="TestStartup"/> class
+    /// <see cref="T:PASRI.API.TestHelper.TestStartup" /> class
     /// </summary>
     /// <example>
-    /// <see cref="IUnitOfWork"/> in the UnitOfWork named field is created
-    /// from <see cref="TestUnitOfWork"/>
+    /// <see cref="T:PASRI.API.Core.IUnitOfWork" /> in the UnitOfWork named field is created
+    /// from <see cref="T:PASRI.API.TestHelper.TestUnitOfWork" />
     /// </example>
     [TestFixture]
-    abstract public class BaseIntegrationTestProvider : IDisposable
+    public abstract class BaseIntegrationTestProvider : IDisposable
     {
-        protected readonly TestServer Server;
+        private readonly TestServer _server;
         protected readonly HttpClient Client;
         protected readonly IUnitOfWork UnitOfWork;
         protected readonly IMapper Mapper;
@@ -34,16 +34,16 @@ namespace PASRI.API.IntegrationTests
             "An internal server error occurred, read through the response below to find the exception\r\n\r\n{0}";
         protected const string JsonMediaType = "application/json";
 
-        public BaseIntegrationTestProvider()
+        protected BaseIntegrationTestProvider()
         {
             var integrationsTestsPath = PlatformServices.Default.Application.ApplicationBasePath;
             var applicationPath = Path.GetFullPath(Path.Combine(integrationsTestsPath, "../../../../PASRI"));
 
-            Server = new TestServer(WebHost.CreateDefaultBuilder()
+            _server = new TestServer(WebHost.CreateDefaultBuilder()
                 .UseStartup<TestStartup>()
                 .UseContentRoot(applicationPath)
                 .UseEnvironment("Development"));
-            Client = Server.CreateClient();
+            Client = _server.CreateClient();
 
             UnitOfWork = new TestUnitOfWork(new SqlitePasriDbContext());
 
@@ -58,16 +58,14 @@ namespace PASRI.API.IntegrationTests
         /// <param name="controllerName">Name of the controller class</param>
         /// <param name="identifier"></param>
         /// <returns></returns>
-        public string GetRelativePath(string controllerName, string identifier = "")
+        protected static string GetRelativePath(string controllerName, string identifier = "")
         {
             var path = new StringBuilder();
             path.Append("/api/");
             path.Append(controllerName.ToLower().Replace("controller", string.Empty));
-            if (!String.IsNullOrWhiteSpace(identifier))
-            {
-                path.Append("/");
-                path.Append(identifier);
-            }
+            if (string.IsNullOrWhiteSpace(identifier)) return path.ToString();
+            path.Append("/");
+            path.Append(identifier);
 
             return path.ToString();
         }
@@ -75,7 +73,7 @@ namespace PASRI.API.IntegrationTests
         public void Dispose()
         {
             Client.Dispose();
-            Server.Dispose();
+            _server.Dispose();
             UnitOfWork.Dispose();
         }
     }

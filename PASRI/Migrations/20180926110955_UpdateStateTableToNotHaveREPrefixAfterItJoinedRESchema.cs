@@ -7,35 +7,35 @@ namespace PASRI.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_BIRTH_RE_STATE_state_province_id",
+                "FK_BIRTH_RE_STATE_state_province_id",
                 schema: "PERSON",
                 table: "BIRTH");
 
             migrationBuilder.DropPrimaryKey(
-                name: "PK_RE_STATE",
+                "PK_RE_STATE",
                 schema: "RE",
                 table: "RE_STATE");
 
             migrationBuilder.RenameTable(
-                name: "RE_STATE",
-                schema: "RE",
-                newName: "STATE",
-                newSchema: "RE");
+                "RE_STATE",
+                "RE",
+                "STATE",
+                "RE");
 
             migrationBuilder.RenameIndex(
-                name: "IX_RE_STATE_code",
+                "IX_RE_STATE_code",
                 schema: "RE",
                 table: "STATE",
                 newName: "IX_STATE_code");
 
             migrationBuilder.AddPrimaryKey(
-                name: "PK_STATE",
+                "PK_STATE",
                 schema: "RE",
                 table: "STATE",
                 column: "state_id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_BIRTH_STATE_state_province_id",
+                "FK_BIRTH_STATE_state_province_id",
                 schema: "PERSON",
                 table: "BIRTH",
                 column: "state_province_id",
@@ -48,35 +48,35 @@ namespace PASRI.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_BIRTH_STATE_state_province_id",
+                "FK_BIRTH_STATE_state_province_id",
                 schema: "PERSON",
                 table: "BIRTH");
 
             migrationBuilder.DropPrimaryKey(
-                name: "PK_STATE",
+                "PK_STATE",
                 schema: "RE",
                 table: "STATE");
 
             migrationBuilder.RenameTable(
-                name: "STATE",
-                schema: "RE",
-                newName: "RE_STATE",
-                newSchema: "RE");
+                "STATE",
+                "RE",
+                "RE_STATE",
+                "RE");
 
             migrationBuilder.RenameIndex(
-                name: "IX_STATE_code",
+                "IX_STATE_code",
                 schema: "RE",
                 table: "RE_STATE",
                 newName: "IX_RE_STATE_code");
 
             migrationBuilder.AddPrimaryKey(
-                name: "PK_RE_STATE",
+                "PK_RE_STATE",
                 schema: "RE",
                 table: "RE_STATE",
                 column: "state_id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_BIRTH_RE_STATE_state_province_id",
+                "FK_BIRTH_RE_STATE_state_province_id",
                 schema: "PERSON",
                 table: "BIRTH",
                 column: "state_province_id",

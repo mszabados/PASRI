@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
-using NUnit.Framework;
-using PASRI.API.Controllers;
-using PASRI.API.Core.Domain;
-using PASRI.API.Dtos;
-using PASRI.API.TestHelper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using NUnit.Framework;
+using PASRI.API.Controllers;
+using PASRI.API.Core.Domain;
+using PASRI.API.Dtos;
+using PASRI.API.TestHelper;
 
 namespace PASRI.API.IntegrationTests.Controllers
 {
@@ -35,13 +35,13 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            IEnumerable<ReferenceRaceDemographicDto> apiReturnedCollection =
+            var apiReturnedCollection =
                 JsonConvert.DeserializeObject<IEnumerable<ReferenceRaceDemographicDto>>(responseString);
-            IEnumerable<ReferenceRaceDemographicDto> preDefinedCollection =
-                PreDefinedData.ReferenceRaceDemographics.Select(Mapper.Map<ReferenceRaceDemographic, ReferenceRaceDemographicDto>).ToList().AsEnumerable<ReferenceRaceDemographicDto>();
+            var preDefinedCollection =
+                PreDefinedData.ReferenceRaceDemographics.Select(Mapper.Map<ReferenceRaceDemographic, ReferenceRaceDemographicDto>).ToList().AsEnumerable();
             ((List<ReferenceRaceDemographicDto>)apiReturnedCollection).Sort();
             ((List<ReferenceRaceDemographicDto>)preDefinedCollection).Sort();
 
@@ -62,13 +62,13 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            ReferenceRaceDemographicDto apiReturnedObject =
+            var apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceRaceDemographicDto>(responseString);
 
-            ReferenceRaceDemographic preDefinedObject =
+            var preDefinedObject =
                 PreDefinedData.ReferenceRaceDemographics
                     .SingleOrDefault(c => c.Id == randomRaceDemographicId);
 
@@ -80,8 +80,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Get_InvalidRaceDemographicId_HttpNotFound()
         {
             // Arrange
-            var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), Int32.MaxValue.ToString());
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), int.MaxValue.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -96,7 +95,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var path = GetRelativePath(nameof(ReferenceRaceDemographicsController));
             var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
-            var newRaceDemographicDto = new ReferenceRaceDemographicDto()
+            var newRaceDemographicDto = new ReferenceRaceDemographicDto
             {
                 Code = notExistsRaceDemographicCode,
                 LongName = "New RaceDemographic",
@@ -113,10 +112,10 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
 
-            ReferenceRaceDemographicDto apiReturnedObject =
+            var apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceRaceDemographicDto>(responseString);
 
             Assert.That(apiReturnedObject.Id, Is.GreaterThan(0));
@@ -145,7 +144,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var path = GetRelativePath(nameof(ReferenceRaceDemographicsController));
 
-            var newRaceDemographicDto = new ReferenceRaceDemographicDto()
+            var newRaceDemographicDto = new ReferenceRaceDemographicDto
             {
                 // Code is required, keep it missing
                 CreatedDate = DateTime.UtcNow
@@ -169,7 +168,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
             var randomRaceDemographic = PreDefinedData.ReferenceRaceDemographics[randomRaceDemographicId - 1];
 
-            var newRaceDemographicDto = new ReferenceRaceDemographicDto()
+            var newRaceDemographicDto = new ReferenceRaceDemographicDto
             {
                 Code = randomRaceDemographic.Code,
                 LongName = "Create Test",
@@ -192,7 +191,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
 
-            ReferenceRaceDemographic apiUpdatingRaceDemographic = UnitOfWork.ReferenceRaceDemographics.Get(randomRaceDemographicId);
+            var apiUpdatingRaceDemographic = UnitOfWork.ReferenceRaceDemographics.Get(randomRaceDemographicId);
             apiUpdatingRaceDemographic.LongName = "Update Test";
             var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicId.ToString());
 
@@ -206,10 +205,10 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
-            ReferenceRaceDemographic dbUpdatedRaceDemographic = UnitOfWork.ReferenceRaceDemographics.Get(apiUpdatingRaceDemographic.Id);
+            var dbUpdatedRaceDemographic = UnitOfWork.ReferenceRaceDemographics.Get(apiUpdatingRaceDemographic.Id);
             AssertHelper.AreObjectsEqual(apiUpdatingRaceDemographic, dbUpdatedRaceDemographic);
         }
 
@@ -234,7 +233,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var randomRaceDemographicId = PreDefinedData.GetRandomRaceDemographicId();
             var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), randomRaceDemographicId.ToString());
-            var apiUpdatingRaceDemographic = new ReferenceRaceDemographicDto()
+            var apiUpdatingRaceDemographic = new ReferenceRaceDemographicDto
             {
                 Id = randomRaceDemographicId
                 // Code is required, keep it missing
@@ -255,10 +254,10 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var notExistsRaceDemographicCode = PreDefinedData.GetNotExistsRaceDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), Int32.MaxValue.ToString());
-            var apiUpdatingRaceDemographic = new ReferenceRaceDemographicDto()
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), int.MaxValue.ToString());
+            var apiUpdatingRaceDemographic = new ReferenceRaceDemographicDto
             {
-                Id = Int32.MaxValue,
+                Id = int.MaxValue,
                 Code = notExistsRaceDemographicCode,
                 LongName = "Update Test"
             };
@@ -287,7 +286,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
 
@@ -295,7 +294,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_InvalidRaceDemographic_HttpNotFound()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), Int32.MaxValue.ToString());
+            var path = GetRelativePath(nameof(ReferenceRaceDemographicsController), int.MaxValue.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);

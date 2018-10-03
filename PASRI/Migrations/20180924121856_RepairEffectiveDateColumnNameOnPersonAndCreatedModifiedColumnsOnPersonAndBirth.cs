@@ -8,54 +8,54 @@ namespace PASRI.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "ModifiedDate",
-                table: "PERSON",
-                newName: "modified_date");
+                "ModifiedDate",
+                "PERSON",
+                "modified_date");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedBy",
-                table: "PERSON",
-                newName: "modified_by");
+                "ModifiedBy",
+                "PERSON",
+                "modified_by");
 
             migrationBuilder.RenameColumn(
-                name: "EffectiveDate",
-                table: "PERSON",
-                newName: "effect_date");
+                "EffectiveDate",
+                "PERSON",
+                "effect_date");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedDate",
-                table: "PERSON",
-                newName: "created_date");
+                "CreatedDate",
+                "PERSON",
+                "created_date");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedBy",
-                table: "PERSON",
-                newName: "created_by");
+                "CreatedBy",
+                "PERSON",
+                "created_by");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedDate",
-                table: "BIRTH",
-                newName: "modified_date");
+                "ModifiedDate",
+                "BIRTH",
+                "modified_date");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedBy",
-                table: "BIRTH",
-                newName: "modified_by");
+                "ModifiedBy",
+                "BIRTH",
+                "modified_by");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedDate",
-                table: "BIRTH",
-                newName: "created_date");
+                "CreatedDate",
+                "BIRTH",
+                "created_date");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedBy",
-                table: "BIRTH",
-                newName: "created_by");
+                "CreatedBy",
+                "BIRTH",
+                "created_by");
 
             migrationBuilder.AlterColumn<DateTime>(
-                name: "effect_date",
-                table: "PERSON",
-                type: "date",
+                "effect_date",
+                "PERSON",
+                "date",
                 nullable: false,
                 oldClrType: typeof(DateTime));
         }
@@ -63,53 +63,53 @@ namespace PASRI.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "modified_date",
-                table: "PERSON",
-                newName: "ModifiedDate");
+                "modified_date",
+                "PERSON",
+                "ModifiedDate");
 
             migrationBuilder.RenameColumn(
-                name: "modified_by",
-                table: "PERSON",
-                newName: "ModifiedBy");
+                "modified_by",
+                "PERSON",
+                "ModifiedBy");
 
             migrationBuilder.RenameColumn(
-                name: "effect_date",
-                table: "PERSON",
-                newName: "EffectiveDate");
+                "effect_date",
+                "PERSON",
+                "EffectiveDate");
 
             migrationBuilder.RenameColumn(
-                name: "created_date",
-                table: "PERSON",
-                newName: "CreatedDate");
+                "created_date",
+                "PERSON",
+                "CreatedDate");
 
             migrationBuilder.RenameColumn(
-                name: "created_by",
-                table: "PERSON",
-                newName: "CreatedBy");
+                "created_by",
+                "PERSON",
+                "CreatedBy");
 
             migrationBuilder.RenameColumn(
-                name: "modified_date",
-                table: "BIRTH",
-                newName: "ModifiedDate");
+                "modified_date",
+                "BIRTH",
+                "ModifiedDate");
 
             migrationBuilder.RenameColumn(
-                name: "modified_by",
-                table: "BIRTH",
-                newName: "ModifiedBy");
+                "modified_by",
+                "BIRTH",
+                "ModifiedBy");
 
             migrationBuilder.RenameColumn(
-                name: "created_date",
-                table: "BIRTH",
-                newName: "CreatedDate");
+                "created_date",
+                "BIRTH",
+                "CreatedDate");
 
             migrationBuilder.RenameColumn(
-                name: "created_by",
-                table: "BIRTH",
-                newName: "CreatedBy");
+                "created_by",
+                "BIRTH",
+                "CreatedBy");
 
             migrationBuilder.AlterColumn<DateTime>(
-                name: "EffectiveDate",
-                table: "PERSON",
+                "EffectiveDate",
+                "PERSON",
                 nullable: false,
                 oldClrType: typeof(DateTime),
                 oldType: "date");

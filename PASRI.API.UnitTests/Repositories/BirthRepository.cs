@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using PASRI.API.Core.Domain;
-using System;
-using System.Collections.ObjectModel;
+﻿using System;
 using System.Linq;
+using NUnit.Framework;
 using PASRI.API.TestHelper;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -32,8 +30,8 @@ namespace PASRI.API.UnitTests.Repositories
 
         [Test]
         [TestCase(null)]
-        [TestCase(Int32.MaxValue)]
-        public void Get_InvalidBirthById_ReturnsNull(Int32 invalidBirthId)
+        [TestCase(int.MaxValue)]
+        public void Get_InvalidBirthById_ReturnsNull(int invalidBirthId)
         {
             var result = UnitOfWork.Births.Get(invalidBirthId);
 
@@ -42,8 +40,8 @@ namespace PASRI.API.UnitTests.Repositories
 
         [Test]
         [TestCase(null)]
-        [TestCase(Int32.MaxValue)]
-        public void GetEagerLoaded_InvalidBirthById_ReturnsNull(Int32 invalidBirthId)
+        [TestCase(int.MaxValue)]
+        public void GetEagerLoaded_InvalidBirthById_ReturnsNull(int invalidBirthId)
         {
             var result = UnitOfWork.Births.GetEagerLoadedBirthById(invalidBirthId);
 
@@ -53,18 +51,18 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Get_ValidBirthByPersonId_ReturnsSingleBirth()
         {
-            var randomPersonId = PreDefinedData.GetRandomPersonId();
+            const int testPersonId = 1;
 
-            var result = UnitOfWork.Births.Find(b => b.PersonId == randomPersonId);
+            var result = UnitOfWork.Births.Find(b => b.PersonId == testPersonId);
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.ElementAt(0).PersonId, Is.EqualTo(randomPersonId));
+            Assert.That(result.ElementAt(0).PersonId, Is.EqualTo(testPersonId));
         }
 
         [Test]
         public void GetEagerLoaded_ValidBirthByPersonId_ReturnsSingleBirthWithBirth()
         {
-            var testPersonId = 1;
+            const int testPersonId = 1;
 
             var result = UnitOfWork.Births.GetEagerLoadedBirthByPersonId(testPersonId);
 
@@ -75,8 +73,8 @@ namespace PASRI.API.UnitTests.Repositories
 
         [Test]
         [TestCase(null)]
-        [TestCase(Int32.MaxValue)]
-        public void Get_InvalidBirthByPersonId_ReturnsNull(Int32 invalidBirthId)
+        [TestCase(int.MaxValue)]
+        public void Get_InvalidBirthByPersonId_ReturnsNull(int invalidBirthId)
         {
             var result = UnitOfWork.Births.Get(invalidBirthId);
 
@@ -85,8 +83,8 @@ namespace PASRI.API.UnitTests.Repositories
 
         [Test]
         [TestCase(null)]
-        [TestCase(Int32.MaxValue)]
-        public void GetEagerLoaded_InvalidBirthId_ReturnsNull(Int32 invalidBirthId)
+        [TestCase(int.MaxValue)]
+        public void GetEagerLoaded_InvalidBirthId_ReturnsNull(int invalidBirthId)
         {
             var result = UnitOfWork.Births.GetEagerLoadedBirthByPersonId(invalidBirthId);
 
@@ -107,7 +105,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneBirth_ReturnsCollection()
         {
-            var result = UnitOfWork.Births.Find(p => p.Id != Int32.MaxValue);
+            var result = UnitOfWork.Births.Find(p => p.Id != int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.GreaterThan(0));
@@ -116,7 +114,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoBirths_ReturnsEmptyCollection()
         {
-            var result = UnitOfWork.Births.Find(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.Births.Find(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(0));
@@ -145,7 +143,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoBirths_ReturnsNull()
         {
-            var result = UnitOfWork.Births.SingleOrDefault(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.Births.SingleOrDefault(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Null);
         }

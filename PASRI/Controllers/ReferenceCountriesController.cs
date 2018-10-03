@@ -61,7 +61,7 @@ namespace PASRI.API.Controllers
             var referenceCountry = _mapper.Map<ReferenceCountryDto, ReferenceCountry>(payload);
 
             var referenceCountryInDb = _unitOfWork.ReferenceCountries.Find(p => p.Code == payload.Code);
-            if (referenceCountryInDb.Count() > 0)
+            if (referenceCountryInDb.Any())
                 return new ConflictResult();
 
             _unitOfWork.ReferenceCountries.Add(referenceCountry);

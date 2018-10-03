@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using PASRI.API.Core.Domain;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using PASRI.API.Core.Domain;
 using PASRI.API.TestHelper;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -55,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneHairColor_ReturnsCollection()
         {
-            var result = UnitOfWork.ReferenceHairColors.Find(p => p.Id != Int32.MaxValue);
+            var result = UnitOfWork.ReferenceHairColors.Find(p => p.Id != int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.GreaterThan(0));
@@ -64,7 +65,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoHairColors_ReturnsEmptyCollection()
         {
-            var result = UnitOfWork.ReferenceHairColors.Find(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceHairColors.Find(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(0));
@@ -93,7 +94,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoHairColors_ReturnsNull()
         {
-            var result = UnitOfWork.ReferenceHairColors.SingleOrDefault(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceHairColors.SingleOrDefault(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Null);
         }
@@ -102,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         public void Add_ValidHairColorNotExists_FetchNewHairColor()
         {
             var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
-            var newReferenceHairColor = new ReferenceHairColor()
+            var newReferenceHairColor = new ReferenceHairColor
             {
                 Code = notExistsHairColorCode,
                 LongName = notExistsHairColorCode
@@ -125,7 +126,7 @@ namespace PASRI.API.UnitTests.Repositories
             var randomHairColor = UnitOfWork.ReferenceHairColors.Get(randomHairColorId);
 
             Assert.That(() => UnitOfWork.ReferenceHairColors.Add(
-                new ReferenceHairColor()
+                new ReferenceHairColor
                 {
                     Id = randomHairColor.Id,
                     Code = randomHairColor.Code
@@ -153,8 +154,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newHairColors = new Collection<ReferenceHairColor>
             {
-                new ReferenceHairColor() { Code = notExistsHairColorCode1, LongName = "" },
-                new ReferenceHairColor() { Code = notExistsHairColorCode2, LongName = "" }
+                new ReferenceHairColor { Code = notExistsHairColorCode1, LongName = "" },
+                new ReferenceHairColor { Code = notExistsHairColorCode2, LongName = "" }
             };
             UnitOfWork.ReferenceHairColors.AddRange(newHairColors);
             UnitOfWork.Complete();
@@ -170,8 +171,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsHairColorCode = PreDefinedData.GetNotExistsHairColorCode();
             var newHairColors = new Collection<ReferenceHairColor>
             {
-                new ReferenceHairColor() { Id = Int32.MaxValue, Code = notExistsHairColorCode, LongName = "" },
-                new ReferenceHairColor() { Id = Int32.MaxValue, Code = notExistsHairColorCode, LongName = "" }
+                new ReferenceHairColor { Id = int.MaxValue, Code = notExistsHairColorCode, LongName = "" },
+                new ReferenceHairColor { Id = int.MaxValue, Code = notExistsHairColorCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceHairColors.AddRange(newHairColors),
@@ -197,9 +198,9 @@ namespace PASRI.API.UnitTests.Repositories
         public void Remove_ValidHairColorNotExists_ThrowsDbUpdateConcurrencyException()
         {
             UnitOfWork.ReferenceHairColors.Remove(
-                new ReferenceHairColor()
+                new ReferenceHairColor
                 {
-                    Id = Int32.MaxValue
+                    Id = int.MaxValue
                 });
 
             Assert.That(() => UnitOfWork.Complete(),
@@ -233,7 +234,7 @@ namespace PASRI.API.UnitTests.Repositories
             var removeReferenceHairColors = new Collection<ReferenceHairColor>();
             var removeCount = new Random().Next(1, referenceHairColors.Count);
 
-            for (int i = 0; i < removeCount; i++)
+            for (var i = 0; i < removeCount; i++)
             {
                 removeReferenceHairColors.Add(referenceHairColors.ElementAt(i));
             }
@@ -254,8 +255,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var existingHairColors = new Collection<ReferenceHairColor>
             {
-                new ReferenceHairColor() { Id = randomHairColor.Id, Code = randomHairColor.Code },
-                new ReferenceHairColor() { Id = randomHairColor.Id, Code = randomHairColor.Code }
+                new ReferenceHairColor { Id = randomHairColor.Id, Code = randomHairColor.Code },
+                new ReferenceHairColor { Id = randomHairColor.Id, Code = randomHairColor.Code }
             };
 
             Assert.That(() => UnitOfWork.ReferenceHairColors.RemoveRange(existingHairColors),

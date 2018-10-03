@@ -61,7 +61,7 @@ namespace PASRI.API.Controllers
             var referenceEthnicGroupDemographic = _mapper.Map<ReferenceEthnicGroupDemographicDto, ReferenceEthnicGroupDemographic>(payload);
 
             var referenceEthnicGroupDemographicInDb = _unitOfWork.ReferenceEthnicGroupDemographics.Find(p => p.Code == payload.Code);
-            if (referenceEthnicGroupDemographicInDb.Count() > 0)
+            if (referenceEthnicGroupDemographicInDb.Any())
                 return new ConflictResult();
 
             _unitOfWork.ReferenceEthnicGroupDemographics.Add(referenceEthnicGroupDemographic);

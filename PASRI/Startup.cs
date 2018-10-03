@@ -1,18 +1,19 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Reflection;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using PASRI.API.Core;
 using PASRI.API.Persistence;
 using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.IO;
-using System.Reflection;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Newtonsoft.Json;
 
 namespace PASRI.API
 {
@@ -23,7 +24,7 @@ namespace PASRI.API
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -36,7 +37,7 @@ namespace PASRI.API
             services.AddAutoMapper();
 
             // Add the API documentation services (e.g. Swagger)
-            AddAPIDocumentationServices(services);
+            AddApiDocumentationServices(services);
 
             // Add the MVC service to the ASP.NET Core 2.1 version
             services.AddMvc(options =>
@@ -80,12 +81,13 @@ namespace PASRI.API
             app.UseMvc();
         }
 
+        [ExcludeFromCodeCoverage]
         protected virtual void AddDatabaseServices(IServiceCollection services)
         {
             services.AddEntityFrameworkSqlServer();
 
             // Create an EntityFramework DbContext from the configured connection string
-            IConfigurationRoot configuration = new ConfigurationBuilder()
+            var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
@@ -99,7 +101,8 @@ namespace PASRI.API
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
-        protected virtual void AddAPIDocumentationServices(IServiceCollection services)
+        [ExcludeFromCodeCoverage]
+        protected virtual void AddApiDocumentationServices(IServiceCollection services)
         {
             // Add the Open API (Swagger) documentation service
             services.AddSwaggerGen(options =>

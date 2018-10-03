@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using PASRI.API.Core.Domain;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using PASRI.API.Core.Domain;
 using PASRI.API.TestHelper;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -55,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneStateProvince_ReturnsCollection()
         {
-            var result = UnitOfWork.ReferenceStateProvinces.Find(p => p.Id != Int32.MaxValue);
+            var result = UnitOfWork.ReferenceStateProvinces.Find(p => p.Id != int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.GreaterThan(0));
@@ -64,7 +65,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoStateProvinces_ReturnsEmptyCollection()
         {
-            var result = UnitOfWork.ReferenceStateProvinces.Find(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceStateProvinces.Find(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(0));
@@ -93,7 +94,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoStateProvinces_ReturnsNull()
         {
-            var result = UnitOfWork.ReferenceStateProvinces.SingleOrDefault(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceStateProvinces.SingleOrDefault(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Null);
         }
@@ -102,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         public void Add_ValidStateProvinceNotExists_FetchNewStateProvince()
         {
             var notExistsStateProvinceCode = PreDefinedData.GetNotExistsStateProvinceCode();
-            var newReferenceStateProvince = new ReferenceStateProvince()
+            var newReferenceStateProvince = new ReferenceStateProvince
             {
                 Code = notExistsStateProvinceCode,
                 LongName = notExistsStateProvinceCode
@@ -125,7 +126,7 @@ namespace PASRI.API.UnitTests.Repositories
             var randomStateProvince = UnitOfWork.ReferenceStateProvinces.Get(randomStateProvinceId);
 
             Assert.That(() => UnitOfWork.ReferenceStateProvinces.Add(
-                new ReferenceStateProvince()
+                new ReferenceStateProvince
                 {
                     Id = randomStateProvince.Id,
                     Code = randomStateProvince.Code
@@ -153,8 +154,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newStateProvinces = new Collection<ReferenceStateProvince>
             {
-                new ReferenceStateProvince() { Code = notExistsStateProvinceCode1, LongName = "" },
-                new ReferenceStateProvince() { Code = notExistsStateProvinceCode2, LongName = "" }
+                new ReferenceStateProvince { Code = notExistsStateProvinceCode1, LongName = "" },
+                new ReferenceStateProvince { Code = notExistsStateProvinceCode2, LongName = "" }
             };
             UnitOfWork.ReferenceStateProvinces.AddRange(newStateProvinces);
             UnitOfWork.Complete();
@@ -170,8 +171,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsStateProvinceCode = PreDefinedData.GetNotExistsStateProvinceCode();
             var newStateProvinces = new Collection<ReferenceStateProvince>
             {
-                new ReferenceStateProvince() { Id = Int32.MaxValue, Code = notExistsStateProvinceCode, LongName = "" },
-                new ReferenceStateProvince() { Id = Int32.MaxValue, Code = notExistsStateProvinceCode, LongName = "" }
+                new ReferenceStateProvince { Id = int.MaxValue, Code = notExistsStateProvinceCode, LongName = "" },
+                new ReferenceStateProvince { Id = int.MaxValue, Code = notExistsStateProvinceCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceStateProvinces.AddRange(newStateProvinces),
@@ -197,9 +198,9 @@ namespace PASRI.API.UnitTests.Repositories
         public void Remove_ValidStateProvinceNotExists_ThrowsDbUpdateConcurrencyException()
         {
             UnitOfWork.ReferenceStateProvinces.Remove(
-                new ReferenceStateProvince()
+                new ReferenceStateProvince
                 {
-                    Id = Int32.MaxValue
+                    Id = int.MaxValue
                 });
 
             Assert.That(() => UnitOfWork.Complete(),
@@ -233,7 +234,7 @@ namespace PASRI.API.UnitTests.Repositories
             var removeReferenceStateProvinces = new Collection<ReferenceStateProvince>();
             var removeCount = new Random().Next(1, referenceStateProvinces.Count);
 
-            for (int i = 0; i < removeCount; i++)
+            for (var i = 0; i < removeCount; i++)
             {
                 removeReferenceStateProvinces.Add(referenceStateProvinces.ElementAt(i));
             }
@@ -254,8 +255,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var existingStateProvinces = new Collection<ReferenceStateProvince>
             {
-                new ReferenceStateProvince() { Id = randomStateProvince.Id, Code = randomStateProvince.Code },
-                new ReferenceStateProvince() { Id = randomStateProvince.Id, Code = randomStateProvince.Code }
+                new ReferenceStateProvince { Id = randomStateProvince.Id, Code = randomStateProvince.Code },
+                new ReferenceStateProvince { Id = randomStateProvince.Id, Code = randomStateProvince.Code }
             };
 
             Assert.That(() => UnitOfWork.ReferenceStateProvinces.RemoveRange(existingStateProvinces),

@@ -146,7 +146,7 @@ namespace PASRI.API.Controllers
         {
             _mapper.Map(payload, person);
 
-            if (!String.IsNullOrWhiteSpace(payload.SuffixCode))
+            if (!string.IsNullOrWhiteSpace(payload.SuffixCode))
             {
                 try
                 {
@@ -164,7 +164,7 @@ namespace PASRI.API.Controllers
             }
 
 
-            if (!String.IsNullOrWhiteSpace(payload.BirthStateProvinceCode))
+            if (!string.IsNullOrWhiteSpace(payload.BirthStateProvinceCode))
             {
                 try
                 {

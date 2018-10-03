@@ -8,17 +8,17 @@ namespace PASRI.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_BIRTH_COUNTRY_country_id",
+                "FK_BIRTH_COUNTRY_country_id",
                 schema: "PERSON",
                 table: "BIRTH");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_BIRTH_STATE_state_province_id",
+                "FK_BIRTH_STATE_state_province_id",
                 schema: "PERSON",
                 table: "BIRTH");
 
             migrationBuilder.AlterColumn<DateTime>(
-                name: "birth_date",
+                "birth_date",
                 schema: "PERSON",
                 table: "BIRTH",
                 type: "date",
@@ -27,7 +27,7 @@ namespace PASRI.API.Migrations
                 oldType: "date");
 
             migrationBuilder.AlterColumn<int>(
-                name: "country_id",
+                "country_id",
                 schema: "PERSON",
                 table: "BIRTH",
                 type: "int",
@@ -36,7 +36,7 @@ namespace PASRI.API.Migrations
                 oldType: "int");
 
             migrationBuilder.AlterColumn<string>(
-                name: "birth_city",
+                "birth_city",
                 schema: "PERSON",
                 table: "BIRTH",
                 type: "varchar(100)",
@@ -45,7 +45,7 @@ namespace PASRI.API.Migrations
                 oldType: "varchar(100)");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_BIRTH_COUNTRY_country_id",
+                "FK_BIRTH_COUNTRY_country_id",
                 schema: "PERSON",
                 table: "BIRTH",
                 column: "country_id",
@@ -55,7 +55,7 @@ namespace PASRI.API.Migrations
                 onDelete: ReferentialAction.SetNull);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_BIRTH_STATE_state_province_id",
+                "FK_BIRTH_STATE_state_province_id",
                 schema: "PERSON",
                 table: "BIRTH",
                 column: "state_province_id",
@@ -68,17 +68,17 @@ namespace PASRI.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_BIRTH_COUNTRY_country_id",
+                "FK_BIRTH_COUNTRY_country_id",
                 schema: "PERSON",
                 table: "BIRTH");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_BIRTH_STATE_state_province_id",
+                "FK_BIRTH_STATE_state_province_id",
                 schema: "PERSON",
                 table: "BIRTH");
 
             migrationBuilder.AlterColumn<DateTime>(
-                name: "birth_date",
+                "birth_date",
                 schema: "PERSON",
                 table: "BIRTH",
                 type: "date",
@@ -88,7 +88,7 @@ namespace PASRI.API.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<int>(
-                name: "country_id",
+                "country_id",
                 schema: "PERSON",
                 table: "BIRTH",
                 type: "int",
@@ -98,7 +98,7 @@ namespace PASRI.API.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "birth_city",
+                "birth_city",
                 schema: "PERSON",
                 table: "BIRTH",
                 type: "varchar(100)",
@@ -108,7 +108,7 @@ namespace PASRI.API.Migrations
                 oldNullable: true);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_BIRTH_COUNTRY_country_id",
+                "FK_BIRTH_COUNTRY_country_id",
                 schema: "PERSON",
                 table: "BIRTH",
                 column: "country_id",
@@ -118,7 +118,7 @@ namespace PASRI.API.Migrations
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_BIRTH_STATE_state_province_id",
+                "FK_BIRTH_STATE_state_province_id",
                 schema: "PERSON",
                 table: "BIRTH",
                 column: "state_province_id",

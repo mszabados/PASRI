@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using PASRI.API.Core.Domain;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using PASRI.API.Core.Domain;
 using PASRI.API.TestHelper;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -55,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneBloodType_ReturnsCollection()
         {
-            var result = UnitOfWork.ReferenceBloodTypes.Find(p => p.Id != Int32.MaxValue);
+            var result = UnitOfWork.ReferenceBloodTypes.Find(p => p.Id != int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.GreaterThan(0));
@@ -64,7 +65,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoBloodTypes_ReturnsEmptyCollection()
         {
-            var result = UnitOfWork.ReferenceBloodTypes.Find(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceBloodTypes.Find(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(0));
@@ -93,7 +94,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoBloodTypes_ReturnsNull()
         {
-            var result = UnitOfWork.ReferenceBloodTypes.SingleOrDefault(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceBloodTypes.SingleOrDefault(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Null);
         }
@@ -102,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         public void Add_ValidBloodTypeNotExists_FetchNewBloodType()
         {
             var notExistsBloodTypeCode = PreDefinedData.GetNotExistsBloodTypeCode();
-            var newReferenceBloodType = new ReferenceBloodType()
+            var newReferenceBloodType = new ReferenceBloodType
             {
                 Code = notExistsBloodTypeCode,
                 LongName = notExistsBloodTypeCode
@@ -125,7 +126,7 @@ namespace PASRI.API.UnitTests.Repositories
             var randomBloodType = UnitOfWork.ReferenceBloodTypes.Get(randomBloodTypeId);
 
             Assert.That(() => UnitOfWork.ReferenceBloodTypes.Add(
-                new ReferenceBloodType()
+                new ReferenceBloodType
                 {
                     Id = randomBloodType.Id,
                     Code = randomBloodType.Code
@@ -153,8 +154,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newBloodTypes = new Collection<ReferenceBloodType>
             {
-                new ReferenceBloodType() { Code = notExistsBloodTypeCode1, LongName = "" },
-                new ReferenceBloodType() { Code = notExistsBloodTypeCode2, LongName = "" }
+                new ReferenceBloodType { Code = notExistsBloodTypeCode1, LongName = "" },
+                new ReferenceBloodType { Code = notExistsBloodTypeCode2, LongName = "" }
             };
             UnitOfWork.ReferenceBloodTypes.AddRange(newBloodTypes);
             UnitOfWork.Complete();
@@ -170,8 +171,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsBloodTypeCode = PreDefinedData.GetNotExistsBloodTypeCode();
             var newBloodTypes = new Collection<ReferenceBloodType>
             {
-                new ReferenceBloodType() { Id = Int32.MaxValue, Code = notExistsBloodTypeCode, LongName = "" },
-                new ReferenceBloodType() { Id = Int32.MaxValue, Code = notExistsBloodTypeCode, LongName = "" }
+                new ReferenceBloodType { Id = int.MaxValue, Code = notExistsBloodTypeCode, LongName = "" },
+                new ReferenceBloodType { Id = int.MaxValue, Code = notExistsBloodTypeCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceBloodTypes.AddRange(newBloodTypes),
@@ -197,9 +198,9 @@ namespace PASRI.API.UnitTests.Repositories
         public void Remove_ValidBloodTypeNotExists_ThrowsDbUpdateConcurrencyException()
         {
             UnitOfWork.ReferenceBloodTypes.Remove(
-                new ReferenceBloodType()
+                new ReferenceBloodType
                 {
-                    Id = Int32.MaxValue
+                    Id = int.MaxValue
                 });
 
             Assert.That(() => UnitOfWork.Complete(),
@@ -233,7 +234,7 @@ namespace PASRI.API.UnitTests.Repositories
             var removeReferenceBloodTypes = new Collection<ReferenceBloodType>();
             var removeCount = new Random().Next(1, referenceBloodTypes.Count);
 
-            for (int i = 0; i < removeCount; i++)
+            for (var i = 0; i < removeCount; i++)
             {
                 removeReferenceBloodTypes.Add(referenceBloodTypes.ElementAt(i));
             }
@@ -254,8 +255,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var existingBloodTypes = new Collection<ReferenceBloodType>
             {
-                new ReferenceBloodType() { Id = randomBloodType.Id, Code = randomBloodType.Code },
-                new ReferenceBloodType() { Id = randomBloodType.Id, Code = randomBloodType.Code }
+                new ReferenceBloodType { Id = randomBloodType.Id, Code = randomBloodType.Code },
+                new ReferenceBloodType { Id = randomBloodType.Id, Code = randomBloodType.Code }
             };
 
             Assert.That(() => UnitOfWork.ReferenceBloodTypes.RemoveRange(existingBloodTypes),

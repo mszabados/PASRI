@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
-using NUnit.Framework;
-using PASRI.API.Controllers;
-using PASRI.API.Core.Domain;
-using PASRI.API.Dtos;
-using PASRI.API.TestHelper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using NUnit.Framework;
+using PASRI.API.Controllers;
+using PASRI.API.Core.Domain;
+using PASRI.API.Dtos;
+using PASRI.API.TestHelper;
 
 namespace PASRI.API.IntegrationTests.Controllers
 {
@@ -35,13 +35,13 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            IEnumerable<ReferenceCountryDto> apiReturnedCollection = 
+            var apiReturnedCollection = 
                 JsonConvert.DeserializeObject<IEnumerable<ReferenceCountryDto>>(responseString);
-            IEnumerable<ReferenceCountryDto> preDefinedCollection =
-                PreDefinedData.ReferenceCountries.Select(Mapper.Map<ReferenceCountry, ReferenceCountryDto>).ToList().AsEnumerable<ReferenceCountryDto>();
+            var preDefinedCollection =
+                PreDefinedData.ReferenceCountries.Select(Mapper.Map<ReferenceCountry, ReferenceCountryDto>).ToList().AsEnumerable();
             ((List<ReferenceCountryDto>)apiReturnedCollection).Sort();
             ((List<ReferenceCountryDto>)preDefinedCollection).Sort();
 
@@ -62,13 +62,13 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            ReferenceCountryDto apiReturnedObject =
+            var apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceCountryDto>(responseString);
 
-            ReferenceCountry preDefinedObject =
+            var preDefinedObject =
                 PreDefinedData.ReferenceCountries
                     .SingleOrDefault(c => c.Id == randomCountryId);
 
@@ -80,8 +80,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Get_InvalidCountryId_HttpNotFound()
         {
             // Arrange
-            var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), Int32.MaxValue.ToString());
+            var path = GetRelativePath(nameof(ReferenceCountriesController), int.MaxValue.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -96,7 +95,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var path = GetRelativePath(nameof(ReferenceCountriesController));
             var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var newCountryDto = new ReferenceCountryDto()
+            var newCountryDto = new ReferenceCountryDto
             {
                 Code = notExistsCountryCode,
                 LongName = "New Country",
@@ -113,10 +112,10 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
 
-            ReferenceCountryDto apiReturnedObject =
+            var apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceCountryDto>(responseString);
 
             Assert.That(apiReturnedObject.Id, Is.GreaterThan(0));
@@ -145,7 +144,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var path = GetRelativePath(nameof(ReferenceCountriesController));
 
-            var newCountryDto = new ReferenceCountryDto()
+            var newCountryDto = new ReferenceCountryDto
             {
                 // Code is required, keep it missing
                 CreatedDate = DateTime.UtcNow
@@ -169,7 +168,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var randomCountryId = PreDefinedData.GetRandomCountryId();
             var randomCountry = PreDefinedData.ReferenceCountries[randomCountryId - 1];
 
-            var newCountryDto = new ReferenceCountryDto()
+            var newCountryDto = new ReferenceCountryDto
             {
                 Code = randomCountry.Code,
                 LongName = "Create Test",
@@ -192,7 +191,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var randomCountryId = PreDefinedData.GetRandomCountryId();
 
-            ReferenceCountry apiUpdatingCountry = UnitOfWork.ReferenceCountries.Get(randomCountryId);
+            var apiUpdatingCountry = UnitOfWork.ReferenceCountries.Get(randomCountryId);
             apiUpdatingCountry.LongName = "Update Test";
             var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryId.ToString());
 
@@ -206,10 +205,10 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
-            ReferenceCountry dbUpdatedCountry = UnitOfWork.ReferenceCountries.Get(apiUpdatingCountry.Id);
+            var dbUpdatedCountry = UnitOfWork.ReferenceCountries.Get(apiUpdatingCountry.Id);
             AssertHelper.AreObjectsEqual(apiUpdatingCountry, dbUpdatedCountry);
         }
 
@@ -234,7 +233,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var randomCountryId = PreDefinedData.GetRandomCountryId();
             var path = GetRelativePath(nameof(ReferenceCountriesController), randomCountryId.ToString());
-            var apiUpdatingCountry = new ReferenceCountryDto()
+            var apiUpdatingCountry = new ReferenceCountryDto
             {
                 Id = randomCountryId
                 // Code is required, keep it missing
@@ -255,10 +254,10 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var notExistsCountryCode = PreDefinedData.GetNotExistsCountryCode();
-            var path = GetRelativePath(nameof(ReferenceCountriesController), Int32.MaxValue.ToString());
-            var apiUpdatingCountry = new ReferenceCountryDto()
+            var path = GetRelativePath(nameof(ReferenceCountriesController), int.MaxValue.ToString());
+            var apiUpdatingCountry = new ReferenceCountryDto
             {
-                Id = Int32.MaxValue,
+                Id = int.MaxValue,
                 Code = notExistsCountryCode,
                 LongName = "Update Test"
             };
@@ -287,7 +286,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
 
@@ -295,7 +294,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_InvalidCountry_HttpNotFound()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceCountriesController), Int32.MaxValue.ToString());
+            var path = GetRelativePath(nameof(ReferenceCountriesController), int.MaxValue.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);

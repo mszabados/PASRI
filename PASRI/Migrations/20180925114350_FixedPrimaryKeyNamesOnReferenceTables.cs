@@ -7,81 +7,81 @@ namespace PASRI.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_BIRTH_RE_COUNTRY_CountryId",
-                table: "BIRTH");
+                "FK_BIRTH_RE_COUNTRY_CountryId",
+                "BIRTH");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_BIRTH_RE_STATE_country_id",
-                table: "BIRTH");
+                "FK_BIRTH_RE_STATE_country_id",
+                "BIRTH");
 
             migrationBuilder.DropIndex(
-                name: "IX_BIRTH_CountryId",
-                table: "BIRTH");
+                "IX_BIRTH_CountryId",
+                "BIRTH");
 
             migrationBuilder.DropColumn(
-                name: "CountryId",
-                table: "BIRTH");
+                "CountryId",
+                "BIRTH");
 
             migrationBuilder.RenameColumn(
-                name: "country_id",
-                table: "RE_SUFFIX",
-                newName: "suffix_id");
+                "country_id",
+                "RE_SUFFIX",
+                "suffix_id");
 
             migrationBuilder.RenameColumn(
-                name: "country_id",
-                table: "RE_RELIGION",
-                newName: "religion_id");
+                "country_id",
+                "RE_RELIGION",
+                "religion_id");
 
             migrationBuilder.RenameColumn(
-                name: "country_id",
-                table: "RE_RACE",
-                newName: "race_id");
+                "country_id",
+                "RE_RACE",
+                "race_id");
 
             migrationBuilder.RenameColumn(
-                name: "country_id",
-                table: "RE_HAIR_COLOR",
-                newName: "hair_color_id");
+                "country_id",
+                "RE_HAIR_COLOR",
+                "hair_color_id");
 
             migrationBuilder.RenameColumn(
-                name: "country_id",
-                table: "RE_GENDER",
-                newName: "gender_id");
+                "country_id",
+                "RE_GENDER",
+                "gender_id");
 
             migrationBuilder.RenameColumn(
-                name: "country_id",
-                table: "RE_EYE_COLOR",
-                newName: "eye_color_id");
+                "country_id",
+                "RE_EYE_COLOR",
+                "eye_color_id");
 
             migrationBuilder.RenameColumn(
-                name: "country_id",
-                table: "RE_ETHNIC",
-                newName: "ethnic_id");
+                "country_id",
+                "RE_ETHNIC",
+                "ethnic_id");
 
             migrationBuilder.AddColumn<int>(
-                name: "state_province_id",
-                table: "BIRTH",
-                type: "int",
+                "state_province_id",
+                "BIRTH",
+                "int",
                 nullable: false,
                 defaultValue: 0);
 
             migrationBuilder.CreateIndex(
-                name: "IX_BIRTH_state_province_id",
-                table: "BIRTH",
-                column: "state_province_id");
+                "IX_BIRTH_state_province_id",
+                "BIRTH",
+                "state_province_id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_BIRTH_RE_COUNTRY_country_id",
-                table: "BIRTH",
-                column: "country_id",
-                principalTable: "RE_COUNTRY",
+                "FK_BIRTH_RE_COUNTRY_country_id",
+                "BIRTH",
+                "country_id",
+                "RE_COUNTRY",
                 principalColumn: "country_id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_BIRTH_RE_STATE_state_province_id",
-                table: "BIRTH",
-                column: "state_province_id",
-                principalTable: "RE_STATE",
+                "FK_BIRTH_RE_STATE_state_province_id",
+                "BIRTH",
+                "state_province_id",
+                "RE_STATE",
                 principalColumn: "state_id",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -89,80 +89,80 @@ namespace PASRI.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_BIRTH_RE_COUNTRY_country_id",
-                table: "BIRTH");
+                "FK_BIRTH_RE_COUNTRY_country_id",
+                "BIRTH");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_BIRTH_RE_STATE_state_province_id",
-                table: "BIRTH");
+                "FK_BIRTH_RE_STATE_state_province_id",
+                "BIRTH");
 
             migrationBuilder.DropIndex(
-                name: "IX_BIRTH_state_province_id",
-                table: "BIRTH");
+                "IX_BIRTH_state_province_id",
+                "BIRTH");
 
             migrationBuilder.DropColumn(
-                name: "state_province_id",
-                table: "BIRTH");
+                "state_province_id",
+                "BIRTH");
 
             migrationBuilder.RenameColumn(
-                name: "suffix_id",
-                table: "RE_SUFFIX",
-                newName: "country_id");
+                "suffix_id",
+                "RE_SUFFIX",
+                "country_id");
 
             migrationBuilder.RenameColumn(
-                name: "religion_id",
-                table: "RE_RELIGION",
-                newName: "country_id");
+                "religion_id",
+                "RE_RELIGION",
+                "country_id");
 
             migrationBuilder.RenameColumn(
-                name: "race_id",
-                table: "RE_RACE",
-                newName: "country_id");
+                "race_id",
+                "RE_RACE",
+                "country_id");
 
             migrationBuilder.RenameColumn(
-                name: "hair_color_id",
-                table: "RE_HAIR_COLOR",
-                newName: "country_id");
+                "hair_color_id",
+                "RE_HAIR_COLOR",
+                "country_id");
 
             migrationBuilder.RenameColumn(
-                name: "gender_id",
-                table: "RE_GENDER",
-                newName: "country_id");
+                "gender_id",
+                "RE_GENDER",
+                "country_id");
 
             migrationBuilder.RenameColumn(
-                name: "eye_color_id",
-                table: "RE_EYE_COLOR",
-                newName: "country_id");
+                "eye_color_id",
+                "RE_EYE_COLOR",
+                "country_id");
 
             migrationBuilder.RenameColumn(
-                name: "ethnic_id",
-                table: "RE_ETHNIC",
-                newName: "country_id");
+                "ethnic_id",
+                "RE_ETHNIC",
+                "country_id");
 
             migrationBuilder.AddColumn<int>(
-                name: "CountryId",
-                table: "BIRTH",
+                "CountryId",
+                "BIRTH",
                 nullable: false,
                 defaultValue: 0);
 
             migrationBuilder.CreateIndex(
-                name: "IX_BIRTH_CountryId",
-                table: "BIRTH",
-                column: "CountryId");
+                "IX_BIRTH_CountryId",
+                "BIRTH",
+                "CountryId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_BIRTH_RE_COUNTRY_CountryId",
-                table: "BIRTH",
-                column: "CountryId",
-                principalTable: "RE_COUNTRY",
+                "FK_BIRTH_RE_COUNTRY_CountryId",
+                "BIRTH",
+                "CountryId",
+                "RE_COUNTRY",
                 principalColumn: "country_id",
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_BIRTH_RE_STATE_country_id",
-                table: "BIRTH",
-                column: "country_id",
-                principalTable: "RE_STATE",
+                "FK_BIRTH_RE_STATE_country_id",
+                "BIRTH",
+                "country_id",
+                "RE_STATE",
                 principalColumn: "state_id",
                 onDelete: ReferentialAction.Restrict);
         }

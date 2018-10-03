@@ -61,7 +61,7 @@ namespace PASRI.API.Controllers
             var referenceBloodType = _mapper.Map<ReferenceBloodTypeDto, ReferenceBloodType>(payload);
 
             var referenceBloodTypeInDb = _unitOfWork.ReferenceBloodTypes.Find(p => p.Code == payload.Code);
-            if (referenceBloodTypeInDb.Count() > 0)
+            if (referenceBloodTypeInDb.Any())
                 return new ConflictResult();
 
             _unitOfWork.ReferenceBloodTypes.Add(referenceBloodType);

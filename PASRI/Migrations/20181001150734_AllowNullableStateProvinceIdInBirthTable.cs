@@ -7,7 +7,7 @@ namespace PASRI.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "middle_name",
+                "middle_name",
                 schema: "PERSON",
                 table: "PERSON",
                 type: "varchar(80)",
@@ -17,7 +17,7 @@ namespace PASRI.API.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "last_name",
+                "last_name",
                 schema: "PERSON",
                 table: "PERSON",
                 type: "varchar(80)",
@@ -26,7 +26,7 @@ namespace PASRI.API.Migrations
                 oldType: "varchar(255)");
 
             migrationBuilder.AlterColumn<string>(
-                name: "first_name",
+                "first_name",
                 schema: "PERSON",
                 table: "PERSON",
                 type: "varchar(80)",
@@ -35,7 +35,7 @@ namespace PASRI.API.Migrations
                 oldType: "varchar(255)");
 
             migrationBuilder.AlterColumn<int>(
-                name: "state_province_id",
+                "state_province_id",
                 schema: "PERSON",
                 table: "BIRTH",
                 type: "int",
@@ -47,7 +47,7 @@ namespace PASRI.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "middle_name",
+                "middle_name",
                 schema: "PERSON",
                 table: "PERSON",
                 type: "varchar(255)",
@@ -57,7 +57,7 @@ namespace PASRI.API.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "last_name",
+                "last_name",
                 schema: "PERSON",
                 table: "PERSON",
                 type: "varchar(255)",
@@ -66,7 +66,7 @@ namespace PASRI.API.Migrations
                 oldType: "varchar(80)");
 
             migrationBuilder.AlterColumn<string>(
-                name: "first_name",
+                "first_name",
                 schema: "PERSON",
                 table: "PERSON",
                 type: "varchar(255)",
@@ -75,7 +75,7 @@ namespace PASRI.API.Migrations
                 oldType: "varchar(80)");
 
             migrationBuilder.AlterColumn<int>(
-                name: "state_province_id",
+                "state_province_id",
                 schema: "PERSON",
                 table: "BIRTH",
                 type: "int",

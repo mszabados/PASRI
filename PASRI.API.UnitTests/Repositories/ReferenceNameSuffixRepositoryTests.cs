@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using PASRI.API.Core.Domain;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using PASRI.API.Core.Domain;
 using PASRI.API.TestHelper;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -55,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneNameSuffix_ReturnsCollection()
         {
-            var result = UnitOfWork.ReferenceNameSuffixes.Find(p => p.Id != Int32.MaxValue);
+            var result = UnitOfWork.ReferenceNameSuffixes.Find(p => p.Id != int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.GreaterThan(0));
@@ -64,7 +65,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoNameSuffixes_ReturnsEmptyCollection()
         {
-            var result = UnitOfWork.ReferenceNameSuffixes.Find(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceNameSuffixes.Find(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(0));
@@ -93,7 +94,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoNameSuffixes_ReturnsNull()
         {
-            var result = UnitOfWork.ReferenceNameSuffixes.SingleOrDefault(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceNameSuffixes.SingleOrDefault(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Null);
         }
@@ -102,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         public void Add_ValidNameSuffixNotExists_FetchNewNameSuffix()
         {
             var notExistsNameSuffixCode = PreDefinedData.GetNotExistsNameSuffixCode();
-            var newReferenceNameSuffix = new ReferenceNameSuffix()
+            var newReferenceNameSuffix = new ReferenceNameSuffix
             {
                 Code = notExistsNameSuffixCode,
                 LongName = notExistsNameSuffixCode
@@ -125,7 +126,7 @@ namespace PASRI.API.UnitTests.Repositories
             var randomNameSuffix = UnitOfWork.ReferenceNameSuffixes.Get(randomNameSuffixId);
 
             Assert.That(() => UnitOfWork.ReferenceNameSuffixes.Add(
-                new ReferenceNameSuffix()
+                new ReferenceNameSuffix
                 {
                     Id = randomNameSuffix.Id,
                     Code = randomNameSuffix.Code
@@ -153,8 +154,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newNameSuffixes = new Collection<ReferenceNameSuffix>
             {
-                new ReferenceNameSuffix() { Code = notExistsNameSuffixCode1, LongName = "" },
-                new ReferenceNameSuffix() { Code = notExistsNameSuffixCode2, LongName = "" }
+                new ReferenceNameSuffix { Code = notExistsNameSuffixCode1, LongName = "" },
+                new ReferenceNameSuffix { Code = notExistsNameSuffixCode2, LongName = "" }
             };
             UnitOfWork.ReferenceNameSuffixes.AddRange(newNameSuffixes);
             UnitOfWork.Complete();
@@ -170,8 +171,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsNameSuffixCode = PreDefinedData.GetNotExistsNameSuffixCode();
             var newNameSuffixes = new Collection<ReferenceNameSuffix>
             {
-                new ReferenceNameSuffix() { Id = Int32.MaxValue, Code = notExistsNameSuffixCode, LongName = "" },
-                new ReferenceNameSuffix() { Id = Int32.MaxValue, Code = notExistsNameSuffixCode, LongName = "" }
+                new ReferenceNameSuffix { Id = int.MaxValue, Code = notExistsNameSuffixCode, LongName = "" },
+                new ReferenceNameSuffix { Id = int.MaxValue, Code = notExistsNameSuffixCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceNameSuffixes.AddRange(newNameSuffixes),
@@ -197,9 +198,9 @@ namespace PASRI.API.UnitTests.Repositories
         public void Remove_ValidNameSuffixNotExists_ThrowsDbUpdateConcurrencyException()
         {
             UnitOfWork.ReferenceNameSuffixes.Remove(
-                new ReferenceNameSuffix()
+                new ReferenceNameSuffix
                 {
-                    Id = Int32.MaxValue
+                    Id = int.MaxValue
                 });
 
             Assert.That(() => UnitOfWork.Complete(),
@@ -233,7 +234,7 @@ namespace PASRI.API.UnitTests.Repositories
             var removeReferenceNameSuffixes = new Collection<ReferenceNameSuffix>();
             var removeCount = new Random().Next(1, referenceNameSuffixes.Count);
 
-            for (int i = 0; i < removeCount; i++)
+            for (var i = 0; i < removeCount; i++)
             {
                 removeReferenceNameSuffixes.Add(referenceNameSuffixes.ElementAt(i));
             }
@@ -254,8 +255,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var existingNameSuffixes = new Collection<ReferenceNameSuffix>
             {
-                new ReferenceNameSuffix() { Id = randomNameSuffix.Id, Code = randomNameSuffix.Code },
-                new ReferenceNameSuffix() { Id = randomNameSuffix.Id, Code = randomNameSuffix.Code }
+                new ReferenceNameSuffix { Id = randomNameSuffix.Id, Code = randomNameSuffix.Code },
+                new ReferenceNameSuffix { Id = randomNameSuffix.Id, Code = randomNameSuffix.Code }
             };
 
             Assert.That(() => UnitOfWork.ReferenceNameSuffixes.RemoveRange(existingNameSuffixes),

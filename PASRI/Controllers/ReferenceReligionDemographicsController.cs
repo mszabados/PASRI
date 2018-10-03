@@ -61,7 +61,7 @@ namespace PASRI.API.Controllers
             var referenceReligionDemographic = _mapper.Map<ReferenceReligionDemographicDto, ReferenceReligionDemographic>(payload);
 
             var referenceReligionDemographicInDb = _unitOfWork.ReferenceReligionDemographics.Find(p => p.Code == payload.Code);
-            if (referenceReligionDemographicInDb.Count() > 0)
+            if (referenceReligionDemographicInDb.Any())
                 return new ConflictResult();
 
             _unitOfWork.ReferenceReligionDemographics.Add(referenceReligionDemographic);

@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
-using NUnit.Framework;
-using PASRI.API.Controllers;
-using PASRI.API.Core.Domain;
-using PASRI.API.Dtos;
-using PASRI.API.TestHelper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using NUnit.Framework;
+using PASRI.API.Controllers;
+using PASRI.API.Core.Domain;
+using PASRI.API.Dtos;
+using PASRI.API.TestHelper;
 
 namespace PASRI.API.IntegrationTests.Controllers
 {
@@ -35,13 +35,13 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            IEnumerable<ReferenceEthnicGroupDemographicDto> apiReturnedCollection =
+            var apiReturnedCollection =
                 JsonConvert.DeserializeObject<IEnumerable<ReferenceEthnicGroupDemographicDto>>(responseString);
-            IEnumerable<ReferenceEthnicGroupDemographicDto> preDefinedCollection =
-                PreDefinedData.ReferenceEthnicGroupDemographics.Select(Mapper.Map<ReferenceEthnicGroupDemographic, ReferenceEthnicGroupDemographicDto>).ToList().AsEnumerable<ReferenceEthnicGroupDemographicDto>();
+            var preDefinedCollection =
+                PreDefinedData.ReferenceEthnicGroupDemographics.Select(Mapper.Map<ReferenceEthnicGroupDemographic, ReferenceEthnicGroupDemographicDto>).ToList().AsEnumerable();
             ((List<ReferenceEthnicGroupDemographicDto>)apiReturnedCollection).Sort();
             ((List<ReferenceEthnicGroupDemographicDto>)preDefinedCollection).Sort();
 
@@ -62,13 +62,13 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            ReferenceEthnicGroupDemographicDto apiReturnedObject =
+            var apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceEthnicGroupDemographicDto>(responseString);
 
-            ReferenceEthnicGroupDemographic preDefinedObject =
+            var preDefinedObject =
                 PreDefinedData.ReferenceEthnicGroupDemographics
                     .SingleOrDefault(c => c.Id == randomEthnicGroupDemographicId);
 
@@ -80,8 +80,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Get_InvalidEthnicGroupDemographicId_HttpNotFound()
         {
             // Arrange
-            var notExistsEthnicGroupDemographicCode = PreDefinedData.GetNotExistsEthnicGroupDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceEthnicGroupDemographicsController), Int32.MaxValue.ToString());
+            var path = GetRelativePath(nameof(ReferenceEthnicGroupDemographicsController), int.MaxValue.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -96,7 +95,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var path = GetRelativePath(nameof(ReferenceEthnicGroupDemographicsController));
             var notExistsEthnicGroupDemographicCode = PreDefinedData.GetNotExistsEthnicGroupDemographicCode();
-            var newEthnicGroupDemographicDto = new ReferenceEthnicGroupDemographicDto()
+            var newEthnicGroupDemographicDto = new ReferenceEthnicGroupDemographicDto
             {
                 Code = notExistsEthnicGroupDemographicCode,
                 LongName = "New EthnicGroupDemographic",
@@ -113,10 +112,10 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
 
-            ReferenceEthnicGroupDemographicDto apiReturnedObject =
+            var apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceEthnicGroupDemographicDto>(responseString);
 
             Assert.That(apiReturnedObject.Id, Is.GreaterThan(0));
@@ -145,7 +144,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var path = GetRelativePath(nameof(ReferenceEthnicGroupDemographicsController));
 
-            var newEthnicGroupDemographicDto = new ReferenceEthnicGroupDemographicDto()
+            var newEthnicGroupDemographicDto = new ReferenceEthnicGroupDemographicDto
             {
                 // Code is required, keep it missing
                 CreatedDate = DateTime.UtcNow
@@ -169,7 +168,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var randomEthnicGroupDemographicId = PreDefinedData.GetRandomEthnicGroupDemographicId();
             var randomEthnicGroupDemographic = PreDefinedData.ReferenceEthnicGroupDemographics[randomEthnicGroupDemographicId - 1];
 
-            var newEthnicGroupDemographicDto = new ReferenceEthnicGroupDemographicDto()
+            var newEthnicGroupDemographicDto = new ReferenceEthnicGroupDemographicDto
             {
                 Code = randomEthnicGroupDemographic.Code,
                 LongName = "Create Test",
@@ -192,7 +191,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var randomEthnicGroupDemographicId = PreDefinedData.GetRandomEthnicGroupDemographicId();
 
-            ReferenceEthnicGroupDemographic apiUpdatingEthnicGroupDemographic = UnitOfWork.ReferenceEthnicGroupDemographics.Get(randomEthnicGroupDemographicId);
+            var apiUpdatingEthnicGroupDemographic = UnitOfWork.ReferenceEthnicGroupDemographics.Get(randomEthnicGroupDemographicId);
             apiUpdatingEthnicGroupDemographic.LongName = "Update Test";
             var path = GetRelativePath(nameof(ReferenceEthnicGroupDemographicsController), randomEthnicGroupDemographicId.ToString());
 
@@ -206,10 +205,10 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
-            ReferenceEthnicGroupDemographic dbUpdatedEthnicGroupDemographic = UnitOfWork.ReferenceEthnicGroupDemographics.Get(apiUpdatingEthnicGroupDemographic.Id);
+            var dbUpdatedEthnicGroupDemographic = UnitOfWork.ReferenceEthnicGroupDemographics.Get(apiUpdatingEthnicGroupDemographic.Id);
             AssertHelper.AreObjectsEqual(apiUpdatingEthnicGroupDemographic, dbUpdatedEthnicGroupDemographic);
         }
 
@@ -234,7 +233,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var randomEthnicGroupDemographicId = PreDefinedData.GetRandomEthnicGroupDemographicId();
             var path = GetRelativePath(nameof(ReferenceEthnicGroupDemographicsController), randomEthnicGroupDemographicId.ToString());
-            var apiUpdatingEthnicGroupDemographic = new ReferenceEthnicGroupDemographicDto()
+            var apiUpdatingEthnicGroupDemographic = new ReferenceEthnicGroupDemographicDto
             {
                 Id = randomEthnicGroupDemographicId
                 // Code is required, keep it missing
@@ -255,10 +254,10 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var notExistsEthnicGroupDemographicCode = PreDefinedData.GetNotExistsEthnicGroupDemographicCode();
-            var path = GetRelativePath(nameof(ReferenceEthnicGroupDemographicsController), Int32.MaxValue.ToString());
-            var apiUpdatingEthnicGroupDemographic = new ReferenceEthnicGroupDemographicDto()
+            var path = GetRelativePath(nameof(ReferenceEthnicGroupDemographicsController), int.MaxValue.ToString());
+            var apiUpdatingEthnicGroupDemographic = new ReferenceEthnicGroupDemographicDto
             {
-                Id = Int32.MaxValue,
+                Id = int.MaxValue,
                 Code = notExistsEthnicGroupDemographicCode,
                 LongName = "Update Test"
             };
@@ -287,7 +286,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
 
@@ -295,7 +294,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_InvalidEthnicGroupDemographic_HttpNotFound()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceEthnicGroupDemographicsController), Int32.MaxValue.ToString());
+            var path = GetRelativePath(nameof(ReferenceEthnicGroupDemographicsController), int.MaxValue.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);

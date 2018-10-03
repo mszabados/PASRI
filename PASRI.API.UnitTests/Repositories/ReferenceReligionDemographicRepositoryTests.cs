@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using PASRI.API.Core.Domain;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using PASRI.API.Core.Domain;
 using PASRI.API.TestHelper;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -55,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneReligionDemographic_ReturnsCollection()
         {
-            var result = UnitOfWork.ReferenceReligionDemographics.Find(p => p.Id != Int32.MaxValue);
+            var result = UnitOfWork.ReferenceReligionDemographics.Find(p => p.Id != int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.GreaterThan(0));
@@ -64,7 +65,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoReligionDemographics_ReturnsEmptyCollection()
         {
-            var result = UnitOfWork.ReferenceReligionDemographics.Find(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceReligionDemographics.Find(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(0));
@@ -93,7 +94,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoReligionDemographics_ReturnsNull()
         {
-            var result = UnitOfWork.ReferenceReligionDemographics.SingleOrDefault(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceReligionDemographics.SingleOrDefault(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Null);
         }
@@ -102,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         public void Add_ValidReligionDemographicNotExists_FetchNewReligionDemographic()
         {
             var notExistsReligionDemographicCode = PreDefinedData.GetNotExistsReligionDemographicCode();
-            var newReferenceReligionDemographic = new ReferenceReligionDemographic()
+            var newReferenceReligionDemographic = new ReferenceReligionDemographic
             {
                 Code = notExistsReligionDemographicCode,
                 LongName = notExistsReligionDemographicCode
@@ -125,7 +126,7 @@ namespace PASRI.API.UnitTests.Repositories
             var randomReligionDemographic = UnitOfWork.ReferenceReligionDemographics.Get(randomReligionDemographicId);
 
             Assert.That(() => UnitOfWork.ReferenceReligionDemographics.Add(
-                new ReferenceReligionDemographic()
+                new ReferenceReligionDemographic
                 {
                     Id = randomReligionDemographic.Id,
                     Code = randomReligionDemographic.Code
@@ -153,8 +154,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newReligionDemographics = new Collection<ReferenceReligionDemographic>
             {
-                new ReferenceReligionDemographic() { Code = notExistsReligionDemographicCode1, LongName = "" },
-                new ReferenceReligionDemographic() { Code = notExistsReligionDemographicCode2, LongName = "" }
+                new ReferenceReligionDemographic { Code = notExistsReligionDemographicCode1, LongName = "" },
+                new ReferenceReligionDemographic { Code = notExistsReligionDemographicCode2, LongName = "" }
             };
             UnitOfWork.ReferenceReligionDemographics.AddRange(newReligionDemographics);
             UnitOfWork.Complete();
@@ -170,8 +171,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsReligionDemographicCode = PreDefinedData.GetNotExistsReligionDemographicCode();
             var newReligionDemographics = new Collection<ReferenceReligionDemographic>
             {
-                new ReferenceReligionDemographic() { Id = Int32.MaxValue, Code = notExistsReligionDemographicCode, LongName = "" },
-                new ReferenceReligionDemographic() { Id = Int32.MaxValue, Code = notExistsReligionDemographicCode, LongName = "" }
+                new ReferenceReligionDemographic { Id = int.MaxValue, Code = notExistsReligionDemographicCode, LongName = "" },
+                new ReferenceReligionDemographic { Id = int.MaxValue, Code = notExistsReligionDemographicCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceReligionDemographics.AddRange(newReligionDemographics),
@@ -197,9 +198,9 @@ namespace PASRI.API.UnitTests.Repositories
         public void Remove_ValidReligionDemographicNotExists_ThrowsDbUpdateConcurrencyException()
         {
             UnitOfWork.ReferenceReligionDemographics.Remove(
-                new ReferenceReligionDemographic()
+                new ReferenceReligionDemographic
                 {
-                    Id = Int32.MaxValue
+                    Id = int.MaxValue
                 });
 
             Assert.That(() => UnitOfWork.Complete(),
@@ -233,7 +234,7 @@ namespace PASRI.API.UnitTests.Repositories
             var removeReferenceReligionDemographics = new Collection<ReferenceReligionDemographic>();
             var removeCount = new Random().Next(1, referenceReligionDemographics.Count);
 
-            for (int i = 0; i < removeCount; i++)
+            for (var i = 0; i < removeCount; i++)
             {
                 removeReferenceReligionDemographics.Add(referenceReligionDemographics.ElementAt(i));
             }
@@ -254,8 +255,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var existingReligionDemographics = new Collection<ReferenceReligionDemographic>
             {
-                new ReferenceReligionDemographic() { Id = randomReligionDemographic.Id, Code = randomReligionDemographic.Code },
-                new ReferenceReligionDemographic() { Id = randomReligionDemographic.Id, Code = randomReligionDemographic.Code }
+                new ReferenceReligionDemographic { Id = randomReligionDemographic.Id, Code = randomReligionDemographic.Code },
+                new ReferenceReligionDemographic { Id = randomReligionDemographic.Id, Code = randomReligionDemographic.Code }
             };
 
             Assert.That(() => UnitOfWork.ReferenceReligionDemographics.RemoveRange(existingReligionDemographics),

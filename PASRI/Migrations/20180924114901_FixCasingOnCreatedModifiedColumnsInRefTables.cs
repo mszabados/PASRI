@@ -7,457 +7,457 @@ namespace PASRI.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "Description",
-                table: "RE_SUFFIX",
-                newName: "description");
+                "Description",
+                "RE_SUFFIX",
+                "description");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedDate",
-                table: "RE_SUFFIX",
-                newName: "modified_date");
+                "ModifiedDate",
+                "RE_SUFFIX",
+                "modified_date");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedBy",
-                table: "RE_SUFFIX",
-                newName: "modified_by");
+                "ModifiedBy",
+                "RE_SUFFIX",
+                "modified_by");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedDate",
-                table: "RE_SUFFIX",
-                newName: "created_date");
+                "CreatedDate",
+                "RE_SUFFIX",
+                "created_date");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedBy",
-                table: "RE_SUFFIX",
-                newName: "created_by");
+                "CreatedBy",
+                "RE_SUFFIX",
+                "created_by");
 
             migrationBuilder.RenameColumn(
-                name: "Description",
-                table: "RE_STATE",
-                newName: "description");
+                "Description",
+                "RE_STATE",
+                "description");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedDate",
-                table: "RE_STATE",
-                newName: "modified_date");
+                "ModifiedDate",
+                "RE_STATE",
+                "modified_date");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedBy",
-                table: "RE_STATE",
-                newName: "modified_by");
+                "ModifiedBy",
+                "RE_STATE",
+                "modified_by");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedDate",
-                table: "RE_STATE",
-                newName: "created_date");
+                "CreatedDate",
+                "RE_STATE",
+                "created_date");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedBy",
-                table: "RE_STATE",
-                newName: "created_by");
+                "CreatedBy",
+                "RE_STATE",
+                "created_by");
 
             migrationBuilder.RenameColumn(
-                name: "Description",
-                table: "RE_RELIGION",
-                newName: "description");
+                "Description",
+                "RE_RELIGION",
+                "description");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedDate",
-                table: "RE_RELIGION",
-                newName: "modified_date");
+                "ModifiedDate",
+                "RE_RELIGION",
+                "modified_date");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedBy",
-                table: "RE_RELIGION",
-                newName: "modified_by");
+                "ModifiedBy",
+                "RE_RELIGION",
+                "modified_by");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedDate",
-                table: "RE_RELIGION",
-                newName: "created_date");
+                "CreatedDate",
+                "RE_RELIGION",
+                "created_date");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedBy",
-                table: "RE_RELIGION",
-                newName: "created_by");
+                "CreatedBy",
+                "RE_RELIGION",
+                "created_by");
 
             migrationBuilder.RenameColumn(
-                name: "Description",
-                table: "RE_RACE",
-                newName: "description");
+                "Description",
+                "RE_RACE",
+                "description");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedDate",
-                table: "RE_RACE",
-                newName: "modified_date");
+                "ModifiedDate",
+                "RE_RACE",
+                "modified_date");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedBy",
-                table: "RE_RACE",
-                newName: "modified_by");
+                "ModifiedBy",
+                "RE_RACE",
+                "modified_by");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedDate",
-                table: "RE_RACE",
-                newName: "created_date");
+                "CreatedDate",
+                "RE_RACE",
+                "created_date");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedBy",
-                table: "RE_RACE",
-                newName: "created_by");
+                "CreatedBy",
+                "RE_RACE",
+                "created_by");
 
             migrationBuilder.RenameColumn(
-                name: "Description",
-                table: "RE_HAIR_COLOR",
-                newName: "description");
+                "Description",
+                "RE_HAIR_COLOR",
+                "description");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedDate",
-                table: "RE_HAIR_COLOR",
-                newName: "modified_date");
+                "ModifiedDate",
+                "RE_HAIR_COLOR",
+                "modified_date");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedBy",
-                table: "RE_HAIR_COLOR",
-                newName: "modified_by");
+                "ModifiedBy",
+                "RE_HAIR_COLOR",
+                "modified_by");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedDate",
-                table: "RE_HAIR_COLOR",
-                newName: "created_date");
+                "CreatedDate",
+                "RE_HAIR_COLOR",
+                "created_date");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedBy",
-                table: "RE_HAIR_COLOR",
-                newName: "created_by");
+                "CreatedBy",
+                "RE_HAIR_COLOR",
+                "created_by");
 
             migrationBuilder.RenameColumn(
-                name: "Description",
-                table: "RE_GENDER",
-                newName: "description");
+                "Description",
+                "RE_GENDER",
+                "description");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedDate",
-                table: "RE_GENDER",
-                newName: "modified_date");
+                "ModifiedDate",
+                "RE_GENDER",
+                "modified_date");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedBy",
-                table: "RE_GENDER",
-                newName: "modified_by");
+                "ModifiedBy",
+                "RE_GENDER",
+                "modified_by");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedDate",
-                table: "RE_GENDER",
-                newName: "created_date");
+                "CreatedDate",
+                "RE_GENDER",
+                "created_date");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedBy",
-                table: "RE_GENDER",
-                newName: "created_by");
+                "CreatedBy",
+                "RE_GENDER",
+                "created_by");
 
             migrationBuilder.RenameColumn(
-                name: "Description",
-                table: "RE_EYE_COLOR",
-                newName: "description");
+                "Description",
+                "RE_EYE_COLOR",
+                "description");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedDate",
-                table: "RE_EYE_COLOR",
-                newName: "modified_date");
+                "ModifiedDate",
+                "RE_EYE_COLOR",
+                "modified_date");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedBy",
-                table: "RE_EYE_COLOR",
-                newName: "modified_by");
+                "ModifiedBy",
+                "RE_EYE_COLOR",
+                "modified_by");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedDate",
-                table: "RE_EYE_COLOR",
-                newName: "created_date");
+                "CreatedDate",
+                "RE_EYE_COLOR",
+                "created_date");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedBy",
-                table: "RE_EYE_COLOR",
-                newName: "created_by");
+                "CreatedBy",
+                "RE_EYE_COLOR",
+                "created_by");
 
             migrationBuilder.RenameColumn(
-                name: "Description",
-                table: "RE_ETHNIC",
-                newName: "description");
+                "Description",
+                "RE_ETHNIC",
+                "description");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedDate",
-                table: "RE_ETHNIC",
-                newName: "modified_date");
+                "ModifiedDate",
+                "RE_ETHNIC",
+                "modified_date");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedBy",
-                table: "RE_ETHNIC",
-                newName: "modified_by");
+                "ModifiedBy",
+                "RE_ETHNIC",
+                "modified_by");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedDate",
-                table: "RE_ETHNIC",
-                newName: "created_date");
+                "CreatedDate",
+                "RE_ETHNIC",
+                "created_date");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedBy",
-                table: "RE_ETHNIC",
-                newName: "created_by");
+                "CreatedBy",
+                "RE_ETHNIC",
+                "created_by");
 
             migrationBuilder.RenameColumn(
-                name: "Description",
-                table: "RE_COUNTRY",
-                newName: "description");
+                "Description",
+                "RE_COUNTRY",
+                "description");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedDate",
-                table: "RE_COUNTRY",
-                newName: "modified_date");
+                "ModifiedDate",
+                "RE_COUNTRY",
+                "modified_date");
 
             migrationBuilder.RenameColumn(
-                name: "ModifiedBy",
-                table: "RE_COUNTRY",
-                newName: "modified_by");
+                "ModifiedBy",
+                "RE_COUNTRY",
+                "modified_by");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedDate",
-                table: "RE_COUNTRY",
-                newName: "created_date");
+                "CreatedDate",
+                "RE_COUNTRY",
+                "created_date");
 
             migrationBuilder.RenameColumn(
-                name: "CreatedBy",
-                table: "RE_COUNTRY",
-                newName: "created_by");
+                "CreatedBy",
+                "RE_COUNTRY",
+                "created_by");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "description",
-                table: "RE_SUFFIX",
-                newName: "Description");
+                "description",
+                "RE_SUFFIX",
+                "Description");
 
             migrationBuilder.RenameColumn(
-                name: "modified_date",
-                table: "RE_SUFFIX",
-                newName: "ModifiedDate");
+                "modified_date",
+                "RE_SUFFIX",
+                "ModifiedDate");
 
             migrationBuilder.RenameColumn(
-                name: "modified_by",
-                table: "RE_SUFFIX",
-                newName: "ModifiedBy");
+                "modified_by",
+                "RE_SUFFIX",
+                "ModifiedBy");
 
             migrationBuilder.RenameColumn(
-                name: "created_date",
-                table: "RE_SUFFIX",
-                newName: "CreatedDate");
+                "created_date",
+                "RE_SUFFIX",
+                "CreatedDate");
 
             migrationBuilder.RenameColumn(
-                name: "created_by",
-                table: "RE_SUFFIX",
-                newName: "CreatedBy");
+                "created_by",
+                "RE_SUFFIX",
+                "CreatedBy");
 
             migrationBuilder.RenameColumn(
-                name: "description",
-                table: "RE_STATE",
-                newName: "Description");
+                "description",
+                "RE_STATE",
+                "Description");
 
             migrationBuilder.RenameColumn(
-                name: "modified_date",
-                table: "RE_STATE",
-                newName: "ModifiedDate");
+                "modified_date",
+                "RE_STATE",
+                "ModifiedDate");
 
             migrationBuilder.RenameColumn(
-                name: "modified_by",
-                table: "RE_STATE",
-                newName: "ModifiedBy");
+                "modified_by",
+                "RE_STATE",
+                "ModifiedBy");
 
             migrationBuilder.RenameColumn(
-                name: "created_date",
-                table: "RE_STATE",
-                newName: "CreatedDate");
+                "created_date",
+                "RE_STATE",
+                "CreatedDate");
 
             migrationBuilder.RenameColumn(
-                name: "created_by",
-                table: "RE_STATE",
-                newName: "CreatedBy");
+                "created_by",
+                "RE_STATE",
+                "CreatedBy");
 
             migrationBuilder.RenameColumn(
-                name: "description",
-                table: "RE_RELIGION",
-                newName: "Description");
+                "description",
+                "RE_RELIGION",
+                "Description");
 
             migrationBuilder.RenameColumn(
-                name: "modified_date",
-                table: "RE_RELIGION",
-                newName: "ModifiedDate");
+                "modified_date",
+                "RE_RELIGION",
+                "ModifiedDate");
 
             migrationBuilder.RenameColumn(
-                name: "modified_by",
-                table: "RE_RELIGION",
-                newName: "ModifiedBy");
+                "modified_by",
+                "RE_RELIGION",
+                "ModifiedBy");
 
             migrationBuilder.RenameColumn(
-                name: "created_date",
-                table: "RE_RELIGION",
-                newName: "CreatedDate");
+                "created_date",
+                "RE_RELIGION",
+                "CreatedDate");
 
             migrationBuilder.RenameColumn(
-                name: "created_by",
-                table: "RE_RELIGION",
-                newName: "CreatedBy");
+                "created_by",
+                "RE_RELIGION",
+                "CreatedBy");
 
             migrationBuilder.RenameColumn(
-                name: "description",
-                table: "RE_RACE",
-                newName: "Description");
+                "description",
+                "RE_RACE",
+                "Description");
 
             migrationBuilder.RenameColumn(
-                name: "modified_date",
-                table: "RE_RACE",
-                newName: "ModifiedDate");
+                "modified_date",
+                "RE_RACE",
+                "ModifiedDate");
 
             migrationBuilder.RenameColumn(
-                name: "modified_by",
-                table: "RE_RACE",
-                newName: "ModifiedBy");
+                "modified_by",
+                "RE_RACE",
+                "ModifiedBy");
 
             migrationBuilder.RenameColumn(
-                name: "created_date",
-                table: "RE_RACE",
-                newName: "CreatedDate");
+                "created_date",
+                "RE_RACE",
+                "CreatedDate");
 
             migrationBuilder.RenameColumn(
-                name: "created_by",
-                table: "RE_RACE",
-                newName: "CreatedBy");
+                "created_by",
+                "RE_RACE",
+                "CreatedBy");
 
             migrationBuilder.RenameColumn(
-                name: "description",
-                table: "RE_HAIR_COLOR",
-                newName: "Description");
+                "description",
+                "RE_HAIR_COLOR",
+                "Description");
 
             migrationBuilder.RenameColumn(
-                name: "modified_date",
-                table: "RE_HAIR_COLOR",
-                newName: "ModifiedDate");
+                "modified_date",
+                "RE_HAIR_COLOR",
+                "ModifiedDate");
 
             migrationBuilder.RenameColumn(
-                name: "modified_by",
-                table: "RE_HAIR_COLOR",
-                newName: "ModifiedBy");
+                "modified_by",
+                "RE_HAIR_COLOR",
+                "ModifiedBy");
 
             migrationBuilder.RenameColumn(
-                name: "created_date",
-                table: "RE_HAIR_COLOR",
-                newName: "CreatedDate");
+                "created_date",
+                "RE_HAIR_COLOR",
+                "CreatedDate");
 
             migrationBuilder.RenameColumn(
-                name: "created_by",
-                table: "RE_HAIR_COLOR",
-                newName: "CreatedBy");
+                "created_by",
+                "RE_HAIR_COLOR",
+                "CreatedBy");
 
             migrationBuilder.RenameColumn(
-                name: "description",
-                table: "RE_GENDER",
-                newName: "Description");
+                "description",
+                "RE_GENDER",
+                "Description");
 
             migrationBuilder.RenameColumn(
-                name: "modified_date",
-                table: "RE_GENDER",
-                newName: "ModifiedDate");
+                "modified_date",
+                "RE_GENDER",
+                "ModifiedDate");
 
             migrationBuilder.RenameColumn(
-                name: "modified_by",
-                table: "RE_GENDER",
-                newName: "ModifiedBy");
+                "modified_by",
+                "RE_GENDER",
+                "ModifiedBy");
 
             migrationBuilder.RenameColumn(
-                name: "created_date",
-                table: "RE_GENDER",
-                newName: "CreatedDate");
+                "created_date",
+                "RE_GENDER",
+                "CreatedDate");
 
             migrationBuilder.RenameColumn(
-                name: "created_by",
-                table: "RE_GENDER",
-                newName: "CreatedBy");
+                "created_by",
+                "RE_GENDER",
+                "CreatedBy");
 
             migrationBuilder.RenameColumn(
-                name: "description",
-                table: "RE_EYE_COLOR",
-                newName: "Description");
+                "description",
+                "RE_EYE_COLOR",
+                "Description");
 
             migrationBuilder.RenameColumn(
-                name: "modified_date",
-                table: "RE_EYE_COLOR",
-                newName: "ModifiedDate");
+                "modified_date",
+                "RE_EYE_COLOR",
+                "ModifiedDate");
 
             migrationBuilder.RenameColumn(
-                name: "modified_by",
-                table: "RE_EYE_COLOR",
-                newName: "ModifiedBy");
+                "modified_by",
+                "RE_EYE_COLOR",
+                "ModifiedBy");
 
             migrationBuilder.RenameColumn(
-                name: "created_date",
-                table: "RE_EYE_COLOR",
-                newName: "CreatedDate");
+                "created_date",
+                "RE_EYE_COLOR",
+                "CreatedDate");
 
             migrationBuilder.RenameColumn(
-                name: "created_by",
-                table: "RE_EYE_COLOR",
-                newName: "CreatedBy");
+                "created_by",
+                "RE_EYE_COLOR",
+                "CreatedBy");
 
             migrationBuilder.RenameColumn(
-                name: "description",
-                table: "RE_ETHNIC",
-                newName: "Description");
+                "description",
+                "RE_ETHNIC",
+                "Description");
 
             migrationBuilder.RenameColumn(
-                name: "modified_date",
-                table: "RE_ETHNIC",
-                newName: "ModifiedDate");
+                "modified_date",
+                "RE_ETHNIC",
+                "ModifiedDate");
 
             migrationBuilder.RenameColumn(
-                name: "modified_by",
-                table: "RE_ETHNIC",
-                newName: "ModifiedBy");
+                "modified_by",
+                "RE_ETHNIC",
+                "ModifiedBy");
 
             migrationBuilder.RenameColumn(
-                name: "created_date",
-                table: "RE_ETHNIC",
-                newName: "CreatedDate");
+                "created_date",
+                "RE_ETHNIC",
+                "CreatedDate");
 
             migrationBuilder.RenameColumn(
-                name: "created_by",
-                table: "RE_ETHNIC",
-                newName: "CreatedBy");
+                "created_by",
+                "RE_ETHNIC",
+                "CreatedBy");
 
             migrationBuilder.RenameColumn(
-                name: "description",
-                table: "RE_COUNTRY",
-                newName: "Description");
+                "description",
+                "RE_COUNTRY",
+                "Description");
 
             migrationBuilder.RenameColumn(
-                name: "modified_date",
-                table: "RE_COUNTRY",
-                newName: "ModifiedDate");
+                "modified_date",
+                "RE_COUNTRY",
+                "ModifiedDate");
 
             migrationBuilder.RenameColumn(
-                name: "modified_by",
-                table: "RE_COUNTRY",
-                newName: "ModifiedBy");
+                "modified_by",
+                "RE_COUNTRY",
+                "ModifiedBy");
 
             migrationBuilder.RenameColumn(
-                name: "created_date",
-                table: "RE_COUNTRY",
-                newName: "CreatedDate");
+                "created_date",
+                "RE_COUNTRY",
+                "CreatedDate");
 
             migrationBuilder.RenameColumn(
-                name: "created_by",
-                table: "RE_COUNTRY",
-                newName: "CreatedBy");
+                "created_by",
+                "RE_COUNTRY",
+                "CreatedBy");
         }
     }
 }

@@ -61,7 +61,7 @@ namespace PASRI.API.Controllers
             var referenceStateProvince = _mapper.Map<ReferenceStateProvinceDto, ReferenceStateProvince>(payload);
 
             var referenceStateProvinceInDb = _unitOfWork.ReferenceStateProvinces.Find(p => p.Code == payload.Code);
-            if (referenceStateProvinceInDb.Count() > 0)
+            if (referenceStateProvinceInDb.Any())
                 return new ConflictResult();
 
             _unitOfWork.ReferenceStateProvinces.Add(referenceStateProvince);

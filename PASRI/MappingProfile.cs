@@ -1,10 +1,9 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
+using AutoMapper;
 using PASRI.API.Core.Domain;
 using PASRI.API.Dtos;
-using System;
-using System.Diagnostics;
-using System.Linq.Expressions;
-using System.Reflection;
 
 namespace PASRI.API
 {
@@ -37,11 +36,13 @@ namespace PASRI.API
         }
     }
 
+    [ExcludeFromCodeCoverage]
     public static class MappingHelper
     {
         /// <summary>
         /// Extension to ignore a member of the main destination class
         /// </summary>
+        // ReSharper disable once UnusedMember.Global
         public static IMappingExpression<TSource, TDestination> IgnoreMember<TSource, TDestination>(
             this IMappingExpression<TSource, TDestination> map,
             Expression<Func<TDestination, object>> selector)
@@ -53,6 +54,7 @@ namespace PASRI.API
         /// <summary>
         /// Extension to ignore a path back to the source class in the reverse map
         /// </summary>
+        // ReSharper disable once UnusedMember.Global
         public static IMappingExpression<TSource, TDestination> IgnorePath<TSource, TDestination>(
             this IMappingExpression<TSource, TDestination> map,
             Expression<Func<TDestination, object>> selector)

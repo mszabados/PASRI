@@ -1,4 +1,5 @@
-﻿using PASRI.API.Core.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using PASRI.API.Core.Domain;
 using PASRI.API.Core.Repositories;
 
 namespace PASRI.API.Persistence.Repositories
@@ -19,7 +20,7 @@ namespace PASRI.API.Persistence.Repositories
     /// </remarks>
     public class ReferenceCountryRepository : Repository<ReferenceCountry>, IReferenceCountryRepository
     {
-        public ReferenceCountryRepository(PasriDbContext context)
+        public ReferenceCountryRepository(DbContext context)
             : base(context)
         {
         }

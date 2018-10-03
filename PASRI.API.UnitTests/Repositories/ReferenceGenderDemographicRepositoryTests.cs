@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using PASRI.API.Core.Domain;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using PASRI.API.Core.Domain;
 using PASRI.API.TestHelper;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -55,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneGenderDemographic_ReturnsCollection()
         {
-            var result = UnitOfWork.ReferenceGenderDemographics.Find(p => p.Id != Int32.MaxValue);
+            var result = UnitOfWork.ReferenceGenderDemographics.Find(p => p.Id != int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.GreaterThan(0));
@@ -64,7 +65,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoGenderDemographics_ReturnsEmptyCollection()
         {
-            var result = UnitOfWork.ReferenceGenderDemographics.Find(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceGenderDemographics.Find(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(0));
@@ -93,7 +94,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoGenderDemographics_ReturnsNull()
         {
-            var result = UnitOfWork.ReferenceGenderDemographics.SingleOrDefault(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceGenderDemographics.SingleOrDefault(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Null);
         }
@@ -102,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         public void Add_ValidGenderDemographicNotExists_FetchNewGenderDemographic()
         {
             var notExistsGenderDemographicCode = PreDefinedData.GetNotExistsGenderDemographicCode();
-            var newReferenceGenderDemographic = new ReferenceGenderDemographic()
+            var newReferenceGenderDemographic = new ReferenceGenderDemographic
             {
                 Code = notExistsGenderDemographicCode,
                 LongName = notExistsGenderDemographicCode
@@ -125,7 +126,7 @@ namespace PASRI.API.UnitTests.Repositories
             var randomGenderDemographic = UnitOfWork.ReferenceGenderDemographics.Get(randomGenderDemographicId);
 
             Assert.That(() => UnitOfWork.ReferenceGenderDemographics.Add(
-                new ReferenceGenderDemographic()
+                new ReferenceGenderDemographic
                 {
                     Id = randomGenderDemographic.Id,
                     Code = randomGenderDemographic.Code
@@ -153,8 +154,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newGenderDemographics = new Collection<ReferenceGenderDemographic>
             {
-                new ReferenceGenderDemographic() { Code = notExistsGenderDemographicCode1, LongName = "" },
-                new ReferenceGenderDemographic() { Code = notExistsGenderDemographicCode2, LongName = "" }
+                new ReferenceGenderDemographic { Code = notExistsGenderDemographicCode1, LongName = "" },
+                new ReferenceGenderDemographic { Code = notExistsGenderDemographicCode2, LongName = "" }
             };
             UnitOfWork.ReferenceGenderDemographics.AddRange(newGenderDemographics);
             UnitOfWork.Complete();
@@ -170,8 +171,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsGenderDemographicCode = PreDefinedData.GetNotExistsGenderDemographicCode();
             var newGenderDemographics = new Collection<ReferenceGenderDemographic>
             {
-                new ReferenceGenderDemographic() { Id = Int32.MaxValue, Code = notExistsGenderDemographicCode, LongName = "" },
-                new ReferenceGenderDemographic() { Id = Int32.MaxValue, Code = notExistsGenderDemographicCode, LongName = "" }
+                new ReferenceGenderDemographic { Id = int.MaxValue, Code = notExistsGenderDemographicCode, LongName = "" },
+                new ReferenceGenderDemographic { Id = int.MaxValue, Code = notExistsGenderDemographicCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceGenderDemographics.AddRange(newGenderDemographics),
@@ -197,9 +198,9 @@ namespace PASRI.API.UnitTests.Repositories
         public void Remove_ValidGenderDemographicNotExists_ThrowsDbUpdateConcurrencyException()
         {
             UnitOfWork.ReferenceGenderDemographics.Remove(
-                new ReferenceGenderDemographic()
+                new ReferenceGenderDemographic
                 {
-                    Id = Int32.MaxValue
+                    Id = int.MaxValue
                 });
 
             Assert.That(() => UnitOfWork.Complete(),
@@ -233,7 +234,7 @@ namespace PASRI.API.UnitTests.Repositories
             var removeReferenceGenderDemographics = new Collection<ReferenceGenderDemographic>();
             var removeCount = new Random().Next(1, referenceGenderDemographics.Count);
 
-            for (int i = 0; i < removeCount; i++)
+            for (var i = 0; i < removeCount; i++)
             {
                 removeReferenceGenderDemographics.Add(referenceGenderDemographics.ElementAt(i));
             }
@@ -254,8 +255,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var existingGenderDemographics = new Collection<ReferenceGenderDemographic>
             {
-                new ReferenceGenderDemographic() { Id = randomGenderDemographic.Id, Code = randomGenderDemographic.Code },
-                new ReferenceGenderDemographic() { Id = randomGenderDemographic.Id, Code = randomGenderDemographic.Code }
+                new ReferenceGenderDemographic { Id = randomGenderDemographic.Id, Code = randomGenderDemographic.Code },
+                new ReferenceGenderDemographic { Id = randomGenderDemographic.Id, Code = randomGenderDemographic.Code }
             };
 
             Assert.That(() => UnitOfWork.ReferenceGenderDemographics.RemoveRange(existingGenderDemographics),

@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
-using NUnit.Framework;
-using PASRI.API.Controllers;
-using PASRI.API.Core.Domain;
-using PASRI.API.Dtos;
-using PASRI.API.TestHelper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using NUnit.Framework;
+using PASRI.API.Controllers;
+using PASRI.API.Core.Domain;
+using PASRI.API.Dtos;
+using PASRI.API.TestHelper;
 
 namespace PASRI.API.IntegrationTests.Controllers
 {
@@ -35,13 +35,13 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            IEnumerable<ReferenceNameSuffixDto> apiReturnedCollection =
+            var apiReturnedCollection =
                 JsonConvert.DeserializeObject<IEnumerable<ReferenceNameSuffixDto>>(responseString);
-            IEnumerable<ReferenceNameSuffixDto> preDefinedCollection =
-                PreDefinedData.ReferenceNameSuffixes.Select(Mapper.Map<ReferenceNameSuffix, ReferenceNameSuffixDto>).ToList().AsEnumerable<ReferenceNameSuffixDto>();
+            var preDefinedCollection =
+                PreDefinedData.ReferenceNameSuffixes.Select(Mapper.Map<ReferenceNameSuffix, ReferenceNameSuffixDto>).ToList().AsEnumerable();
             ((List<ReferenceNameSuffixDto>)apiReturnedCollection).Sort();
             ((List<ReferenceNameSuffixDto>)preDefinedCollection).Sort();
 
@@ -62,13 +62,13 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            ReferenceNameSuffixDto apiReturnedObject =
+            var apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceNameSuffixDto>(responseString);
 
-            ReferenceNameSuffix preDefinedObject =
+            var preDefinedObject =
                 PreDefinedData.ReferenceNameSuffixes
                     .SingleOrDefault(c => c.Id == randomNameSuffixId);
 
@@ -80,8 +80,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Get_InvalidNameSuffixId_HttpNotFound()
         {
             // Arrange
-            var notExistsNameSuffixCode = PreDefinedData.GetNotExistsNameSuffixCode();
-            var path = GetRelativePath(nameof(ReferenceNameSuffixesController), Int32.MaxValue.ToString());
+            var path = GetRelativePath(nameof(ReferenceNameSuffixesController), int.MaxValue.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -96,7 +95,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var path = GetRelativePath(nameof(ReferenceNameSuffixesController));
             var notExistsNameSuffixCode = PreDefinedData.GetNotExistsNameSuffixCode();
-            var newNameSuffixDto = new ReferenceNameSuffixDto()
+            var newNameSuffixDto = new ReferenceNameSuffixDto
             {
                 Code = notExistsNameSuffixCode,
                 LongName = "New NameSuffix",
@@ -113,10 +112,10 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
 
-            ReferenceNameSuffixDto apiReturnedObject =
+            var apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceNameSuffixDto>(responseString);
 
             Assert.That(apiReturnedObject.Id, Is.GreaterThan(0));
@@ -145,7 +144,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var path = GetRelativePath(nameof(ReferenceNameSuffixesController));
 
-            var newNameSuffixDto = new ReferenceNameSuffixDto()
+            var newNameSuffixDto = new ReferenceNameSuffixDto
             {
                 // Code is required, keep it missing
                 CreatedDate = DateTime.UtcNow
@@ -169,7 +168,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var randomNameSuffixId = PreDefinedData.GetRandomNameSuffixId();
             var randomNameSuffix = PreDefinedData.ReferenceNameSuffixes[randomNameSuffixId - 1];
 
-            var newNameSuffixDto = new ReferenceNameSuffixDto()
+            var newNameSuffixDto = new ReferenceNameSuffixDto
             {
                 Code = randomNameSuffix.Code,
                 LongName = "Create Test",
@@ -192,7 +191,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var randomNameSuffixId = PreDefinedData.GetRandomNameSuffixId();
 
-            ReferenceNameSuffix apiUpdatingNameSuffix = UnitOfWork.ReferenceNameSuffixes.Get(randomNameSuffixId);
+            var apiUpdatingNameSuffix = UnitOfWork.ReferenceNameSuffixes.Get(randomNameSuffixId);
             apiUpdatingNameSuffix.LongName = "Update Test";
             var path = GetRelativePath(nameof(ReferenceNameSuffixesController), randomNameSuffixId.ToString());
 
@@ -206,10 +205,10 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
-            ReferenceNameSuffix dbUpdatedNameSuffix = UnitOfWork.ReferenceNameSuffixes.Get(apiUpdatingNameSuffix.Id);
+            var dbUpdatedNameSuffix = UnitOfWork.ReferenceNameSuffixes.Get(apiUpdatingNameSuffix.Id);
             AssertHelper.AreObjectsEqual(apiUpdatingNameSuffix, dbUpdatedNameSuffix);
         }
 
@@ -234,7 +233,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var randomNameSuffixId = PreDefinedData.GetRandomNameSuffixId();
             var path = GetRelativePath(nameof(ReferenceNameSuffixesController), randomNameSuffixId.ToString());
-            var apiUpdatingNameSuffix = new ReferenceNameSuffixDto()
+            var apiUpdatingNameSuffix = new ReferenceNameSuffixDto
             {
                 Id = randomNameSuffixId
                 // Code is required, keep it missing
@@ -255,10 +254,10 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var notExistsNameSuffixCode = PreDefinedData.GetNotExistsNameSuffixCode();
-            var path = GetRelativePath(nameof(ReferenceNameSuffixesController), Int32.MaxValue.ToString());
-            var apiUpdatingNameSuffix = new ReferenceNameSuffixDto()
+            var path = GetRelativePath(nameof(ReferenceNameSuffixesController), int.MaxValue.ToString());
+            var apiUpdatingNameSuffix = new ReferenceNameSuffixDto
             {
-                Id = Int32.MaxValue,
+                Id = int.MaxValue,
                 Code = notExistsNameSuffixCode,
                 LongName = "Update Test"
             };
@@ -287,7 +286,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
 
@@ -295,7 +294,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_InvalidNameSuffix_HttpNotFound()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceNameSuffixesController), Int32.MaxValue.ToString());
+            var path = GetRelativePath(nameof(ReferenceNameSuffixesController), int.MaxValue.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);

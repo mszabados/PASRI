@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
-using NUnit.Framework;
-using PASRI.API.Controllers;
-using PASRI.API.Core.Domain;
-using PASRI.API.Dtos;
-using PASRI.API.TestHelper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using NUnit.Framework;
+using PASRI.API.Controllers;
+using PASRI.API.Core.Domain;
+using PASRI.API.Dtos;
+using PASRI.API.TestHelper;
 
 namespace PASRI.API.IntegrationTests.Controllers
 {
@@ -35,13 +35,13 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            IEnumerable<ReferenceStateProvinceDto> apiReturnedCollection =
+            var apiReturnedCollection =
                 JsonConvert.DeserializeObject<IEnumerable<ReferenceStateProvinceDto>>(responseString);
-            IEnumerable<ReferenceStateProvinceDto> preDefinedCollection =
-                PreDefinedData.ReferenceStateProvinces.Select(Mapper.Map<ReferenceStateProvince, ReferenceStateProvinceDto>).ToList().AsEnumerable<ReferenceStateProvinceDto>();
+            var preDefinedCollection =
+                PreDefinedData.ReferenceStateProvinces.Select(Mapper.Map<ReferenceStateProvince, ReferenceStateProvinceDto>).ToList().AsEnumerable();
             ((List<ReferenceStateProvinceDto>)apiReturnedCollection).Sort();
             ((List<ReferenceStateProvinceDto>)preDefinedCollection).Sort();
 
@@ -62,13 +62,13 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            ReferenceStateProvinceDto apiReturnedObject =
+            var apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceStateProvinceDto>(responseString);
 
-            ReferenceStateProvince preDefinedObject =
+            var preDefinedObject =
                 PreDefinedData.ReferenceStateProvinces
                     .SingleOrDefault(c => c.Id == randomStateProvinceId);
 
@@ -80,8 +80,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Get_InvalidStateProvinceId_HttpNotFound()
         {
             // Arrange
-            var notExistsStateProvinceCode = PreDefinedData.GetNotExistsStateProvinceCode();
-            var path = GetRelativePath(nameof(ReferenceStateProvincesController), Int32.MaxValue.ToString());
+            var path = GetRelativePath(nameof(ReferenceStateProvincesController), int.MaxValue.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -96,7 +95,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var path = GetRelativePath(nameof(ReferenceStateProvincesController));
             var notExistsStateProvinceCode = PreDefinedData.GetNotExistsStateProvinceCode();
-            var newStateProvinceDto = new ReferenceStateProvinceDto()
+            var newStateProvinceDto = new ReferenceStateProvinceDto
             {
                 Code = notExistsStateProvinceCode,
                 LongName = "New StateProvince",
@@ -113,10 +112,10 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
 
-            ReferenceStateProvinceDto apiReturnedObject =
+            var apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceStateProvinceDto>(responseString);
 
             Assert.That(apiReturnedObject.Id, Is.GreaterThan(0));
@@ -145,7 +144,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var path = GetRelativePath(nameof(ReferenceStateProvincesController));
 
-            var newStateProvinceDto = new ReferenceStateProvinceDto()
+            var newStateProvinceDto = new ReferenceStateProvinceDto
             {
                 // Code is required, keep it missing
                 CreatedDate = DateTime.UtcNow
@@ -169,7 +168,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var randomStateProvinceId = PreDefinedData.GetRandomStateProvinceId();
             var randomStateProvince = PreDefinedData.ReferenceStateProvinces[randomStateProvinceId - 1];
 
-            var newStateProvinceDto = new ReferenceStateProvinceDto()
+            var newStateProvinceDto = new ReferenceStateProvinceDto
             {
                 Code = randomStateProvince.Code,
                 LongName = "Create Test",
@@ -192,7 +191,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var randomStateProvinceId = PreDefinedData.GetRandomStateProvinceId();
 
-            ReferenceStateProvince apiUpdatingStateProvince = UnitOfWork.ReferenceStateProvinces.Get(randomStateProvinceId);
+            var apiUpdatingStateProvince = UnitOfWork.ReferenceStateProvinces.Get(randomStateProvinceId);
             apiUpdatingStateProvince.LongName = "Update Test";
             var path = GetRelativePath(nameof(ReferenceStateProvincesController), randomStateProvinceId.ToString());
 
@@ -206,10 +205,10 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
-            ReferenceStateProvince dbUpdatedStateProvince = UnitOfWork.ReferenceStateProvinces.Get(apiUpdatingStateProvince.Id);
+            var dbUpdatedStateProvince = UnitOfWork.ReferenceStateProvinces.Get(apiUpdatingStateProvince.Id);
             AssertHelper.AreObjectsEqual(apiUpdatingStateProvince, dbUpdatedStateProvince);
         }
 
@@ -234,7 +233,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var randomStateProvinceId = PreDefinedData.GetRandomStateProvinceId();
             var path = GetRelativePath(nameof(ReferenceStateProvincesController), randomStateProvinceId.ToString());
-            var apiUpdatingStateProvince = new ReferenceStateProvinceDto()
+            var apiUpdatingStateProvince = new ReferenceStateProvinceDto
             {
                 Id = randomStateProvinceId
                 // Code is required, keep it missing
@@ -255,10 +254,10 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var notExistsStateProvinceCode = PreDefinedData.GetNotExistsStateProvinceCode();
-            var path = GetRelativePath(nameof(ReferenceStateProvincesController), Int32.MaxValue.ToString());
-            var apiUpdatingStateProvince = new ReferenceStateProvinceDto()
+            var path = GetRelativePath(nameof(ReferenceStateProvincesController), int.MaxValue.ToString());
+            var apiUpdatingStateProvince = new ReferenceStateProvinceDto
             {
-                Id = Int32.MaxValue,
+                Id = int.MaxValue,
                 Code = notExistsStateProvinceCode,
                 LongName = "Update Test"
             };
@@ -287,7 +286,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
 
@@ -295,7 +294,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_InvalidStateProvince_HttpNotFound()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceStateProvincesController), Int32.MaxValue.ToString());
+            var path = GetRelativePath(nameof(ReferenceStateProvincesController), int.MaxValue.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);

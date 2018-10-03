@@ -26,9 +26,9 @@ namespace PASRI.API.Persistence.Repositories
     {
         protected readonly DbContext Context;
 
-        private DbSet<TEntity> _entities;
+        private readonly DbSet<TEntity> _entities;
 
-        public Repository(DbContext context)
+        protected Repository(DbContext context)
         {
             Context = context;
 

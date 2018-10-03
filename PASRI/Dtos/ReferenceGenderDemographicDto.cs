@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using PASRI.API.Persistence.EntityConfigurations;
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace PASRI.API.Dtos
 {
@@ -23,7 +24,7 @@ namespace PASRI.API.Dtos
 
         public int CompareTo(ReferenceGenderDemographicDto obj)
         {
-            return String.Compare(this.Code, obj.Code, StringComparison.Ordinal);
+            return string.Compare(Code, obj.Code, StringComparison.Ordinal);
         }
     }
 }

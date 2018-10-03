@@ -61,7 +61,7 @@ namespace PASRI.API.Controllers
             var referenceEyeColor = _mapper.Map<ReferenceEyeColorDto, ReferenceEyeColor>(payload);
 
             var referenceEyeColorInDb = _unitOfWork.ReferenceEyeColors.Find(p => p.Code == payload.Code);
-            if (referenceEyeColorInDb.Count() > 0)
+            if (referenceEyeColorInDb.Any())
                 return new ConflictResult();
 
             _unitOfWork.ReferenceEyeColors.Add(referenceEyeColor);

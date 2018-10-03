@@ -21,15 +21,12 @@ namespace PASRI.API.Persistence.Repositories
     /// </remarks>
     public class PersonRepository : Repository<Person>, IPersonRepository
     {
-        public PersonRepository(PasriDbContext context)
+        public PersonRepository(DbContext context)
             : base(context)
         {
         }
 
-        public PasriDbContext PasriDbContext
-        {
-            get { return Context as PasriDbContext; }
-        }
+        private PasriDbContext PasriDbContext => Context as PasriDbContext;
 
         /// <summary>
         /// Returns an eagerly loaded <see cref="Person"/> object for updating by the API controller

@@ -19,7 +19,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
 
         public void Configure(EntityTypeBuilder<ReferenceRaceDemographic> builder)
         {
-            builder.ToTable("RE_RACE", schema: "PERSON");
+            builder.ToTable("RE_RACE", "PERSON");
 
             builder.HasKey(p => p.Id);
 

@@ -20,15 +20,17 @@ namespace PASRI.API.TestHelper
     /// </remarks>
     public class TestUnitOfWork : UnitOfWork
     {
+        // ReSharper disable once SuggestBaseTypeForParameter
+        // Must be SqlitePasriDbContext for Integration tests to work
         public TestUnitOfWork(SqlitePasriDbContext context) : base(context)
         {
         }
 
         protected override void InitializeTestDatabaseInMemory()
         {
-            _context.Database.OpenConnection();
-            _context.Database.EnsureCreated();
-            var seeder = new DatabaseSeeder(_context);
+            Context.Database.OpenConnection();
+            Context.Database.EnsureCreated();
+            var seeder = new DatabaseSeeder(Context);
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             seeder.Seed();
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed

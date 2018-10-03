@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using PASRI.API.Core.Domain;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using PASRI.API.Core.Domain;
 using PASRI.API.TestHelper;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -55,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneEthnicGroupDemographic_ReturnsCollection()
         {
-            var result = UnitOfWork.ReferenceEthnicGroupDemographics.Find(p => p.Id != Int32.MaxValue);
+            var result = UnitOfWork.ReferenceEthnicGroupDemographics.Find(p => p.Id != int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.GreaterThan(0));
@@ -64,7 +65,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoEthnicGroupDemographics_ReturnsEmptyCollection()
         {
-            var result = UnitOfWork.ReferenceEthnicGroupDemographics.Find(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceEthnicGroupDemographics.Find(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(0));
@@ -93,7 +94,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoEthnicGroupDemographics_ReturnsNull()
         {
-            var result = UnitOfWork.ReferenceEthnicGroupDemographics.SingleOrDefault(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceEthnicGroupDemographics.SingleOrDefault(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Null);
         }
@@ -102,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         public void Add_ValidEthnicGroupDemographicNotExists_FetchNewEthnicGroupDemographic()
         {
             var notExistsEthnicGroupDemographicCode = PreDefinedData.GetNotExistsEthnicGroupDemographicCode();
-            var newReferenceEthnicGroupDemographic = new ReferenceEthnicGroupDemographic()
+            var newReferenceEthnicGroupDemographic = new ReferenceEthnicGroupDemographic
             {
                 Code = notExistsEthnicGroupDemographicCode,
                 LongName = notExistsEthnicGroupDemographicCode
@@ -125,7 +126,7 @@ namespace PASRI.API.UnitTests.Repositories
             var randomEthnicGroupDemographic = UnitOfWork.ReferenceEthnicGroupDemographics.Get(randomEthnicGroupDemographicId);
 
             Assert.That(() => UnitOfWork.ReferenceEthnicGroupDemographics.Add(
-                new ReferenceEthnicGroupDemographic()
+                new ReferenceEthnicGroupDemographic
                 {
                     Id = randomEthnicGroupDemographic.Id,
                     Code = randomEthnicGroupDemographic.Code
@@ -153,8 +154,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newEthnicGroupDemographics = new Collection<ReferenceEthnicGroupDemographic>
             {
-                new ReferenceEthnicGroupDemographic() { Code = notExistsEthnicGroupDemographicCode1, LongName = "" },
-                new ReferenceEthnicGroupDemographic() { Code = notExistsEthnicGroupDemographicCode2, LongName = "" }
+                new ReferenceEthnicGroupDemographic { Code = notExistsEthnicGroupDemographicCode1, LongName = "" },
+                new ReferenceEthnicGroupDemographic { Code = notExistsEthnicGroupDemographicCode2, LongName = "" }
             };
             UnitOfWork.ReferenceEthnicGroupDemographics.AddRange(newEthnicGroupDemographics);
             UnitOfWork.Complete();
@@ -170,8 +171,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsEthnicGroupDemographicCode = PreDefinedData.GetNotExistsEthnicGroupDemographicCode();
             var newEthnicGroupDemographics = new Collection<ReferenceEthnicGroupDemographic>
             {
-                new ReferenceEthnicGroupDemographic() { Id = Int32.MaxValue, Code = notExistsEthnicGroupDemographicCode, LongName = "" },
-                new ReferenceEthnicGroupDemographic() { Id = Int32.MaxValue, Code = notExistsEthnicGroupDemographicCode, LongName = "" }
+                new ReferenceEthnicGroupDemographic { Id = int.MaxValue, Code = notExistsEthnicGroupDemographicCode, LongName = "" },
+                new ReferenceEthnicGroupDemographic { Id = int.MaxValue, Code = notExistsEthnicGroupDemographicCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceEthnicGroupDemographics.AddRange(newEthnicGroupDemographics),
@@ -197,9 +198,9 @@ namespace PASRI.API.UnitTests.Repositories
         public void Remove_ValidEthnicGroupDemographicNotExists_ThrowsDbUpdateConcurrencyException()
         {
             UnitOfWork.ReferenceEthnicGroupDemographics.Remove(
-                new ReferenceEthnicGroupDemographic()
+                new ReferenceEthnicGroupDemographic
                 {
-                    Id = Int32.MaxValue
+                    Id = int.MaxValue
                 });
 
             Assert.That(() => UnitOfWork.Complete(),
@@ -233,7 +234,7 @@ namespace PASRI.API.UnitTests.Repositories
             var removeReferenceEthnicGroupDemographics = new Collection<ReferenceEthnicGroupDemographic>();
             var removeCount = new Random().Next(1, referenceEthnicGroupDemographics.Count);
 
-            for (int i = 0; i < removeCount; i++)
+            for (var i = 0; i < removeCount; i++)
             {
                 removeReferenceEthnicGroupDemographics.Add(referenceEthnicGroupDemographics.ElementAt(i));
             }
@@ -254,8 +255,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var existingEthnicGroupDemographics = new Collection<ReferenceEthnicGroupDemographic>
             {
-                new ReferenceEthnicGroupDemographic() { Id = randomEthnicGroupDemographic.Id, Code = randomEthnicGroupDemographic.Code },
-                new ReferenceEthnicGroupDemographic() { Id = randomEthnicGroupDemographic.Id, Code = randomEthnicGroupDemographic.Code }
+                new ReferenceEthnicGroupDemographic { Id = randomEthnicGroupDemographic.Id, Code = randomEthnicGroupDemographic.Code },
+                new ReferenceEthnicGroupDemographic { Id = randomEthnicGroupDemographic.Id, Code = randomEthnicGroupDemographic.Code }
             };
 
             Assert.That(() => UnitOfWork.ReferenceEthnicGroupDemographics.RemoveRange(existingEthnicGroupDemographics),

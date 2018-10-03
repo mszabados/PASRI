@@ -61,7 +61,7 @@ namespace PASRI.API.Controllers
             var referenceRaceDemographic = _mapper.Map<ReferenceRaceDemographicDto, ReferenceRaceDemographic>(payload);
 
             var referenceRaceDemographicInDb = _unitOfWork.ReferenceRaceDemographics.Find(p => p.Code == payload.Code);
-            if (referenceRaceDemographicInDb.Count() > 0)
+            if (referenceRaceDemographicInDb.Any())
                 return new ConflictResult();
 
             _unitOfWork.ReferenceRaceDemographics.Add(referenceRaceDemographic);

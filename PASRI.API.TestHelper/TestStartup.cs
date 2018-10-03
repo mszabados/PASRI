@@ -5,7 +5,7 @@ using PASRI.API.Core;
 namespace PASRI.API.TestHelper
 {
     /// <summary>
-    /// Used as a startup class for the <see cref="BaseIntegrationTestProvider"/>
+    /// Used as a startup class for the BaseIntegrationTestProvider and BaseUnitTestProvider
     /// that initializes the <see cref="TestUnitOfWork"/> which
     /// provides in-memory database implementation
     /// </summary>

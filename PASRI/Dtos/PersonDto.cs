@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using PASRI.API.Persistence.EntityConfigurations;
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace PASRI.API.Dtos
 {
@@ -15,6 +16,11 @@ namespace PASRI.API.Dtos
         [Required(AllowEmptyStrings = false)]
         [StringLength(PersonConfiguration.FirstNameLength)]
         public string FirstName { get; set; }
+
+        [DataMember]
+        [Required(AllowEmptyStrings = false)]
+        [StringLength(PersonConfiguration.MiddleNameLength)]
+        public string MiddleName { get; set; }
 
         [DataMember]
         [Required(AllowEmptyStrings = false)]
@@ -64,7 +70,7 @@ namespace PASRI.API.Dtos
 
         public int CompareTo(PersonDto obj)
         {
-            int thisId = Id ?? 0;
+            var thisId = Id ?? 0;
             return thisId.CompareTo(obj.Id ?? 0);
         }
     }

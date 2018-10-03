@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using PASRI.API.Core.Domain;
 using PASRI.API.Persistence.EntityConfigurations;
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace PASRI.API.Persistence
 {
@@ -18,7 +20,9 @@ namespace PASRI.API.Persistence
         {
         }
 
-        public PasriDbContext(DbContextOptions<PasriDbContext> options)
+        // ReSharper disable once UnusedMember.Global
+        [ExcludeFromCodeCoverage]
+        public PasriDbContext(DbContextOptions options)
             : base(options)
         {
         }

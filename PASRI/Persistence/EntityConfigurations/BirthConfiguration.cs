@@ -18,7 +18,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
 
         public void Configure(EntityTypeBuilder<Birth> builder)
         {
-            builder.ToTable("BIRTH", schema: "PERSON");
+            builder.ToTable("BIRTH", "PERSON");
 
             builder.HasKey(p => p.Id);
 
@@ -61,16 +61,16 @@ namespace PASRI.API.Persistence.EntityConfigurations
                 .HasColumnName("modified_by")
                 .HasColumnType("varchar(30)");
 
-            builder.HasOne<Person>(b => b.Person)
+            builder.HasOne(b => b.Person)
                 .WithOne(p => p.Birth)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne<ReferenceStateProvince>(b => b.StateProvince)
+            builder.HasOne(b => b.StateProvince)
                 .WithMany()
                 .HasForeignKey(b => b.StateProvinceId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            builder.HasOne<ReferenceCountry>(b => b.Country)
+            builder.HasOne(b => b.Country)
                 .WithMany()
                 .HasForeignKey(b => b.CountryId)
                 .OnDelete(DeleteBehavior.SetNull);

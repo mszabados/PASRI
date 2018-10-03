@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using PASRI.API.Core.Domain;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using PASRI.API.Core.Domain;
 using PASRI.API.TestHelper;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -55,7 +56,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOneEyeColor_ReturnsCollection()
         {
-            var result = UnitOfWork.ReferenceEyeColors.Find(p => p.Id != Int32.MaxValue);
+            var result = UnitOfWork.ReferenceEyeColors.Find(p => p.Id != int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.GreaterThan(0));
@@ -64,7 +65,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoEyeColors_ReturnsEmptyCollection()
         {
-            var result = UnitOfWork.ReferenceEyeColors.Find(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceEyeColors.Find(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(0));
@@ -93,7 +94,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoEyeColors_ReturnsNull()
         {
-            var result = UnitOfWork.ReferenceEyeColors.SingleOrDefault(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.ReferenceEyeColors.SingleOrDefault(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Null);
         }
@@ -102,7 +103,7 @@ namespace PASRI.API.UnitTests.Repositories
         public void Add_ValidEyeColorNotExists_FetchNewEyeColor()
         {
             var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
-            var newReferenceEyeColor = new ReferenceEyeColor()
+            var newReferenceEyeColor = new ReferenceEyeColor
             {
                 Code = notExistsEyeColorCode,
                 LongName = notExistsEyeColorCode
@@ -125,7 +126,7 @@ namespace PASRI.API.UnitTests.Repositories
             var randomEyeColor = UnitOfWork.ReferenceEyeColors.Get(randomEyeColorId);
 
             Assert.That(() => UnitOfWork.ReferenceEyeColors.Add(
-                new ReferenceEyeColor()
+                new ReferenceEyeColor
                 {
                     Id = randomEyeColor.Id,
                     Code = randomEyeColor.Code
@@ -153,8 +154,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var newEyeColors = new Collection<ReferenceEyeColor>
             {
-                new ReferenceEyeColor() { Code = notExistsEyeColorCode1, LongName = "" },
-                new ReferenceEyeColor() { Code = notExistsEyeColorCode2, LongName = "" }
+                new ReferenceEyeColor { Code = notExistsEyeColorCode1, LongName = "" },
+                new ReferenceEyeColor { Code = notExistsEyeColorCode2, LongName = "" }
             };
             UnitOfWork.ReferenceEyeColors.AddRange(newEyeColors);
             UnitOfWork.Complete();
@@ -170,8 +171,8 @@ namespace PASRI.API.UnitTests.Repositories
             var notExistsEyeColorCode = PreDefinedData.GetNotExistsEyeColorCode();
             var newEyeColors = new Collection<ReferenceEyeColor>
             {
-                new ReferenceEyeColor() { Id = Int32.MaxValue, Code = notExistsEyeColorCode, LongName = "" },
-                new ReferenceEyeColor() { Id = Int32.MaxValue, Code = notExistsEyeColorCode, LongName = "" }
+                new ReferenceEyeColor { Id = int.MaxValue, Code = notExistsEyeColorCode, LongName = "" },
+                new ReferenceEyeColor { Id = int.MaxValue, Code = notExistsEyeColorCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceEyeColors.AddRange(newEyeColors),
@@ -197,9 +198,9 @@ namespace PASRI.API.UnitTests.Repositories
         public void Remove_ValidEyeColorNotExists_ThrowsDbUpdateConcurrencyException()
         {
             UnitOfWork.ReferenceEyeColors.Remove(
-                new ReferenceEyeColor()
+                new ReferenceEyeColor
                 {
-                    Id = Int32.MaxValue
+                    Id = int.MaxValue
                 });
 
             Assert.That(() => UnitOfWork.Complete(),
@@ -233,7 +234,7 @@ namespace PASRI.API.UnitTests.Repositories
             var removeReferenceEyeColors = new Collection<ReferenceEyeColor>();
             var removeCount = new Random().Next(1, referenceEyeColors.Count);
 
-            for (int i = 0; i < removeCount; i++)
+            for (var i = 0; i < removeCount; i++)
             {
                 removeReferenceEyeColors.Add(referenceEyeColors.ElementAt(i));
             }
@@ -254,8 +255,8 @@ namespace PASRI.API.UnitTests.Repositories
 
             var existingEyeColors = new Collection<ReferenceEyeColor>
             {
-                new ReferenceEyeColor() { Id = randomEyeColor.Id, Code = randomEyeColor.Code },
-                new ReferenceEyeColor() { Id = randomEyeColor.Id, Code = randomEyeColor.Code }
+                new ReferenceEyeColor { Id = randomEyeColor.Id, Code = randomEyeColor.Code },
+                new ReferenceEyeColor { Id = randomEyeColor.Id, Code = randomEyeColor.Code }
             };
 
             Assert.That(() => UnitOfWork.ReferenceEyeColors.RemoveRange(existingEyeColors),

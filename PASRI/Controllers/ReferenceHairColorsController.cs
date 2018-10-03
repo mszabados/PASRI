@@ -61,7 +61,7 @@ namespace PASRI.API.Controllers
             var referenceHairColor = _mapper.Map<ReferenceHairColorDto, ReferenceHairColor>(payload);
 
             var referenceHairColorInDb = _unitOfWork.ReferenceHairColors.Find(p => p.Code == payload.Code);
-            if (referenceHairColorInDb.Count() > 0)
+            if (referenceHairColorInDb.Any())
                 return new ConflictResult();
 
             _unitOfWork.ReferenceHairColors.Add(referenceHairColor);

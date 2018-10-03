@@ -12,9 +12,9 @@ namespace PASRI.API.UnitTests
     /// from <see cref="TestUnitOfWork"/>
     /// </example>
     [TestFixture]
-    abstract public class BaseUnitTestProvider
+    public abstract class BaseUnitTestProvider
     {
-        public IUnitOfWork UnitOfWork;
+        protected IUnitOfWork UnitOfWork;
 
         [SetUp]
         public void RunBeforeAllTests()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using PASRI.API.Core;
 using PASRI.API.Core.Repositories;
@@ -23,54 +24,56 @@ namespace PASRI.API.Persistence
     /// </remarks>
     public class UnitOfWork : IUnitOfWork
     {
-        protected PasriDbContext _context;
+        protected readonly PasriDbContext Context;
 
         public UnitOfWork(PasriDbContext context)
         {
-            _context = context;
+            Context = context;
 
             if (Environment.GetEnvironmentVariable("DOCKER_ENVIRONMENT") == "Development")
             {
-                _context.Database.OpenConnection();
-                _context.Database.Migrate();
+                Context.Database.OpenConnection();
+                Context.Database.Migrate();
             }
 
+            // ReSharper disable once VirtualMemberCallInConstructor
             InitializeTestDatabaseInMemory();
 
-            Persons = new PersonRepository(_context);
-            Births = new BirthRepository(_context);
-            ReferenceCountries = new ReferenceCountryRepository(_context);
-            ReferenceEthnicGroupDemographics = new ReferenceEthnicGroupDemographicRepository(_context);
-            ReferenceEyeColors = new ReferenceEyeColorRepository(_context);
-            ReferenceGenderDemographics = new ReferenceGenderDemographicRepository(_context);
-            ReferenceHairColors = new ReferenceHairColorRepository(_context);
-            ReferenceRaceDemographics = new ReferenceRaceDemographicRepository(_context);
-            ReferenceReligionDemographics = new ReferenceReligionDemographicRepository(_context);
-            ReferenceStateProvinces = new ReferenceStateProvinceRepository(_context);
-            ReferenceNameSuffixes = new ReferenceNameSuffixRepository(_context);
-            ReferenceBloodTypes = new ReferenceBloodTypeRepository(_context);
+            Persons = new PersonRepository(Context);
+            Births = new BirthRepository(Context);
+            ReferenceCountries = new ReferenceCountryRepository(Context);
+            ReferenceEthnicGroupDemographics = new ReferenceEthnicGroupDemographicRepository(Context);
+            ReferenceEyeColors = new ReferenceEyeColorRepository(Context);
+            ReferenceGenderDemographics = new ReferenceGenderDemographicRepository(Context);
+            ReferenceHairColors = new ReferenceHairColorRepository(Context);
+            ReferenceRaceDemographics = new ReferenceRaceDemographicRepository(Context);
+            ReferenceReligionDemographics = new ReferenceReligionDemographicRepository(Context);
+            ReferenceStateProvinces = new ReferenceStateProvinceRepository(Context);
+            ReferenceNameSuffixes = new ReferenceNameSuffixRepository(Context);
+            ReferenceBloodTypes = new ReferenceBloodTypeRepository(Context);
         }
 
 
-        public IPersonRepository Persons { get; protected set; }
-        public IBirthRepository Births { get; protected set; }
-        public IReferenceCountryRepository ReferenceCountries { get; protected set; }
-        public IReferenceEthnicGroupDemographicRepository ReferenceEthnicGroupDemographics { get; protected set; }
-        public IReferenceEyeColorRepository ReferenceEyeColors { get; protected set; }
-        public IReferenceGenderDemographicRepository ReferenceGenderDemographics { get; protected set; }
-        public IReferenceHairColorRepository ReferenceHairColors { get; protected set; }
-        public IReferenceRaceDemographicRepository ReferenceRaceDemographics { get; protected set; }
-        public IReferenceReligionDemographicRepository ReferenceReligionDemographics { get; protected set; }
-        public IReferenceStateProvinceRepository ReferenceStateProvinces { get; protected set; }
-        public IReferenceNameSuffixRepository ReferenceNameSuffixes { get; protected set; }
-        public IReferenceBloodTypeRepository ReferenceBloodTypes { get; protected set; }
+        public IPersonRepository Persons { get; }
+        public IBirthRepository Births { get; }
+        public IReferenceCountryRepository ReferenceCountries { get; }
+        public IReferenceEthnicGroupDemographicRepository ReferenceEthnicGroupDemographics { get; }
+        public IReferenceEyeColorRepository ReferenceEyeColors { get; }
+        public IReferenceGenderDemographicRepository ReferenceGenderDemographics { get; }
+        public IReferenceHairColorRepository ReferenceHairColors { get; }
+        public IReferenceRaceDemographicRepository ReferenceRaceDemographics { get; }
+        public IReferenceReligionDemographicRepository ReferenceReligionDemographics { get; }
+        public IReferenceStateProvinceRepository ReferenceStateProvinces { get; }
+        public IReferenceNameSuffixRepository ReferenceNameSuffixes { get; }
+        public IReferenceBloodTypeRepository ReferenceBloodTypes { get; }
 
         /// <summary>
         /// A derived unit of work class can initialize and
         /// seed the database for testing.  This method is called
         /// in this <see cref="UnitOfWork"/> constructor
         /// </summary>
-        virtual protected void InitializeTestDatabaseInMemory()
+        [ExcludeFromCodeCoverage]
+        protected virtual void InitializeTestDatabaseInMemory()
         {
         }
 
@@ -80,12 +83,12 @@ namespace PASRI.API.Persistence
         /// <returns></returns>
         public int Complete()
         {
-            return _context.SaveChanges();
+            return Context.SaveChanges();
         }
 
         public void Dispose()
         {
-            _context.Dispose();
+            Context.Dispose();
         }
     }
 }

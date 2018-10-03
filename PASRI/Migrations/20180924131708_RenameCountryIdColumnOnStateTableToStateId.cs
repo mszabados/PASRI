@@ -7,17 +7,17 @@ namespace PASRI.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "country_id",
-                table: "RE_STATE",
-                newName: "state_id");
+                "country_id",
+                "RE_STATE",
+                "state_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "state_id",
-                table: "RE_STATE",
-                newName: "country_id");
+                "state_id",
+                "RE_STATE",
+                "country_id");
         }
     }
 }

@@ -20,7 +20,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
 
         public void Configure(EntityTypeBuilder<Person> builder)
         {
-            builder.ToTable("PERSON", schema: "PERSON");
+            builder.ToTable("PERSON", "PERSON");
 
             builder.HasKey(p => p.Id);
 
@@ -65,7 +65,7 @@ namespace PASRI.API.Persistence.EntityConfigurations
                 .HasColumnName("modified_by")
                 .HasColumnType("varchar(30)");
 
-            builder.HasOne<ReferenceNameSuffix>(p => p.Suffix)
+            builder.HasOne(p => p.Suffix)
                 .WithMany()
                 .HasForeignKey(p => p.SuffixId)
                 .OnDelete(DeleteBehavior.SetNull);

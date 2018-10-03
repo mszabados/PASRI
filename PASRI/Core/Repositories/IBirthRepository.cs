@@ -25,7 +25,7 @@ namespace PASRI.API.Core.Repositories
         /// <summary>
         /// Returns an eagerly loaded <see cref="Birth"/> object for updating by the API controller
         /// </summary>
-        /// <param name="person">Unique <see cref="Person"/> identification number</param>
+        /// <param name="personId">Unique <see cref="Person"/> identification number</param>
         /// <returns><see cref="Birth"/></returns>
         Birth GetEagerLoadedBirthByPersonId(int personId);
     }

@@ -1,4 +1,6 @@
 ﻿using System;
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Local
 
 namespace PASRI.API.Core.Domain
 {

@@ -1,5 +1,5 @@
-﻿using PASRI.API.Persistence;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using PASRI.API.Persistence;
 
 namespace PASRI.API.TestHelper
 {

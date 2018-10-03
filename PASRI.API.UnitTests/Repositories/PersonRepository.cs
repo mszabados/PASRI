@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using PASRI.API.Core.Domain;
-using System;
-using System.Collections.ObjectModel;
+﻿using System;
 using System.Linq;
+using NUnit.Framework;
 using PASRI.API.TestHelper;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace PASRI.API.UnitTests.Repositories
 {
@@ -33,7 +31,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void GetEagerLoaded_ValidPersonId_ReturnsSinglePersonWithBirth()
         {
-            var testPersonId = 1;
+            const int testPersonId = 1;
 
             var result = UnitOfWork.Persons.GetEagerLoadedPerson(testPersonId);
 
@@ -44,8 +42,8 @@ namespace PASRI.API.UnitTests.Repositories
 
         [Test]
         [TestCase(null)]
-        [TestCase(Int32.MaxValue)]
-        public void Get_InvalidPersonId_ReturnsNull(Int32 invalidPersonId)
+        [TestCase(int.MaxValue)]
+        public void Get_InvalidPersonId_ReturnsNull(int invalidPersonId)
         {
             var result = UnitOfWork.Persons.Get(invalidPersonId);
 
@@ -54,8 +52,8 @@ namespace PASRI.API.UnitTests.Repositories
 
         [Test]
         [TestCase(null)]
-        [TestCase(Int32.MaxValue)]
-        public void GetEagerLoaded_InvalidPersonId_ReturnsNull(Int32 invalidPersonId)
+        [TestCase(int.MaxValue)]
+        public void GetEagerLoaded_InvalidPersonId_ReturnsNull(int invalidPersonId)
         {
             var result = UnitOfWork.Persons.GetEagerLoadedPerson(invalidPersonId);
 
@@ -76,7 +74,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindMoreThanOnePerson_ReturnsCollection()
         {
-            var result = UnitOfWork.Persons.Find(p => p.Id != Int32.MaxValue);
+            var result = UnitOfWork.Persons.Find(p => p.Id != int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.GreaterThan(0));
@@ -85,7 +83,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void Find_PredicateUsedToFindNoPersons_ReturnsEmptyCollection()
         {
-            var result = UnitOfWork.Persons.Find(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.Persons.Find(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(0));
@@ -114,7 +112,7 @@ namespace PASRI.API.UnitTests.Repositories
         [Test]
         public void SingleOrDefault_PredicateUsedOnToFindNoPersons_ReturnsNull()
         {
-            var result = UnitOfWork.Persons.SingleOrDefault(p => p.Id == Int32.MaxValue);
+            var result = UnitOfWork.Persons.SingleOrDefault(p => p.Id == int.MaxValue);
 
             Assert.That(result, Is.Null);
         }

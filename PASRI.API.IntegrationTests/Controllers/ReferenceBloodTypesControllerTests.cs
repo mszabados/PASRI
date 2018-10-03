@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
-using NUnit.Framework;
-using PASRI.API.Controllers;
-using PASRI.API.Core.Domain;
-using PASRI.API.Dtos;
-using PASRI.API.TestHelper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using NUnit.Framework;
+using PASRI.API.Controllers;
+using PASRI.API.Core.Domain;
+using PASRI.API.Dtos;
+using PASRI.API.TestHelper;
 
 namespace PASRI.API.IntegrationTests.Controllers
 {
@@ -35,13 +35,13 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            IEnumerable<ReferenceBloodTypeDto> apiReturnedCollection =
+            var apiReturnedCollection =
                 JsonConvert.DeserializeObject<IEnumerable<ReferenceBloodTypeDto>>(responseString);
-            IEnumerable<ReferenceBloodTypeDto> preDefinedCollection =
-                PreDefinedData.ReferenceBloodTypes.Select(Mapper.Map<ReferenceBloodType, ReferenceBloodTypeDto>).ToList().AsEnumerable<ReferenceBloodTypeDto>();
+            var preDefinedCollection =
+                PreDefinedData.ReferenceBloodTypes.Select(Mapper.Map<ReferenceBloodType, ReferenceBloodTypeDto>).ToList().AsEnumerable();
             ((List<ReferenceBloodTypeDto>)apiReturnedCollection).Sort();
             ((List<ReferenceBloodTypeDto>)preDefinedCollection).Sort();
 
@@ -62,13 +62,13 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            ReferenceBloodTypeDto apiReturnedObject =
+            var apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceBloodTypeDto>(responseString);
 
-            ReferenceBloodType preDefinedObject =
+            var preDefinedObject =
                 PreDefinedData.ReferenceBloodTypes
                     .SingleOrDefault(c => c.Id == randomBloodTypeId);
 
@@ -80,8 +80,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Get_InvalidBloodTypeId_HttpNotFound()
         {
             // Arrange
-            var notExistsBloodTypeCode = PreDefinedData.GetNotExistsBloodTypeCode();
-            var path = GetRelativePath(nameof(ReferenceBloodTypesController), Int32.MaxValue.ToString());
+            var path = GetRelativePath(nameof(ReferenceBloodTypesController), int.MaxValue.ToString());
 
             // Act
             var response = await Client.GetAsync(path);
@@ -96,7 +95,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var path = GetRelativePath(nameof(ReferenceBloodTypesController));
             var notExistsBloodTypeCode = PreDefinedData.GetNotExistsBloodTypeCode();
-            var newBloodTypeDto = new ReferenceBloodTypeDto()
+            var newBloodTypeDto = new ReferenceBloodTypeDto
             {
                 Code = notExistsBloodTypeCode,
                 LongName = "New",
@@ -113,10 +112,10 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
 
-            ReferenceBloodTypeDto apiReturnedObject =
+            var apiReturnedObject =
                 JsonConvert.DeserializeObject<ReferenceBloodTypeDto>(responseString);
 
             Assert.That(apiReturnedObject.Id, Is.GreaterThan(0));
@@ -145,7 +144,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var path = GetRelativePath(nameof(ReferenceBloodTypesController));
 
-            var newBloodTypeDto = new ReferenceBloodTypeDto()
+            var newBloodTypeDto = new ReferenceBloodTypeDto
             {
                 // Code is required, keep it missing
                 CreatedDate = DateTime.UtcNow
@@ -169,7 +168,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             var randomBloodTypeId = PreDefinedData.GetRandomBloodTypeId();
             var randomBloodType = PreDefinedData.ReferenceBloodTypes[randomBloodTypeId - 1];
 
-            var newBloodTypeDto = new ReferenceBloodTypeDto()
+            var newBloodTypeDto = new ReferenceBloodTypeDto
             {
                 Code = randomBloodType.Code,
                 LongName = "Create Test",
@@ -192,7 +191,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var randomBloodTypeId = PreDefinedData.GetRandomBloodTypeId();
 
-            ReferenceBloodType apiUpdatingBloodType = UnitOfWork.ReferenceBloodTypes.Get(randomBloodTypeId);
+            var apiUpdatingBloodType = UnitOfWork.ReferenceBloodTypes.Get(randomBloodTypeId);
             apiUpdatingBloodType.LongName = "Update Test";
             var path = GetRelativePath(nameof(ReferenceBloodTypesController), randomBloodTypeId.ToString());
 
@@ -206,10 +205,10 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
 
-            ReferenceBloodType dbUpdatedBloodType = UnitOfWork.ReferenceBloodTypes.Get(apiUpdatingBloodType.Id);
+            var dbUpdatedBloodType = UnitOfWork.ReferenceBloodTypes.Get(apiUpdatingBloodType.Id);
             AssertHelper.AreObjectsEqual(apiUpdatingBloodType, dbUpdatedBloodType);
         }
 
@@ -234,7 +233,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Arrange
             var randomBloodTypeId = PreDefinedData.GetRandomBloodTypeId();
             var path = GetRelativePath(nameof(ReferenceBloodTypesController), randomBloodTypeId.ToString());
-            var apiUpdatingBloodType = new ReferenceBloodTypeDto()
+            var apiUpdatingBloodType = new ReferenceBloodTypeDto
             {
                 Id = randomBloodTypeId
                 // Code is required, keep it missing
@@ -255,10 +254,10 @@ namespace PASRI.API.IntegrationTests.Controllers
         {
             // Arrange
             var notExistsBloodTypeCode = PreDefinedData.GetNotExistsBloodTypeCode();
-            var path = GetRelativePath(nameof(ReferenceBloodTypesController), Int32.MaxValue.ToString());
-            var apiUpdatingBloodType = new ReferenceBloodTypeDto()
+            var path = GetRelativePath(nameof(ReferenceBloodTypesController), int.MaxValue.ToString());
+            var apiUpdatingBloodType = new ReferenceBloodTypeDto
             {
-                Id = Int32.MaxValue,
+                Id = int.MaxValue,
                 Code = notExistsBloodTypeCode,
                 LongName = "Update Test"
             };
@@ -287,7 +286,7 @@ namespace PASRI.API.IntegrationTests.Controllers
             // Assert
             Assert.DoesNotThrow(
                 () => response.EnsureSuccessStatusCode(),
-                String.Format(HttpExceptionFormattedMessage, responseString));
+                string.Format(HttpExceptionFormattedMessage, responseString));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
         }
 
@@ -295,7 +294,7 @@ namespace PASRI.API.IntegrationTests.Controllers
         public async Task Delete_InvalidBloodType_HttpNotFound()
         {
             // Arrange
-            var path = GetRelativePath(nameof(ReferenceBloodTypesController), Int32.MaxValue.ToString());
+            var path = GetRelativePath(nameof(ReferenceBloodTypesController), int.MaxValue.ToString());
 
             // Act
             var response = await Client.DeleteAsync(path);
