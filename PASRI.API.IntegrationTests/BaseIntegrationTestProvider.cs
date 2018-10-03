@@ -23,7 +23,7 @@ namespace PASRI.API.IntegrationTests
     /// from <see cref="TestUnitOfWork"/>
     /// </example>
     [TestFixture]
-    public class BaseIntegrationTestProvider : IDisposable
+    abstract public class BaseIntegrationTestProvider : IDisposable
     {
         protected readonly TestServer Server;
         protected readonly HttpClient Client;
