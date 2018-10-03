@@ -30,14 +30,8 @@ namespace PASRI.API.Persistence
         {
             Context = context;
 
-            if (Environment.GetEnvironmentVariable("DOCKER_ENVIRONMENT") == "Development")
-            {
-                Context.Database.OpenConnection();
-                Context.Database.Migrate();
-            }
-
             // ReSharper disable once VirtualMemberCallInConstructor
-            InitializeTestDatabaseInMemory();
+            InitializeDatabaseSchema();
 
             Persons = new PersonRepository(Context);
             Births = new BirthRepository(Context);
@@ -73,8 +67,13 @@ namespace PASRI.API.Persistence
         /// in this <see cref="UnitOfWork"/> constructor
         /// </summary>
         [ExcludeFromCodeCoverage]
-        protected virtual void InitializeTestDatabaseInMemory()
+        protected virtual void InitializeDatabaseSchema()
         {
+            if (Environment.GetEnvironmentVariable("DOCKER_ENVIRONMENT") == "Development")
+            {
+                Context.Database.OpenConnection();
+                Context.Database.Migrate();
+            }
         }
 
         /// <summary>

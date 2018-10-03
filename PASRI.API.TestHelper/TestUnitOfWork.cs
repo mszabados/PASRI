@@ -26,7 +26,7 @@ namespace PASRI.API.TestHelper
         {
         }
 
-        protected override void InitializeTestDatabaseInMemory()
+        protected override void InitializeDatabaseSchema()
         {
             Context.Database.OpenConnection();
             Context.Database.EnsureCreated();
