@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Abstractions;
 using PASRI.API.Core;
 using PASRI.API.Core.Domain;
 using PASRI.API.Dtos;
-using PASRI.API.Persistence.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PASRI.API.Controllers
 {

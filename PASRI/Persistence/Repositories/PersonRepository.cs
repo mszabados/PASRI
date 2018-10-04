@@ -40,8 +40,8 @@ namespace PASRI.API.Persistence.Repositories
             for including info
         */
 
-        public const string BirthInfo = nameof(BirthInfo);
-        public const string DemographicInfo = nameof(DemographicInfo);
+        private const string BirthInfo = nameof(BirthInfo);
+        private const string DemographicInfo = nameof(DemographicInfo);
         
         #endregion
 
