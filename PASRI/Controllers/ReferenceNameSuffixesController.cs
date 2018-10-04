@@ -10,7 +10,7 @@ namespace PASRI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiExplorerSettings(GroupName = "Reference NameSuffixes")]
+    [ApiExplorerSettings(GroupName = "Reference Name Suffixes")]
     public class ReferenceNameSuffixesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

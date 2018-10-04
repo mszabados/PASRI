@@ -18,13 +18,13 @@ namespace PASRI.API
             // Straight DTO to domain model maps
             CreateMap<ReferenceBloodType, ReferenceBloodTypeDto>().ReverseMap();
             CreateMap<ReferenceCountry, ReferenceCountryDto>().ReverseMap();
-            CreateMap<ReferenceEthnicGroupDemographic, ReferenceEthnicGroupDemographicDto>().ReverseMap();
+            CreateMap<ReferenceEthnicGroup, ReferenceEthnicGroupDto>().ReverseMap();
             CreateMap<ReferenceEyeColor, ReferenceEyeColorDto>().ReverseMap();
-            CreateMap<ReferenceGenderDemographic, ReferenceGenderDemographicDto>().ReverseMap();
+            CreateMap<ReferenceGender, ReferenceGenderDto>().ReverseMap();
             CreateMap<ReferenceHairColor, ReferenceHairColorDto>().ReverseMap();
             CreateMap<ReferenceNameSuffix, ReferenceNameSuffixDto>().ReverseMap();
-            CreateMap<ReferenceRaceDemographic, ReferenceRaceDemographicDto>().ReverseMap();
-            CreateMap<ReferenceReligionDemographic, ReferenceReligionDemographicDto>().ReverseMap();
+            CreateMap<ReferenceRace, ReferenceRaceDto>().ReverseMap();
+            CreateMap<ReferenceReligion, ReferenceReligionDto>().ReverseMap();
             CreateMap<ReferenceStateProvince, ReferenceStateProvinceDto>().ReverseMap();
 
             // Complex mapping for nested types

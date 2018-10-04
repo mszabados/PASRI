@@ -10,7 +10,7 @@ namespace PASRI.API.Controllers
 {
         [Route("api/[controller]")]
         [ApiController]
-        [ApiExplorerSettings(GroupName = "Reference BloodTypes")]
+        [ApiExplorerSettings(GroupName = "Reference Blood Types")]
         public class ReferenceBloodTypesController : ControllerBase
         {
             private readonly IUnitOfWork _unitOfWork;

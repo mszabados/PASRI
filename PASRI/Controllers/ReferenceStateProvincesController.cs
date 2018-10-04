@@ -10,7 +10,7 @@ namespace PASRI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiExplorerSettings(GroupName = "Reference StateProvinces")]
+    [ApiExplorerSettings(GroupName = "Reference State/Provinces")]
     public class ReferenceStateProvincesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

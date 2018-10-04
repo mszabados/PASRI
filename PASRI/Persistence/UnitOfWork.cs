@@ -36,12 +36,12 @@ namespace PASRI.API.Persistence
             Persons = new PersonRepository(Context);
             Births = new BirthRepository(Context);
             ReferenceCountries = new ReferenceCountryRepository(Context);
-            ReferenceEthnicGroupDemographics = new ReferenceEthnicGroupDemographicRepository(Context);
+            ReferenceEthnicGroups = new ReferenceEthnicGroupRepository(Context);
             ReferenceEyeColors = new ReferenceEyeColorRepository(Context);
-            ReferenceGenderDemographics = new ReferenceGenderDemographicRepository(Context);
+            ReferenceGenders = new ReferenceGenderRepository(Context);
             ReferenceHairColors = new ReferenceHairColorRepository(Context);
-            ReferenceRaceDemographics = new ReferenceRaceDemographicRepository(Context);
-            ReferenceReligionDemographics = new ReferenceReligionDemographicRepository(Context);
+            ReferenceRaces = new ReferenceRaceRepository(Context);
+            ReferenceReligions = new ReferenceReligionRepository(Context);
             ReferenceStateProvinces = new ReferenceStateProvinceRepository(Context);
             ReferenceNameSuffixes = new ReferenceNameSuffixRepository(Context);
             ReferenceBloodTypes = new ReferenceBloodTypeRepository(Context);
@@ -51,12 +51,12 @@ namespace PASRI.API.Persistence
         public IPersonRepository Persons { get; }
         public IBirthRepository Births { get; }
         public IReferenceCountryRepository ReferenceCountries { get; }
-        public IReferenceEthnicGroupDemographicRepository ReferenceEthnicGroupDemographics { get; }
+        public IReferenceEthnicGroupRepository ReferenceEthnicGroups { get; }
         public IReferenceEyeColorRepository ReferenceEyeColors { get; }
-        public IReferenceGenderDemographicRepository ReferenceGenderDemographics { get; }
+        public IReferenceGenderRepository ReferenceGenders { get; }
         public IReferenceHairColorRepository ReferenceHairColors { get; }
-        public IReferenceRaceDemographicRepository ReferenceRaceDemographics { get; }
-        public IReferenceReligionDemographicRepository ReferenceReligionDemographics { get; }
+        public IReferenceRaceRepository ReferenceRaces { get; }
+        public IReferenceReligionRepository ReferenceReligions { get; }
         public IReferenceStateProvinceRepository ReferenceStateProvinces { get; }
         public IReferenceNameSuffixRepository ReferenceNameSuffixes { get; }
         public IReferenceBloodTypeRepository ReferenceBloodTypes { get; }

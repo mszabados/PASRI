@@ -27,13 +27,13 @@ namespace PASRI.API.TestHelper
             _context.Births.AddRange(PreDefinedData.Births);
             _context.ReferenceBloodTypes.AddRange(PreDefinedData.ReferenceBloodTypes);
             _context.ReferenceCountries.AddRange(PreDefinedData.ReferenceCountries);
-            _context.ReferenceEthnicGroupDemographics.AddRange(PreDefinedData.ReferenceEthnicGroupDemographics);
+            _context.ReferenceEthnicGroups.AddRange(PreDefinedData.ReferenceEthnicGroups);
             _context.ReferenceEyeColors.AddRange(PreDefinedData.ReferenceEyeColors);
-            _context.ReferenceGenderDemographics.AddRange(PreDefinedData.ReferenceGenderDemographics);
+            _context.ReferenceGenders.AddRange(PreDefinedData.ReferenceGenders);
             _context.ReferenceHairColors.AddRange(PreDefinedData.ReferenceHairColors);
             _context.ReferenceNameSuffixes.AddRange(PreDefinedData.ReferenceNameSuffixes);
-            _context.ReferenceRaceDemographics.AddRange(PreDefinedData.ReferenceRaceDemographics);
-            _context.ReferenceReligionDemographics.AddRange(PreDefinedData.ReferenceReligionDemographics);
+            _context.ReferenceRaces.AddRange(PreDefinedData.ReferenceRaces);
+            _context.ReferenceReligions.AddRange(PreDefinedData.ReferenceReligions);
             _context.ReferenceStates.AddRange(PreDefinedData.ReferenceStateProvinces);
 
             _context.SaveChanges();

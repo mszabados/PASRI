@@ -10,7 +10,7 @@ namespace PASRI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiExplorerSettings(GroupName = "Reference EyeColors")]
+    [ApiExplorerSettings(GroupName = "Reference Eye Colors")]
     public class ReferenceEyeColorsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

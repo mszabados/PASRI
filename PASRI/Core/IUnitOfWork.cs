@@ -20,12 +20,12 @@ namespace PASRI.API.Core
         IPersonRepository Persons { get;  }
         IBirthRepository Births { get; }
         IReferenceCountryRepository ReferenceCountries { get; }
-        IReferenceEthnicGroupDemographicRepository ReferenceEthnicGroupDemographics { get; }
+        IReferenceEthnicGroupRepository ReferenceEthnicGroups { get; }
         IReferenceEyeColorRepository ReferenceEyeColors { get; }
-        IReferenceGenderDemographicRepository ReferenceGenderDemographics { get; }
+        IReferenceGenderRepository ReferenceGenders { get; }
         IReferenceHairColorRepository ReferenceHairColors { get; }
-        IReferenceRaceDemographicRepository ReferenceRaceDemographics { get; }
-        IReferenceReligionDemographicRepository ReferenceReligionDemographics { get; }
+        IReferenceRaceRepository ReferenceRaces { get; }
+        IReferenceReligionRepository ReferenceReligions { get; }
         IReferenceStateProvinceRepository ReferenceStateProvinces { get; }
         IReferenceNameSuffixRepository ReferenceNameSuffixes { get; }
         IReferenceBloodTypeRepository ReferenceBloodTypes { get; }

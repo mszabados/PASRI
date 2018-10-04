@@ -118,32 +118,32 @@ namespace PASRI.API.TestHelper
 
         #endregion
 
-        #region ReferenceEthnicGroupDemographics
+        #region ReferenceEthnicGroups
 
-        public static readonly ReferenceEthnicGroupDemographic[] ReferenceEthnicGroupDemographics = {
-            new ReferenceEthnicGroupDemographic { Id = 1, Code = "AA", LongName = "Asian Indian" },
-            new ReferenceEthnicGroupDemographic { Id = 2, Code = "AB", LongName = "Chinese" },
-            new ReferenceEthnicGroupDemographic { Id = 3, Code = "AC", LongName = "Filipino" },
-            new ReferenceEthnicGroupDemographic { Id = 4, Code = "BG", LongName = "Other" }
+        public static readonly ReferenceEthnicGroup[] ReferenceEthnicGroups = {
+            new ReferenceEthnicGroup { Id = 1, Code = "AA", LongName = "Asian Indian" },
+            new ReferenceEthnicGroup { Id = 2, Code = "AB", LongName = "Chinese" },
+            new ReferenceEthnicGroup { Id = 3, Code = "AC", LongName = "Filipino" },
+            new ReferenceEthnicGroup { Id = 4, Code = "BG", LongName = "Other" }
         };
 
         /// <summary>
-        /// Helper method to retrieve a ethnic group demographic code, which is the primary key
-        /// of the <see cref="ReferenceEthnicGroupDemographic"/> that does not exist in the
-        /// <see cref="PreDefinedData.ReferenceEthnicGroupDemographics"/> test collection
+        /// Helper method to retrieve a ethnic group code, which is the primary key
+        /// of the <see cref="ReferenceEthnicGroup"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferenceEthnicGroups"/> test collection
         /// </summary>
-        public static string GetNotExistsEthnicGroupDemographicCode() =>
-            AssertHelper.GetValueNotInArray(ReferenceEthnicGroupDemographics,
+        public static string GetNotExistsEthnicGroupCode() =>
+            AssertHelper.GetValueNotInArray(ReferenceEthnicGroups,
                 "Code", 2);
 
         /// <summary>
-        /// Helper method to retrieve a ethnic group demographic code, which is the primary key
-        /// of the <see cref="ReferenceEthnicGroupDemographic"/> that exists in the
-        /// <see cref="PreDefinedData.ReferenceEthnicGroupDemographics"/> test collection
+        /// Helper method to retrieve a ethnic group code, which is the primary key
+        /// of the <see cref="ReferenceEthnicGroup"/> that exists in the
+        /// <see cref="PreDefinedData.ReferenceEthnicGroups"/> test collection
         /// </summary>
-        public static int GetRandomEthnicGroupDemographicId() =>
-            ReferenceEthnicGroupDemographics[
-                new Random().Next(0, ReferenceEthnicGroupDemographics.Length)
+        public static int GetRandomEthnicGroupId() =>
+            ReferenceEthnicGroups[
+                new Random().Next(0, ReferenceEthnicGroups.Length)
             ].Id;
 
         #endregion
@@ -177,31 +177,31 @@ namespace PASRI.API.TestHelper
 
         #endregion
 
-        #region ReferenceGenderDemographics
+        #region ReferenceGenders
 
-        public static readonly ReferenceGenderDemographic[] ReferenceGenderDemographics = {
-            new ReferenceGenderDemographic { Id = 1, Code = "Z", LongName = "Unknown" },
-            new ReferenceGenderDemographic { Id = 2, Code = "F", LongName = "Female" },
-            new ReferenceGenderDemographic { Id = 3, Code = "M", LongName = "Male" }
+        public static readonly ReferenceGender[] ReferenceGenders = {
+            new ReferenceGender { Id = 1, Code = "Z", LongName = "Unknown" },
+            new ReferenceGender { Id = 2, Code = "F", LongName = "Female" },
+            new ReferenceGender { Id = 3, Code = "M", LongName = "Male" }
         };
 
         /// <summary>
-        /// Helper method to retrieve a gender demographic code, which is the primary key
-        /// of the <see cref="ReferenceGenderDemographic"/> that does not exist in the
-        /// <see cref="PreDefinedData.ReferenceGenderDemographics"/> test collection
+        /// Helper method to retrieve a gender code, which is the primary key
+        /// of the <see cref="ReferenceGender"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferenceGenders"/> test collection
         /// </summary>
-        public static string GetNotExistsGenderDemographicCode() =>
-            AssertHelper.GetValueNotInArray(ReferenceGenderDemographics,
+        public static string GetNotExistsGenderCode() =>
+            AssertHelper.GetValueNotInArray(ReferenceGenders,
                 "Code", 1);
 
         /// <summary>
-        /// Helper method to retrieve a gender demographic code, which is the primary key
-        /// of the <see cref="ReferenceGenderDemographic"/> that exists in the
-        /// <see cref="PreDefinedData.ReferenceGenderDemographics"/> test collection
+        /// Helper method to retrieve a gender code, which is the primary key
+        /// of the <see cref="ReferenceGender"/> that exists in the
+        /// <see cref="PreDefinedData.ReferenceGenders"/> test collection
         /// </summary>
-        public static int GetRandomGenderDemographicId() =>
-            ReferenceGenderDemographics[
-                new Random().Next(0, ReferenceGenderDemographics.Length)
+        public static int GetRandomGenderId() =>
+            ReferenceGenders[
+                new Random().Next(0, ReferenceGenders.Length)
             ].Id;
 
         #endregion
@@ -264,63 +264,63 @@ namespace PASRI.API.TestHelper
 
         #endregion
 
-        #region ReferenceRaceDemographics
+        #region ReferenceRaces
 
-        public static readonly ReferenceRaceDemographic[] ReferenceRaceDemographics = {
-            new ReferenceRaceDemographic { Id = 1, Code = "A", LongName = "American Indian/Alaskan Native" },
-            new ReferenceRaceDemographic { Id = 2, Code = "B", LongName = "Asian" },
-            new ReferenceRaceDemographic { Id = 3, Code = "C", LongName = "Black" },
-            new ReferenceRaceDemographic { Id = 4, Code = "D", LongName = "Native Hawaiian or other Pacific Islander" },
-            new ReferenceRaceDemographic { Id = 5, Code = "E", LongName = "White" },
-            new ReferenceRaceDemographic { Id = 6, Code = "F", LongName = "Declined to Respond" }
+        public static readonly ReferenceRace[] ReferenceRaces = {
+            new ReferenceRace { Id = 1, Code = "A", LongName = "American Indian/Alaskan Native" },
+            new ReferenceRace { Id = 2, Code = "B", LongName = "Asian" },
+            new ReferenceRace { Id = 3, Code = "C", LongName = "Black" },
+            new ReferenceRace { Id = 4, Code = "D", LongName = "Native Hawaiian or other Pacific Islander" },
+            new ReferenceRace { Id = 5, Code = "E", LongName = "White" },
+            new ReferenceRace { Id = 6, Code = "F", LongName = "Declined to Respond" }
         };
 
         /// <summary>
-        /// Helper method to retrieve a race demographic code, which is the primary key
-        /// of the <see cref="ReferenceRaceDemographic"/> that does not exist in the
-        /// <see cref="PreDefinedData.ReferenceRaceDemographics"/> test collection
+        /// Helper method to retrieve a race code, which is the primary key
+        /// of the <see cref="ReferenceRace"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferenceRaces"/> test collection
         /// </summary>
-        public static string GetNotExistsRaceDemographicCode() =>
-            AssertHelper.GetValueNotInArray(ReferenceRaceDemographics,
+        public static string GetNotExistsRaceCode() =>
+            AssertHelper.GetValueNotInArray(ReferenceRaces,
                 "Code", 1);
 
         /// <summary>
-        /// Helper method to retrieve a race demographic code, which is the primary key
-        /// of the <see cref="ReferenceRaceDemographic"/> that exists in the
-        /// <see cref="PreDefinedData.ReferenceRaceDemographics"/> test collection
+        /// Helper method to retrieve a race code, which is the primary key
+        /// of the <see cref="ReferenceRace"/> that exists in the
+        /// <see cref="PreDefinedData.ReferenceRaces"/> test collection
         /// </summary>
-        public static int GetRandomRaceDemographicId() =>
-            ReferenceRaceDemographics[
-                new Random().Next(0, ReferenceRaceDemographics.Length)
+        public static int GetRandomRaceId() =>
+            ReferenceRaces[
+                new Random().Next(0, ReferenceRaces.Length)
             ].Id;
 
         #endregion
 
-        #region ReferenceReligionDemographics
+        #region ReferenceReligions
 
-        public static readonly ReferenceReligionDemographic[] ReferenceReligionDemographics = {
-            new ReferenceReligionDemographic { Id = 1, Code = "AC", LongName = "Advent Christian Church" },
-            new ReferenceReligionDemographic { Id = 2, Code = "AV", LongName = "Adventist Churches - Excludes Adv ent Christian Church, Jehovah's Witnesses, Native American, and Seventh Day Adventist" },
-            new ReferenceReligionDemographic { Id = 3, Code = "ME", LongName = "African Methodist Episcopal Church" }
+        public static readonly ReferenceReligion[] ReferenceReligions = {
+            new ReferenceReligion { Id = 1, Code = "AC", LongName = "Advent Christian Church" },
+            new ReferenceReligion { Id = 2, Code = "AV", LongName = "Adventist Churches - Excludes Adv ent Christian Church, Jehovah's Witnesses, Native American, and Seventh Day Adventist" },
+            new ReferenceReligion { Id = 3, Code = "ME", LongName = "African Methodist Episcopal Church" }
         };
 
         /// <summary>
-        /// Helper method to retrieve a religion demographic code, which is the primary key
-        /// of the <see cref="ReferenceReligionDemographic"/> that does not exist in the
-        /// <see cref="PreDefinedData.ReferenceReligionDemographics"/> test collection
+        /// Helper method to retrieve a religion code, which is the primary key
+        /// of the <see cref="ReferenceReligion"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferenceReligions"/> test collection
         /// </summary>
-        public static string GetNotExistsReligionDemographicCode() =>
-            AssertHelper.GetValueNotInArray(ReferenceReligionDemographics,
+        public static string GetNotExistsReligionCode() =>
+            AssertHelper.GetValueNotInArray(ReferenceReligions,
                 "Code", 2);
 
         /// <summary>
-        /// Helper method to retrieve a religion demographic code, which is the primary key
-        /// of the <see cref="ReferenceReligionDemographic"/> that exists in the
-        /// <see cref="PreDefinedData.ReferenceReligionDemographics"/> test collection
+        /// Helper method to retrieve a religion code, which is the primary key
+        /// of the <see cref="ReferenceReligion"/> that exists in the
+        /// <see cref="PreDefinedData.ReferenceReligions"/> test collection
         /// </summary>
-        public static int GetRandomReligionDemographicId() =>
-            ReferenceReligionDemographics[
-                new Random().Next(0, ReferenceReligionDemographics.Length)
+        public static int GetRandomReligionId() =>
+            ReferenceReligions[
+                new Random().Next(0, ReferenceReligions.Length)
             ].Id;
 
         #endregion
