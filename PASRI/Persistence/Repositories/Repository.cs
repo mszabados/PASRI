@@ -79,8 +79,8 @@ namespace PASRI.API.Persistence.Repositories
             _entities.RemoveRange(entities);
         }
 
-        public static List<string> GetAllIncludeInfoConstants() =>
-            Utils.GetAllConstantsEndsWith(typeof(TEntity), IncludeInfoConstantSuffix)
+        public List<string> GetAllIncludeInfoConstants() =>
+            Utils.GetAllConstantsEndsWith(this.GetType(), IncludeInfoConstantSuffix)
                 .Select(fi => fi.GetValue(null).ToString())
                 .ToList();
     }
