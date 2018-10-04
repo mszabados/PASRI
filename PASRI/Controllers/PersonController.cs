@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 using PASRI.API.Core;
 using PASRI.API.Core.Domain;
 using PASRI.API.Dtos;
+using PASRI.API.Persistence.Repositories;
 
 namespace PASRI.API.Controllers
 {
@@ -26,22 +28,33 @@ namespace PASRI.API.Controllers
         /// <summary>
         /// Get a list of all persons
         /// </summary>
+        /// <param name="includeList">Comma-delimited list of information elements to return
+        /// <example>BirthInfo,DemographicInfo</example></param>
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<PersonDto>))]
-        public IActionResult GetPersons()
+        public IActionResult GetPersons(string includeList = "")
         {
-            return Ok(_unitOfWork.Persons.GetAll().Select(_mapper.Map<Person, PersonDto>));
+            return Ok(_unitOfWork.Persons
+                .Search(null, 
+                    Utils.ConvertCsvToList(includeList))
+                .Select(_mapper.Map<Person, PersonDto>).ToList());
         }
 
         /// <summary>
         /// Get a single person by its unique person id
         /// </summary>
+        /// <param name="includeList">Comma-delimited list of information elements to return
+        /// <example>BirthInfo,DemographicInfo</example></param>
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(PersonDto))]
         [ProducesResponseType(404)]
-        public IActionResult GetPerson(int id)
+        public IActionResult GetPerson(int id, 
+            string includeList = "")
         {
-            var person = _unitOfWork.Persons.Get(id);
+            var person = _unitOfWork.Persons
+                .Search(id, 
+                    Utils.ConvertCsvToList(includeList))
+                .SingleOrDefault();
 
             if (person == null)
                 return NotFound();
@@ -98,6 +111,7 @@ namespace PASRI.API.Controllers
         public IActionResult UpdatePerson(int id, PersonDto payload)
         {
             var personInDb = _unitOfWork.Persons.GetEagerLoadedPerson(id);
+
             if (personInDb == null)
                 return NotFound();
 

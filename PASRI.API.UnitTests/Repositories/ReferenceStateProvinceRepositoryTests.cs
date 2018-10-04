@@ -50,7 +50,7 @@ namespace PASRI.API.UnitTests.Repositories
             var result = UnitOfWork.ReferenceStateProvinces.Find(p => p.Id == randomStateProvinceId);
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.ElementAt(0).Id == randomStateProvinceId);
+            Assert.That(result.First().Id == randomStateProvinceId);
         }
 
         [Test]

@@ -50,7 +50,7 @@ namespace PASRI.API.UnitTests.Repositories
             var result = UnitOfWork.ReferenceEyeColors.Find(p => p.Id == randomEyeColorId);
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.ElementAt(0).Id == randomEyeColorId);
+            Assert.That(result.First().Id == randomEyeColorId);
         }
 
         [Test]

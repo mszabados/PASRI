@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using PASRI.API.Core.Domain;
 using PASRI.API.Core.Repositories;
@@ -28,20 +31,56 @@ namespace PASRI.API.Persistence.Repositories
 
         private PasriDbContext PasriDbContext => Context as PasriDbContext;
 
+        #region Constants for dynamically selecting information about a Person
+        /*
+        1. All constants must be name with Info due to the base.IncludeInfoConstantSuffix
+            and its corresponding helper method base.GetAllIncludeInfoConstants()
+        2. Update the includeList parameter's example XML documentation directly
+            so the API's documentation builder can describe the optional parameter 
+            for including info
+        */
+
+        public const string BirthInfo = nameof(BirthInfo);
+        public const string DemographicInfo = nameof(DemographicInfo);
+        
+        #endregion
+
         /// <summary>
-        /// Returns an eagerly loaded <see cref="Person"/> object for updating by the API controller
+        /// Returns an eager loaded <see cref="Person"/> object
         /// </summary>
         /// <param name="personId">Unique <see cref="Person"/> identification number</param>
         /// <returns><see cref="Person"/></returns>
-        public Person GetEagerLoadedPerson(int personId)
-        {            
-            return PasriDbContext.Persons
-                .Include(p => p.Birth)
-                .Include(p => p.Birth.StateProvince)
-                .Include(p => p.Birth.Country)
-                .Include(p => p.Suffix)
-                .SingleOrDefault(p => p.Id == personId);
-            
+        public Person GetEagerLoadedPerson(int personId) => 
+            Search(personId, GetAllIncludeInfoConstants()).SingleOrDefault();
+
+        /// <summary>
+        /// Searches and selects from the database a <see cref="Person"/> collection
+        /// based on input parameters
+        /// </summary>
+        /// <param name="personId">Optional <see cref="Person"/> identification number</param>
+        /// <param name="includeInfo">Optional list of include objects corresponding with
+        /// the IncludeInfo constants of <see cref="PersonRepository"/></param>
+        /// <returns><see cref="List{Person}"/></returns>
+        public List<Person> Search(int? personId, 
+            List<string> includeInfo)
+        {
+            var persons = PasriDbContext.Persons.AsQueryable();
+
+            if (personId.HasValue)
+            {
+                persons = persons.Where(p => p.Id == personId);
+            }
+
+            if (includeInfo.Contains(BirthInfo))
+            {
+                persons = persons.Include(p => p.Birth);
+                persons = persons.Include(p => p.Birth.StateProvince);
+                persons = persons.Include(p => p.Birth.Country);
+            }
+
+            persons = persons.Include(p => p.Suffix);
+
+            return persons.ToList();
         }
     }
 }

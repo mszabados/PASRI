@@ -50,7 +50,7 @@ namespace PASRI.API.UnitTests.Repositories
             var result = UnitOfWork.ReferenceEthnicGroupDemographics.Find(p => p.Id == randomEthnicGroupDemographicId);
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.ElementAt(0).Id == randomEthnicGroupDemographicId);
+            Assert.That(result.First().Id == randomEthnicGroupDemographicId);
         }
 
         [Test]

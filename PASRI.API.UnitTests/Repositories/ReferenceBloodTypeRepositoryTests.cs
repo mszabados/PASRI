@@ -50,7 +50,7 @@ namespace PASRI.API.UnitTests.Repositories
             var result = UnitOfWork.ReferenceBloodTypes.Find(p => p.Id == randomBloodTypeId);
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.ElementAt(0).Id == randomBloodTypeId);
+            Assert.That(result.First().Id == randomBloodTypeId);
         }
 
         [Test]

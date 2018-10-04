@@ -50,7 +50,7 @@ namespace PASRI.API.UnitTests.Repositories
             var result = UnitOfWork.ReferenceHairColors.Find(p => p.Id == randomHairColorId);
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.ElementAt(0).Id == randomHairColorId);
+            Assert.That(result.First().Id == randomHairColorId);
         }
 
         [Test]

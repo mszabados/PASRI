@@ -50,7 +50,7 @@ namespace PASRI.API.UnitTests.Repositories
             var result = UnitOfWork.ReferenceCountries.Find(p => p.Id == randomCountryId);
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.ElementAt(0).Id == randomCountryId);
+            Assert.That(result.First().Id == randomCountryId);
         }
 
         [Test]

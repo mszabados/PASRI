@@ -1,4 +1,6 @@
-﻿using PASRI.API.Core.Domain;
+﻿using System.Collections.Generic;
+using PASRI.API.Core.Domain;
+using PASRI.API.Persistence.Repositories;
 
 namespace PASRI.API.Core.Repositories
 {
@@ -16,10 +18,20 @@ namespace PASRI.API.Core.Repositories
     public interface IPersonRepository : IRepository<Person>
     {
         /// <summary>
-        /// Returns an eagerly loaded <see cref="Person"/> object for updating by the API controller
+        /// Returns an eager loaded <see cref="Person"/> object
         /// </summary>
         /// <param name="personId">Unique <see cref="Person"/> identification number</param>
         /// <returns><see cref="Person"/></returns>
         Person GetEagerLoadedPerson(int personId);
+
+        /// <summary>
+        /// Searches and selects from the database a <see cref="Person"/> collection
+        /// based on input parameters
+        /// </summary>
+        /// <param name="personId">Optional <see cref="Person"/> identification number</param>
+        /// <param name="includeInfo">Optional list of include objects corresponding with
+        /// the IncludeInfo constants of <see cref="PersonRepository"/></param>
+        /// <returns><see cref="List{Person}"/></returns>
+        List<Person> Search(int? personId, List<string> includeInfo);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using NUnit.Framework;
 using PASRI.API.TestHelper;
 // ReSharper disable PossibleMultipleEnumeration
@@ -56,7 +55,7 @@ namespace PASRI.API.UnitTests.Repositories
             var result = UnitOfWork.Births.Find(b => b.PersonId == testPersonId);
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.ElementAt(0).PersonId, Is.EqualTo(testPersonId));
+            Assert.That(result.First().PersonId, Is.EqualTo(testPersonId));
         }
 
         [Test]
@@ -99,7 +98,7 @@ namespace PASRI.API.UnitTests.Repositories
             var result = UnitOfWork.Births.Find(p => p.Id == randomBirthId);
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.ElementAt(0).Id == randomBirthId);
+            Assert.That(result.First().Id == randomBirthId);
         }
 
         [Test]

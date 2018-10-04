@@ -50,7 +50,7 @@ namespace PASRI.API.UnitTests.Repositories
             var result = UnitOfWork.ReferenceNameSuffixes.Find(p => p.Id == randomNameSuffixId);
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result.ElementAt(0).Id == randomNameSuffixId);
+            Assert.That(result.First().Id == randomNameSuffixId);
         }
 
         [Test]

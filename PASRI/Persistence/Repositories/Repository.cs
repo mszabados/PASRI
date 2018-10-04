@@ -25,6 +25,7 @@ namespace PASRI.API.Persistence.Repositories
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext Context;
+        protected readonly static string IncludeInfoConstantSuffix = "Info";
 
         private readonly DbSet<TEntity> _entities;
 
@@ -77,5 +78,10 @@ namespace PASRI.API.Persistence.Repositories
         {
             _entities.RemoveRange(entities);
         }
+
+        public static List<string> GetAllIncludeInfoConstants() =>
+            Utils.GetAllConstantsEndsWith(typeof(TEntity), IncludeInfoConstantSuffix)
+                .Select(fi => fi.GetValue(null).ToString())
+                .ToList();
     }
 }
