@@ -6,7 +6,7 @@ services:
       ACCEPT_EULA: "Y"
       MSSQL_PID: "Developer"
       SA_PASSWORD: "ON8vBP82OmbhpCnDkb0J"
-    image: microsoft/mssql-server-linux:2017-latest
+    image: mcr.microsoft.com/mssql/server:2017-latest
     volumes:
       - pasri-mssql-data:/var/opt/mssql/data
     container_name: pasrisql
