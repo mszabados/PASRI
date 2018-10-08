@@ -15,7 +15,7 @@
   </Target>
 
   <ItemGroup>
-    <Content Include="..\PASRI\appsettings.json" Link="appsettings.json">
+    <Content Include="..\PASRI.API\appsettings.json" Link="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -50,7 +50,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PASRI.API.TestHelper\PASRI.API.TestHelper.csproj" />
-    <ProjectReference Include="..\PASRI\PASRI.API.csproj" />
+    <ProjectReference Include="..\PASRI.API\PASRI.API.csproj" />
   </ItemGroup>
 
 </Project>
