@@ -37,7 +37,7 @@ namespace PASRI.API.IntegrationTests
         protected BaseIntegrationTestProvider()
         {
             var integrationsTestsPath = PlatformServices.Default.Application.ApplicationBasePath;
-            var applicationPath = Path.GetFullPath(Path.Combine(integrationsTestsPath, "../../../../PASRI"));
+            var applicationPath = Path.GetFullPath(Path.Combine(integrationsTestsPath, "../../../../PASRI.API"));
 
             _server = new TestServer(WebHost.CreateDefaultBuilder()
                 .UseStartup<TestStartup>()
