@@ -24,7 +24,7 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Id)
-                .HasColumnName("eye_color_id")
+                .HasColumnName("re_eye_color_id")
                 .IsRequired();
 
             builder.Property(p => p.Code)

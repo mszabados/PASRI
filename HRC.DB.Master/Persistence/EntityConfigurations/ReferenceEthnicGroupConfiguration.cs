@@ -24,7 +24,7 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Id)
-                .HasColumnName("ethnic_id")
+                .HasColumnName("re_ethnic_id")
                 .IsRequired();
 
             builder.Property(p => p.Code)

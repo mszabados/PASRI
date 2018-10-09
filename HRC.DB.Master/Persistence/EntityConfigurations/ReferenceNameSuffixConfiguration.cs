@@ -24,7 +24,7 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Id)
-                .HasColumnName("suffix_id")
+                .HasColumnName("re_suffix_id")
                 .IsRequired();
 
             builder.Property(p => p.Code)

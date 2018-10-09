@@ -43,7 +43,7 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
                 .IsRequired();
 
             builder.Property(p => p.SuffixId)
-                .HasColumnName("suffix_id");
+                .HasColumnName("re_suffix_id");
 
             builder.Property(p => p.EffectiveDate)
                 .HasColumnName("effect_date")
