@@ -4,7 +4,6 @@ using HRC.DB.Master.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics.CodeAnalysis;
-using HRC.DB.Master.Test;
 
 namespace HRC.DB.Master.Persistence
 {
