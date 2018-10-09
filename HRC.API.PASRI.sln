@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HRC.API.PASRI", "HRC.API.PASRI\HRC.API.PASRI.csproj", "{5471E068-1558-40BC-97AA-2E0E225B0221}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HRC.DB.Master.UnitTests", "HRC.DB.Master.UnitTests\HRC.DB.Master.UnitTests.csproj", "{50525729-933A-44F6-B133-9AF5C8741C6B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HRC.API.PASRI.IntegrationTests", "HRC.API.PASRI.IntegrationTests\HRC.API.PASRI.IntegrationTests.csproj", "{9ABF670A-4B94-4803-9F4F-85D88D8921D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4B959F23-C684-473C-B99A-6CD4A9D1C63D}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "PASRI in Docker", "HRC.API.PASRI.Docker\PASRI in Docker.dcproj", "{39C7FACE-B08B-4927-9886-F447AE436068}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HRC.DB.Master", "HRC.DB.Master\HRC.DB.Master.csproj", "{2E2F64F6-B161-4604-A27A-C83C1996A9F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HRC.Helper", "HRC.Helper\HRC.Helper.csproj", "{5606AE2C-8D4D-42A7-AD03-AFAFB9C286A6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5471E068-1558-40BC-97AA-2E0E225B0221}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5471E068-1558-40BC-97AA-2E0E225B0221}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5471E068-1558-40BC-97AA-2E0E225B0221}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5471E068-1558-40BC-97AA-2E0E225B0221}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50525729-933A-44F6-B133-9AF5C8741C6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50525729-933A-44F6-B133-9AF5C8741C6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50525729-933A-44F6-B133-9AF5C8741C6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50525729-933A-44F6-B133-9AF5C8741C6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9ABF670A-4B94-4803-9F4F-85D88D8921D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9ABF670A-4B94-4803-9F4F-85D88D8921D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9ABF670A-4B94-4803-9F4F-85D88D8921D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9ABF670A-4B94-4803-9F4F-85D88D8921D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39C7FACE-B08B-4927-9886-F447AE436068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39C7FACE-B08B-4927-9886-F447AE436068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39C7FACE-B08B-4927-9886-F447AE436068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39C7FACE-B08B-4927-9886-F447AE436068}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E2F64F6-B161-4604-A27A-C83C1996A9F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E2F64F6-B161-4604-A27A-C83C1996A9F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E2F64F6-B161-4604-A27A-C83C1996A9F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E2F64F6-B161-4604-A27A-C83C1996A9F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5606AE2C-8D4D-42A7-AD03-AFAFB9C286A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5606AE2C-8D4D-42A7-AD03-AFAFB9C286A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5606AE2C-8D4D-42A7-AD03-AFAFB9C286A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5606AE2C-8D4D-42A7-AD03-AFAFB9C286A6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {88C01C06-D013-412F-BCF7-9611F52CDD35}
+	EndGlobalSection
+EndGlobal
