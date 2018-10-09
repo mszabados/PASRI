@@ -1,6 +1,8 @@
 ﻿using HRC.DB.Master.Core.Domain;
 using HRC.DB.Master.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace HRC.DB.Master.Persistence.Repositories
 {
@@ -24,5 +26,39 @@ namespace HRC.DB.Master.Persistence.Repositories
             : base(context)
         {
         }
+
+        private MasterDbContext MasterDbContext => Context as MasterDbContext;
+
+        #region Overridden standard methods
+
+        /// <summary>
+        /// Removes the dependent state/provinces before removing the country
+        /// to comply with the foreign-key which is not cascading
+        /// </summary>
+        public override void Remove(ReferenceCountry country)
+        {
+            var queryStateProvinces = MasterDbContext.ReferenceStateProvinces.AsQueryable();
+            queryStateProvinces = queryStateProvinces.Where(sp => sp.CountryId == country.Id);
+            MasterDbContext.ReferenceStateProvinces.RemoveRange(queryStateProvinces.ToList());
+            MasterDbContext.ReferenceCountries.Remove(country);
+        }
+
+        /// <summary>
+        /// Removes the dependent state/provinces before removing the countries
+        /// to comply with the foreign-key which is not cascading
+        /// </summary>
+        public override void RemoveRange(IEnumerable<ReferenceCountry> countries)
+        {
+            foreach (var country in countries)
+            {
+                var queryStateProvinces = MasterDbContext.ReferenceStateProvinces.AsQueryable();
+                queryStateProvinces = queryStateProvinces.Where(sp => sp.CountryId == country.Id);
+                MasterDbContext.ReferenceStateProvinces.RemoveRange(queryStateProvinces.ToList());
+            }
+
+            MasterDbContext.ReferenceCountries.RemoveRange(countries);
+        }
+
+        #endregion
     }
 }

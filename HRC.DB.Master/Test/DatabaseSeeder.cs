@@ -34,7 +34,7 @@ namespace HRC.DB.Master.Test
             _context.ReferenceNameSuffixes.AddRange(PreDefinedData.ReferenceNameSuffixes);
             _context.ReferenceRaces.AddRange(PreDefinedData.ReferenceRaces);
             _context.ReferenceReligions.AddRange(PreDefinedData.ReferenceReligions);
-            _context.ReferenceStates.AddRange(PreDefinedData.ReferenceStateProvinces);
+            _context.ReferenceStateProvinces.AddRange(PreDefinedData.ReferenceStateProvinces);
 
             _context.SaveChanges();
         }

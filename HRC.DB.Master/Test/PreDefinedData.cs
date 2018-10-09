@@ -332,7 +332,13 @@ namespace HRC.DB.Master.Test
         public static readonly ReferenceStateProvince[] ReferenceStateProvinces = {
             new ReferenceStateProvince { Id = 1, CountryId = 1, Code = "TX", LongName = "Texas" },
             new ReferenceStateProvince { Id = 2, CountryId = 1, Code = "KY", LongName = "Kentucky" },
-            new ReferenceStateProvince { Id = 3, CountryId = 1, Code = "DE", LongName = "Delaware" }
+            new ReferenceStateProvince { Id = 3, CountryId = 1, Code = "DE", LongName = "Delaware" },
+            new ReferenceStateProvince { Id = 4, CountryId = 2, Code = "AB", LongName = "Alberta" },
+            new ReferenceStateProvince { Id = 5, CountryId = 2, Code = "NB", LongName = "New Brunswick" },
+            new ReferenceStateProvince { Id = 6, CountryId = 2, Code = "YT", LongName = "Yukon Territory" },
+            new ReferenceStateProvince { Id = 7, CountryId = 3, Code = "DG", LongName = "Durango" },
+            new ReferenceStateProvince { Id = 8, CountryId = 3, Code = "OA", LongName = "Oaxaca" },
+            new ReferenceStateProvince { Id = 9, CountryId = 3, Code = "CU", LongName = "Coahuila" }
         };
 
         /// <summary>

@@ -38,7 +38,7 @@ namespace HRC.DB.Master.Persistence
         public virtual DbSet<ReferenceNameSuffix> ReferenceNameSuffixes { get; set; }
         public virtual DbSet<ReferenceRace> ReferenceRaces { get; set; }
         public virtual DbSet<ReferenceReligion> ReferenceReligions { get; set; }
-        public virtual DbSet<ReferenceStateProvince> ReferenceStates { get; set; }
+        public virtual DbSet<ReferenceStateProvince> ReferenceStateProvinces { get; set; }
         public virtual DbSet<ReferenceBloodType> ReferenceBloodTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

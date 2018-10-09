@@ -27,7 +27,7 @@ namespace HRC.DB.Master.Persistence.Repositories
         {
         }
 
-        private MasterDbContext PasriDbContext => Context as MasterDbContext;
+        private MasterDbContext MasterDbContext => Context as MasterDbContext;
 
         #region Constants for dynamically selecting information about a Person
         /*
@@ -40,7 +40,7 @@ namespace HRC.DB.Master.Persistence.Repositories
 
         private const string BirthInfo = nameof(BirthInfo);
         private const string DemographicInfo = nameof(DemographicInfo);
-        
+
         #endregion
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace HRC.DB.Master.Persistence.Repositories
         public List<Person> Search(int? personId, 
             List<string> includeInfo)
         {
-            var persons = PasriDbContext.Persons.AsQueryable();
+            var persons = MasterDbContext.Persons.AsQueryable();
 
             if (personId.HasValue)
             {
