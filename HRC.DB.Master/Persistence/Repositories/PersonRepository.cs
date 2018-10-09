@@ -8,7 +8,7 @@ namespace HRC.DB.Master.Persistence.Repositories
 {
     /// <summary>
     /// Extends the <see cref="Repository{TEntity}"/> for <see cref="Person"/>, implementing
-    /// <see cref="IPersonRepository"/>, using the <see cref="PasriDbContext"/> to get,
+    /// <see cref="IPersonRepository"/>, using the <see cref="MasterDbContext"/> to get,
     /// find with predicate, add, or remove <see cref="Person"/> objects in the database in
     /// accordance with the implemented repository methods.
     /// 

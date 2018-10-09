@@ -27,7 +27,7 @@ namespace HRC.Helper
             string.Join(",", list.ToArray());
 
         public static List<string> ConvertCsvToList(string csv) =>
-            csv.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
+            csv.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
 
     }
 }

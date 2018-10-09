@@ -81,7 +81,7 @@ namespace HRC.DB.Master.Persistence.Repositories
         }
 
         public List<string> GetAllIncludeInfoConstants() =>
-            Utils.GetAllConstantsEndsWith(this.GetType(), IncludeInfoConstantSuffix)
+            Utils.GetAllConstantsEndsWith(GetType(), IncludeInfoConstantSuffix)
                 .Select(fi => fi.GetValue(null).ToString())
                 .ToList();
     }
