@@ -26,7 +26,7 @@ namespace HRC.API.PASRI
             CreateMap<ReferenceNameSuffix, ReferenceNameSuffixDto>().ReverseMap();
             CreateMap<ReferenceRace, ReferenceRaceDto>().ReverseMap();
             CreateMap<ReferenceReligion, ReferenceReligionDto>().ReverseMap();
-            CreateMap<ReferenceStateProvince, ReferenceStateProvinceDto>().ReverseMap();
+            
 
             // Complex mapping for nested types
             CreateMap<Person, PersonDto>()
@@ -34,6 +34,10 @@ namespace HRC.API.PASRI
                 .IgnoreAllPropertiesWithAnInaccessibleSetter()
                 .IgnorePath(d => d.Birth.StateProvince.Code)
                 .IgnorePath(d => d.Birth.Country.Code);
+            CreateMap<ReferenceStateProvince, ReferenceStateProvinceDto>()
+                .ReverseMap()
+                .IgnoreAllPropertiesWithAnInaccessibleSetter()
+                .IgnorePath(d => d.Country.Code);
         }
     }
 

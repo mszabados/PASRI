@@ -58,11 +58,11 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
                 .HasColumnType("varchar(30)");
 
             builder.Property(p => p.ModifiedDate)
-                .HasColumnName("modified_date")
+                .HasColumnName("last_modified_date")
                 .HasColumnType("datetime");
 
             builder.Property(p => p.ModifiedBy)
-                .HasColumnName("modified_by")
+                .HasColumnName("last_modified_by")
                 .HasColumnType("varchar(30)");
 
             builder.HasOne(p => p.Suffix)

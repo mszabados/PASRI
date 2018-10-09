@@ -19,12 +19,16 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
 
         public void Configure(EntityTypeBuilder<ReferenceStateProvince> builder)
         {
-            builder.ToTable("STATE", "RE");
+            builder.ToTable("RE_STATE_PROVINCE", "RE");
 
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Id)
-                .HasColumnName("state_id")
+                .HasColumnName("re_state_province_id")
+                .IsRequired();
+
+            builder.Property(p => p.CountryId)
+                .HasColumnName("re_country_id")
                 .IsRequired();
 
             builder.Property(p => p.Code)
@@ -47,12 +51,17 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
                 .HasColumnType("varchar(30)");
 
             builder.Property(p => p.ModifiedDate)
-                .HasColumnName("modified_date")
+                .HasColumnName("last_modified_date")
                 .HasColumnType("datetime");
 
             builder.Property(p => p.ModifiedBy)
-                .HasColumnName("modified_by")
+                .HasColumnName("last_modified_by")
                 .HasColumnType("varchar(30)");
+
+            builder.HasOne(p => p.Country)
+                .WithMany()
+                .HasForeignKey(p => p.CountryId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -32,6 +32,7 @@ namespace HRC.API.PASRI.IntegrationTests
         protected const string HttpExceptionFormattedMessage =
             "An internal server error occurred, read through the response below to find the exception\r\n\r\n{0}";
         protected const string JsonMediaType = "application/json";
+        protected const string CreatedModifiedBy = "IntegrationTests";
 
         protected BaseIntegrationTestProvider()
         {

@@ -100,7 +100,10 @@ namespace HRC.API.PASRI.IntegrationTests.Controllers
             {
                 Code = notExistsEyeColorCode,
                 LongName = "New EyeColor",
-                CreatedDate = DateTime.UtcNow
+                CreatedDate = DateTime.UtcNow,
+                CreatedBy = CreatedModifiedBy,
+                ModifiedDate = DateTime.UtcNow,
+                ModifiedBy = CreatedModifiedBy
             };
 
             // Act
@@ -198,7 +201,7 @@ namespace HRC.API.PASRI.IntegrationTests.Controllers
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(apiUpdatingEyeColor),
+                JsonConvert.SerializeObject(Mapper.Map<ReferenceEyeColor, ReferenceEyeColorDto>(apiUpdatingEyeColor)),
                     Encoding.UTF8,
                     JsonMediaType));
             var responseString = await response.Content.ReadAsStringAsync();

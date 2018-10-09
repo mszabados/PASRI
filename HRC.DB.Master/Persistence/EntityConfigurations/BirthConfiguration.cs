@@ -38,11 +38,11 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
                 .HasColumnType($"varchar({BirthCityLength})");
 
             builder.Property(p => p.StateProvinceId)
-                .HasColumnName("state_province_id")
+                .HasColumnName("re_state_province_id")
                 .HasColumnType("int");
 
             builder.Property(p => p.CountryId)
-                .HasColumnName("country_id")
+                .HasColumnName("re_country_id")
                 .HasColumnType("int");
 
             builder.Property(p => p.CreatedDate)
@@ -54,11 +54,11 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
                 .HasColumnType("varchar(30)");
 
             builder.Property(p => p.ModifiedDate)
-                .HasColumnName("modified_date")
+                .HasColumnName("last_modified_date")
                 .HasColumnType("datetime");
 
             builder.Property(p => p.ModifiedBy)
-                .HasColumnName("modified_by")
+                .HasColumnName("last_modified_by")
                 .HasColumnType("varchar(30)");
 
             builder.HasOne(b => b.Person)

@@ -19,12 +19,12 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
 
         public void Configure(EntityTypeBuilder<ReferenceCountry> builder)
         {
-            builder.ToTable("COUNTRY", "RE");
+            builder.ToTable("RE_COUNTRY", "RE");
 
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Id)
-                .HasColumnName("country_id")
+                .HasColumnName("re_country_id")
                 .IsRequired();
 
             builder.Property(p => p.Code)
@@ -47,11 +47,11 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
                 .HasColumnType("varchar(30)");
 
             builder.Property(p => p.ModifiedDate)
-                .HasColumnName("modified_date")
+                .HasColumnName("last_modified_date")
                 .HasColumnType("datetime");
 
             builder.Property(p => p.ModifiedBy)
-                .HasColumnName("modified_by")
+                .HasColumnName("last_modified_by")
                 .HasColumnType("varchar(30)");
         }
     }

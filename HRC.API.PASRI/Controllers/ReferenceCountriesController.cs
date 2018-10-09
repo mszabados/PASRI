@@ -113,6 +113,9 @@ namespace HRC.API.PASRI.Controllers
             if (referenceCountryInDb == null)
                 return NotFound();
 
+            var referenceStateProvinces = _unitOfWork.ReferenceStateProvinces.Find(sp => sp.CountryId == id);
+
+            _unitOfWork.ReferenceStateProvinces.RemoveRange(referenceStateProvinces);
             _unitOfWork.ReferenceCountries.Remove(referenceCountryInDb);
             _unitOfWork.Complete();
 

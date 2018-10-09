@@ -64,6 +64,9 @@ namespace HRC.API.PASRI.Controllers
             if (referenceStateProvinceInDb.Any())
                 return new ConflictResult();
 
+            var referenceCountry = _unitOfWork.ReferenceCountries.SingleOrDefault(c => c.Code == payload.CountryCode);
+            referenceStateProvince.CountryId = referenceCountry.Id;
+
             _unitOfWork.ReferenceStateProvinces.Add(referenceStateProvince);
             _unitOfWork.Complete();
 
@@ -94,6 +97,10 @@ namespace HRC.API.PASRI.Controllers
                 return NotFound();
 
             _mapper.Map(payload, referenceStateProvinceInDb);
+
+            var referenceCountry = _unitOfWork.ReferenceCountries.SingleOrDefault(c => c.Code == payload.CountryCode);
+            referenceStateProvinceInDb.CountryId = referenceCountry.Id;
+
             _unitOfWork.Complete();
 
             return NoContent();

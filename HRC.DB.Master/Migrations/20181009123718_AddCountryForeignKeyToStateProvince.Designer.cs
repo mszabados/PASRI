@@ -4,14 +4,16 @@ using HRC.DB.Master.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HRC.DB.Master.Migrations
 {
     [DbContext(typeof(MasterDbContext))]
-    partial class MasterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181009123718_AddCountryForeignKeyToStateProvince")]
+    partial class AddCountryForeignKeyToStateProvince
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +33,7 @@ namespace HRC.DB.Master.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.Property<int?>("CountryId")
-                        .HasColumnName("re_country_id")
+                        .HasColumnName("country_id")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -47,18 +49,18 @@ namespace HRC.DB.Master.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnName("last_modified_by")
+                        .HasColumnName("modified_by")
                         .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnName("last_modified_date")
+                        .HasColumnName("modified_date")
                         .HasColumnType("datetime");
 
                     b.Property<int>("PersonId")
                         .HasColumnName("person_id");
 
                     b.Property<int?>("StateProvinceId")
-                        .HasColumnName("re_state_province_id")
+                        .HasColumnName("state_province_id")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -107,11 +109,11 @@ namespace HRC.DB.Master.Migrations
                         .HasColumnType("varchar(80)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnName("last_modified_by")
+                        .HasColumnName("modified_by")
                         .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnName("last_modified_date")
+                        .HasColumnName("modified_date")
                         .HasColumnType("datetime");
 
                     b.Property<int?>("SuffixId")
@@ -150,11 +152,11 @@ namespace HRC.DB.Master.Migrations
                         .HasColumnType("varchar(11)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnName("last_modified_by")
+                        .HasColumnName("modified_by")
                         .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnName("last_modified_date")
+                        .HasColumnName("modified_date")
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
@@ -169,7 +171,7 @@ namespace HRC.DB.Master.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("re_country_id")
+                        .HasColumnName("country_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
@@ -191,11 +193,11 @@ namespace HRC.DB.Master.Migrations
                         .HasColumnType("varchar(44)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnName("last_modified_by")
+                        .HasColumnName("modified_by")
                         .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnName("last_modified_date")
+                        .HasColumnName("modified_date")
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
@@ -203,7 +205,7 @@ namespace HRC.DB.Master.Migrations
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.ToTable("RE_COUNTRY","RE");
+                    b.ToTable("COUNTRY","RE");
                 });
 
             modelBuilder.Entity("HRC.DB.Master.Core.Domain.ReferenceEthnicGroup", b =>
@@ -232,11 +234,11 @@ namespace HRC.DB.Master.Migrations
                         .HasColumnType("varchar(28)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnName("last_modified_by")
+                        .HasColumnName("modified_by")
                         .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnName("last_modified_date")
+                        .HasColumnName("modified_date")
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
@@ -273,11 +275,11 @@ namespace HRC.DB.Master.Migrations
                         .HasColumnType("varchar(14)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnName("last_modified_by")
+                        .HasColumnName("modified_by")
                         .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnName("last_modified_date")
+                        .HasColumnName("modified_date")
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
@@ -314,11 +316,11 @@ namespace HRC.DB.Master.Migrations
                         .HasColumnType("varchar(7)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnName("last_modified_by")
+                        .HasColumnName("modified_by")
                         .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnName("last_modified_date")
+                        .HasColumnName("modified_date")
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
@@ -355,11 +357,11 @@ namespace HRC.DB.Master.Migrations
                         .HasColumnType("varchar(6)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnName("last_modified_by")
+                        .HasColumnName("modified_by")
                         .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnName("last_modified_date")
+                        .HasColumnName("modified_date")
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
@@ -396,11 +398,11 @@ namespace HRC.DB.Master.Migrations
                         .HasColumnType("varchar(15)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnName("last_modified_by")
+                        .HasColumnName("modified_by")
                         .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnName("last_modified_date")
+                        .HasColumnName("modified_date")
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
@@ -437,11 +439,11 @@ namespace HRC.DB.Master.Migrations
                         .HasColumnType("varchar(237)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnName("last_modified_by")
+                        .HasColumnName("modified_by")
                         .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnName("last_modified_date")
+                        .HasColumnName("modified_date")
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
@@ -478,11 +480,11 @@ namespace HRC.DB.Master.Migrations
                         .HasColumnType("varchar(253)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnName("last_modified_by")
+                        .HasColumnName("modified_by")
                         .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnName("last_modified_date")
+                        .HasColumnName("modified_date")
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
@@ -497,7 +499,7 @@ namespace HRC.DB.Master.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("re_state_province_id")
+                        .HasColumnName("state_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
@@ -507,7 +509,7 @@ namespace HRC.DB.Master.Migrations
 
                     b.Property<int?>("CountryId")
                         .IsRequired()
-                        .HasColumnName("re_country_id");
+                        .HasColumnName("country_id");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnName("created_by")
@@ -523,11 +525,11 @@ namespace HRC.DB.Master.Migrations
                         .HasColumnType("varchar(35)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnName("last_modified_by")
+                        .HasColumnName("modified_by")
                         .HasColumnType("varchar(30)");
 
                     b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnName("last_modified_date")
+                        .HasColumnName("modified_date")
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
@@ -537,7 +539,7 @@ namespace HRC.DB.Master.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("RE_STATE_PROVINCE","RE");
+                    b.ToTable("STATE","RE");
                 });
 
             modelBuilder.Entity("HRC.DB.Master.Core.Domain.Birth", b =>

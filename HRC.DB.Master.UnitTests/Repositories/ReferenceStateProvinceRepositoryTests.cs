@@ -107,6 +107,7 @@ namespace HRC.DB.Master.UnitTests.Repositories
             var notExistsStateProvinceCode = PreDefinedData.GetNotExistsStateProvinceCode();
             var newReferenceStateProvince = new ReferenceStateProvince
             {
+                CountryId = 1,
                 Code = notExistsStateProvinceCode,
                 LongName = notExistsStateProvinceCode
             };
@@ -156,8 +157,8 @@ namespace HRC.DB.Master.UnitTests.Repositories
 
             var newStateProvinces = new Collection<ReferenceStateProvince>
             {
-                new ReferenceStateProvince { Code = notExistsStateProvinceCode1, LongName = "" },
-                new ReferenceStateProvince { Code = notExistsStateProvinceCode2, LongName = "" }
+                new ReferenceStateProvince { CountryId = 1, Code = notExistsStateProvinceCode1, LongName = "" },
+                new ReferenceStateProvince { CountryId = 1, Code = notExistsStateProvinceCode2, LongName = "" }
             };
             UnitOfWork.ReferenceStateProvinces.AddRange(newStateProvinces);
             UnitOfWork.Complete();
@@ -173,8 +174,8 @@ namespace HRC.DB.Master.UnitTests.Repositories
             var notExistsStateProvinceCode = PreDefinedData.GetNotExistsStateProvinceCode();
             var newStateProvinces = new Collection<ReferenceStateProvince>
             {
-                new ReferenceStateProvince { Id = int.MaxValue, Code = notExistsStateProvinceCode, LongName = "" },
-                new ReferenceStateProvince { Id = int.MaxValue, Code = notExistsStateProvinceCode, LongName = "" }
+                new ReferenceStateProvince { Id = int.MaxValue, CountryId = 1, Code = notExistsStateProvinceCode, LongName = "" },
+                new ReferenceStateProvince { Id = int.MaxValue, CountryId = 1, Code = notExistsStateProvinceCode, LongName = "" }
             };
 
             Assert.That(() => UnitOfWork.ReferenceStateProvinces.AddRange(newStateProvinces),

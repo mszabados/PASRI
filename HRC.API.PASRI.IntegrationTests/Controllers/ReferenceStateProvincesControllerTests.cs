@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace HRC.API.PASRI.IntegrationTests.Controllers
 {
@@ -98,9 +99,13 @@ namespace HRC.API.PASRI.IntegrationTests.Controllers
             var notExistsStateProvinceCode = PreDefinedData.GetNotExistsStateProvinceCode();
             var newStateProvinceDto = new ReferenceStateProvinceDto
             {
+                CountryCode = "US",
                 Code = notExistsStateProvinceCode,
                 LongName = "New StateProvince",
-                CreatedDate = DateTime.UtcNow
+                CreatedDate = DateTime.UtcNow,
+                CreatedBy = CreatedModifiedBy,
+                ModifiedDate = DateTime.UtcNow,
+                ModifiedBy = CreatedModifiedBy
             };
 
             // Act
@@ -168,9 +173,10 @@ namespace HRC.API.PASRI.IntegrationTests.Controllers
             var path = GetRelativePath(nameof(ReferenceStateProvincesController));
             var randomStateProvinceId = PreDefinedData.GetRandomStateProvinceId();
             var randomStateProvince = PreDefinedData.ReferenceStateProvinces[randomStateProvinceId - 1];
-
+            
             var newStateProvinceDto = new ReferenceStateProvinceDto
             {
+                CountryCode = "US",
                 Code = randomStateProvince.Code,
                 LongName = "Create Test",
                 CreatedDate = DateTime.UtcNow
@@ -191,14 +197,13 @@ namespace HRC.API.PASRI.IntegrationTests.Controllers
         {
             // Arrange
             var randomStateProvinceId = PreDefinedData.GetRandomStateProvinceId();
-
             var apiUpdatingStateProvince = UnitOfWork.ReferenceStateProvinces.Get(randomStateProvinceId);
             apiUpdatingStateProvince.LongName = "Update Test";
             var path = GetRelativePath(nameof(ReferenceStateProvincesController), randomStateProvinceId.ToString());
 
             // Act
             var response = await Client.PutAsync(path, new StringContent(
-                    JsonConvert.SerializeObject(apiUpdatingStateProvince),
+                    JsonConvert.SerializeObject(Mapper.Map<ReferenceStateProvince, ReferenceStateProvinceDto>(apiUpdatingStateProvince)),
                     Encoding.UTF8,
                     JsonMediaType));
             var responseString = await response.Content.ReadAsStringAsync();
@@ -259,6 +264,7 @@ namespace HRC.API.PASRI.IntegrationTests.Controllers
             var apiUpdatingStateProvince = new ReferenceStateProvinceDto
             {
                 Id = int.MaxValue,
+                CountryCode = "US",
                 Code = notExistsStateProvinceCode,
                 LongName = "Update Test"
             };

@@ -11,6 +11,10 @@ namespace HRC.API.PASRI.Dtos
         public int? Id { get; set; }
 
         [Required]
+        [StringLength(ReferenceCountryConfiguration.CodeLength)]
+        public string CountryCode { get; set; }
+
+        [Required]
         [StringLength(ReferenceStateProvinceConfiguration.CodeLength)]
         public string Code { get; set; }
 
