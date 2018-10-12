@@ -14,8 +14,8 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
     /// </remarks>
     public class ReferenceBloodTypeConfiguration : IEntityTypeConfiguration<ReferenceBloodType>
     {
-        public const int CodeLength = 3;
-        public const int LongNameLength = 11;
+        public const int CodeLength = 1;
+        public const int LongNameLength = 15;
 
         public void Configure(EntityTypeBuilder<ReferenceBloodType> builder)
         {

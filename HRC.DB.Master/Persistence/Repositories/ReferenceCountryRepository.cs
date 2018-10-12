@@ -32,7 +32,8 @@ namespace HRC.DB.Master.Persistence.Repositories
         #region Overridden standard methods
 
         /// <summary>
-        /// Removes the dependent state/provinces before removing the country
+        /// Removes the dependent <see cref="ReferenceStateProvince"/> collection
+        /// before removing the <see cref="ReferenceCountry"/>
         /// to comply with the foreign-key which is not cascading
         /// </summary>
         public override void Remove(ReferenceCountry country)
@@ -44,19 +45,21 @@ namespace HRC.DB.Master.Persistence.Repositories
         }
 
         /// <summary>
-        /// Removes the dependent state/provinces before removing the countries
+        /// Removes the dependent <see cref="ReferenceStateProvince"/> collections
+        /// before removing the <see cref="ReferenceCountry"/> collection
         /// to comply with the foreign-key which is not cascading
         /// </summary>
         public override void RemoveRange(IEnumerable<ReferenceCountry> countries)
         {
-            foreach (var country in countries)
+            var referenceCountries = countries.ToList();
+            foreach (var country in referenceCountries)
             {
                 var queryStateProvinces = MasterDbContext.ReferenceStateProvinces.AsQueryable();
                 queryStateProvinces = queryStateProvinces.Where(sp => sp.CountryId == country.Id);
                 MasterDbContext.ReferenceStateProvinces.RemoveRange(queryStateProvinces.ToList());
             }
 
-            MasterDbContext.ReferenceCountries.RemoveRange(countries);
+            MasterDbContext.ReferenceCountries.RemoveRange(referenceCountries);
         }
 
         #endregion

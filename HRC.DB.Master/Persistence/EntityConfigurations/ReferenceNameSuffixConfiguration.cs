@@ -29,7 +29,7 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
 
             builder.Property(p => p.Code)
                 .HasColumnName("code")
-                .HasColumnType($"char({CodeLength})")
+                .HasColumnType($"varchar({CodeLength})")
                 .IsRequired();
             builder.HasIndex(c => c.Code).IsUnique();
 

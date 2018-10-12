@@ -40,6 +40,17 @@ namespace HRC.DB.Master.Persistence
         public virtual DbSet<ReferenceReligion> ReferenceReligions { get; set; }
         public virtual DbSet<ReferenceStateProvince> ReferenceStateProvinces { get; set; }
         public virtual DbSet<ReferenceBloodType> ReferenceBloodTypes { get; set; }
+        public virtual DbSet<ReferenceAccessionSource> ReferenceAccessionSources { get; set; }
+        public virtual DbSet<ReferenceBasisForUsCitizenship> ReferenceBasesForUsCitizenship { get; set; }
+        public virtual DbSet<ReferenceMarriage> ReferenceMarriages { get; set; }
+        public virtual DbSet<ReferenceMilSvcCitizenshipQual> ReferenceMilSvcCitizenshipQuals { get; set; }
+        public virtual DbSet<ReferencePayPlan> ReferencePayPlans { get; set; }
+        public virtual DbSet<ReferencePersonnelClass> ReferencePersonnelClasses { get; set; }
+        public virtual DbSet<ReferenceRank> ReferenceRanks { get; set; }
+        public virtual DbSet<ReferenceServiceBranch> ReferenceServiceBranches { get; set; }
+        public virtual DbSet<ReferenceServiceBranchComponent> ReferenceServiceBranchComponents { get; set; }
+        public virtual DbSet<ReferenceSsnVerification> ReferenceSsnVerifications { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,7 +66,16 @@ namespace HRC.DB.Master.Persistence
             modelBuilder.ApplyConfiguration(new ReferenceRaceConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceReligionConfiguration());
             modelBuilder.ApplyConfiguration(new ReferenceStateProvinceConfiguration());
-            
+            modelBuilder.ApplyConfiguration(new ReferenceAccessionSourceConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceBasisForUsCitizenshipConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceMarriageConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceMilSvcCitizenshipQualConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferencePayPlanConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferencePersonnelClassConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceRankConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceServiceBranchConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceServiceBranchComponentConfiguration());
+            modelBuilder.ApplyConfiguration(new ReferenceSsnVerificationConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

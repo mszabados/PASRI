@@ -15,7 +15,7 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
     public class ReferenceHairColorConfiguration : IEntityTypeConfiguration<ReferenceHairColor>
     {
         public const int CodeLength = 2;
-        public const int LongNameLength = 6;
+        public const int LongNameLength = 10;
 
         public void Configure(EntityTypeBuilder<ReferenceHairColor> builder)
         {

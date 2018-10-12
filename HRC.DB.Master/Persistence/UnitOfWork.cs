@@ -46,6 +46,17 @@ namespace HRC.DB.Master.Persistence
             ReferenceStateProvinces = new ReferenceStateProvinceRepository(Context);
             ReferenceNameSuffixes = new ReferenceNameSuffixRepository(Context);
             ReferenceBloodTypes = new ReferenceBloodTypeRepository(Context);
+            ReferenceAccessionSources = new ReferenceAccessionSourceRepository(Context);
+            ReferenceBasesForUsCitizenship = new ReferenceBasisForUsCitizenshipRepository(Context);
+            ReferenceMarriages = new ReferenceMarriageRepository(Context);
+            ReferenceMilSvcCitizenshipQuals = new ReferenceMilSvcCitizenshipQualRepository(Context);
+            ReferencePayPlans = new ReferencePayPlanRepository(Context);
+            ReferencePersonnelClasses = new ReferencePersonnelClassRepository(Context);
+            ReferenceRanks = new ReferenceRankRepository(Context);
+            ReferenceServiceBranches = new ReferenceServiceBranchRepository(Context);
+            ReferenceServiceBranchComponents = new ReferenceServiceBranchComponentRepository(Context);
+            ReferenceSsnVerifications = new ReferenceSsnVerificationRepository(Context);
+
         }
 
 
@@ -61,6 +72,17 @@ namespace HRC.DB.Master.Persistence
         public IReferenceStateProvinceRepository ReferenceStateProvinces { get; }
         public IReferenceNameSuffixRepository ReferenceNameSuffixes { get; }
         public IReferenceBloodTypeRepository ReferenceBloodTypes { get; }
+        public IReferenceAccessionSourceRepository ReferenceAccessionSources { get; }
+        public IReferenceBasisForUsCitizenshipRepository ReferenceBasesForUsCitizenship { get; }
+        public IReferenceMarriageRepository ReferenceMarriages { get; }
+        public IReferenceMilSvcCitizenshipQualRepository ReferenceMilSvcCitizenshipQuals { get; }
+        public IReferencePayPlanRepository ReferencePayPlans { get; }
+        public IReferencePersonnelClassRepository ReferencePersonnelClasses { get; }
+        public IReferenceRankRepository ReferenceRanks { get; }
+        public IReferenceServiceBranchRepository ReferenceServiceBranches { get; }
+        public IReferenceServiceBranchComponentRepository ReferenceServiceBranchComponents { get; }
+        public IReferenceSsnVerificationRepository ReferenceSsnVerifications { get; }
+
 
         /// <summary>
         /// A derived unit of work class can initialize and

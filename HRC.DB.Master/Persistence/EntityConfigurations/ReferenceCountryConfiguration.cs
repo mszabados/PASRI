@@ -15,7 +15,7 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
     public class ReferenceCountryConfiguration : IEntityTypeConfiguration<ReferenceCountry>
     {
         public const int CodeLength = 2;
-        public const int LongNameLength = 44;
+        public const int LongNameLength = 60;
 
         public void Configure(EntityTypeBuilder<ReferenceCountry> builder)
         {

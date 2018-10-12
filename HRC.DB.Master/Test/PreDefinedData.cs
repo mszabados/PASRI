@@ -53,13 +53,81 @@ namespace HRC.DB.Master.Test
 
         #endregion
 
+        #region ReferenceAccessionSources
+
+        public static readonly ReferenceAccessionSource[] ReferenceAccessionSources = {
+            new ReferenceAccessionSource { Id = 1, Code = "EA", LongName = "Enlisted - Induction" },
+            new ReferenceAccessionSource { Id = 2, Code = "EZ", LongName = "Enlisted - Unknown" },
+            new ReferenceAccessionSource { Id = 3, Code = "WZ", LongName = "Warrant Officer - Unknown" },
+            new ReferenceAccessionSource { Id = 4, Code = "OZ", LongName = "Commissioned Officer - Unknown" }
+        };
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceAccessionSource"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferenceAccessionSources"/> test collection
+        /// </summary>
+        public static string GetNotExistsAccessionSourceCode()
+        {
+            return AssertHelper.GetValueNotInArray(ReferenceAccessionSources,
+                "Code", 1);
+        }
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceAccessionSource"/> that exists in the
+        /// <see cref="PreDefinedData.ReferenceAccessionSources"/> test collection
+        /// </summary>
+        public static int GetRandomAccessionSourceId()
+        {
+            return ReferenceAccessionSources[
+                new Random().Next(0, ReferenceAccessionSources.Length)
+            ].Id;
+        }
+
+        #endregion
+
+        #region ReferenceBasesForUsCitizenships
+
+        public static readonly ReferenceBasisForUsCitizenship[] ReferenceBasesForUsCitizenship = {
+            new ReferenceBasisForUsCitizenship { Id = 1, Code = "A", LongName = "Native born. A person born in one of the 50 United States, Puerto Rico, Guam, American Samoa, Northern Marina Islands; U.S. Virgin Islands; or Panama Canal Zone (if the father or mother (or both) was or is a citizen of the United States)." },
+            new ReferenceBasisForUsCitizenship { Id = 2, Code = "B", LongName = "Naturalized. A person born outside of the United States who has completed naturalization procedures and has been given U.S. citizenship by duly constituted authority." },
+            new ReferenceBasisForUsCitizenship { Id = 3, Code = "C", LongName = "Derivative birth. A person born outside the United States who acquires U.S. citizenship at birth because one or both of his or her parents are U.S. citizens at the time of the person’s birth." },
+            new ReferenceBasisForUsCitizenship { Id = 4, Code = "D", LongName = "Derivative naturalization. A person who acquires U.S. citizenship after birth through naturalization of one or both parents." }
+        };
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceBasisForUsCitizenship"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferenceBasesForUsCitizenship"/> test collection
+        /// </summary>
+        public static string GetNotExistsBasisForUsCitizenshipCode()
+        {
+            return AssertHelper.GetValueNotInArray(ReferenceBasesForUsCitizenship,
+                "Code", 1);
+        }
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceBasisForUsCitizenship"/> that exists in the
+        /// <see cref="PreDefinedData.ReferenceBasesForUsCitizenship"/> test collection
+        /// </summary>
+        public static int GetRandomBasisForUsCitizenshipId()
+        {
+            return ReferenceBasesForUsCitizenship[
+                new Random().Next(0, ReferenceBasesForUsCitizenship.Length)
+            ].Id;
+        }
+
+        #endregion
+
         #region ReferenceBloodTypes
 
         public static readonly ReferenceBloodType[] ReferenceBloodTypes = {
-            new ReferenceBloodType { Id = 1, Code = "O", LongName = "No antigens, A and B antibodies" },
-            new ReferenceBloodType { Id = 2, Code = "A", LongName = "A antigen, B antibody" },
-            new ReferenceBloodType { Id = 3, Code = "B", LongName = "B antigen, A antibody" },
-            new ReferenceBloodType { Id = 4, Code = "AB", LongName = "A and B antigen, no antibodies" }
+            new ReferenceBloodType { Id = 1, Code = "A", LongName = "A Positive" },
+            new ReferenceBloodType { Id = 2, Code = "B", LongName = "A Negative" },
+            new ReferenceBloodType { Id = 3, Code = "E", LongName = "O Positive" },
+            new ReferenceBloodType { Id = 4, Code = "F", LongName = "O Negative" }
         };
 
         /// <summary>
@@ -237,6 +305,72 @@ namespace HRC.DB.Master.Test
 
         #endregion
 
+        #region ReferenceMarriages
+
+        public static readonly ReferenceMarriage[] ReferenceMarriages = {
+            new ReferenceMarriage { Id = 1, Code = "M", LongName = "Married" },
+            new ReferenceMarriage { Id = 2, Code = "N", LongName = "Never married" },
+            new ReferenceMarriage { Id = 3, Code = "D", LongName = "Divorced" }
+        };
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceMarriage"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferenceMarriages"/> test collection
+        /// </summary>
+        public static string GetNotExistsMarriageCode()
+        {
+            return AssertHelper.GetValueNotInArray(ReferenceMarriages,
+                "Code", 1);
+        }
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceMarriage"/> that exists in the
+        /// <see cref="PreDefinedData.ReferenceMarriages"/> test collection
+        /// </summary>
+        public static int GetRandomMarriageId()
+        {
+            return ReferenceMarriages[
+                new Random().Next(0, ReferenceMarriages.Length)
+            ].Id;
+        }
+
+        #endregion
+
+        #region ReferenceMilSvcCitizenshipQuals
+
+        public static readonly ReferenceMilSvcCitizenshipQual[] ReferenceMilSvcCitizenshipQuals = {
+            new ReferenceMilSvcCitizenshipQual { Id = 1, Code = "A", LongName = "US Citizen via being born in the United States of America" },
+            new ReferenceMilSvcCitizenshipQual { Id = 2, Code = "B", LongName = "US Citizen through naturalization" },
+            new ReferenceMilSvcCitizenshipQual { Id = 3, Code = "H", LongName = "Nonimmigrant alien" }
+        };
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceMilSvcCitizenshipQual"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferenceMilSvcCitizenshipQuals"/> test collection
+        /// </summary>
+        public static string GetNotExistsMilSvcCitizenshipQualCode()
+        {
+            return AssertHelper.GetValueNotInArray(ReferenceMilSvcCitizenshipQuals,
+                "Code", 1);
+        }
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceMilSvcCitizenshipQual"/> that exists in the
+        /// <see cref="PreDefinedData.ReferenceMilSvcCitizenshipQuals"/> test collection
+        /// </summary>
+        public static int GetRandomMilSvcCitizenshipQualId()
+        {
+            return ReferenceMilSvcCitizenshipQuals[
+                new Random().Next(0, ReferenceMilSvcCitizenshipQuals.Length)
+            ].Id;
+        }
+
+        #endregion
+
         #region ReferenceNameSuffixes
 
         public static readonly ReferenceNameSuffix[] ReferenceNameSuffixes = {
@@ -263,6 +397,72 @@ namespace HRC.DB.Master.Test
             ReferenceNameSuffixes[
                 new Random().Next(0, ReferenceNameSuffixes.Length)
             ].Id;
+
+        #endregion
+
+        #region ReferencePayPlans
+
+        public static readonly ReferencePayPlan[] ReferencePayPlans = {
+            new ReferencePayPlan { Id = 1, PersonnelClassId = 1, Code = "ME01", LongName = "Level 01" },
+            new ReferencePayPlan { Id = 2, PersonnelClassId = 1, Code = "ME02", LongName = "Level 02" },
+            new ReferencePayPlan { Id = 3, PersonnelClassId = 2, Code = "MO01", LongName = "Level 01" }
+        };
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferencePayPlan"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferencePayPlans"/> test collection
+        /// </summary>
+        public static string GetNotExistsPayPlanCode()
+        {
+            return AssertHelper.GetValueNotInArray(ReferencePayPlans,
+                "Code", 1);
+        }
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferencePayPlan"/> that exists in the
+        /// <see cref="PreDefinedData.ReferencePayPlans"/> test collection
+        /// </summary>
+        public static int GetRandomPayPlanId()
+        {
+            return ReferencePayPlans[
+                new Random().Next(0, ReferencePayPlans.Length)
+            ].Id;
+        }
+
+        #endregion
+
+        #region ReferencePersonnelClasses
+
+        public static readonly ReferencePersonnelClass[] ReferencePersonnelClasses = {
+            new ReferencePersonnelClass { Id = 1, Code = "ME", LongName = "Enilsted (includes Officer Candidate School students)" },
+            new ReferencePersonnelClass { Id = 2, Code = "MO", LongName = "Commissioned Officer" },
+            new ReferencePersonnelClass { Id = 3, Code = "ZZ", LongName = "Unknown" }
+        };
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferencePersonnelClass"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferencePersonnelClasses"/> test collection
+        /// </summary>
+        public static string GetNotExistsPersonnelClassCode()
+        {
+            return AssertHelper.GetValueNotInArray(ReferencePersonnelClasses,
+                "Code", 1);
+        }
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferencePersonnelClass"/> that exists in the
+        /// <see cref="PreDefinedData.ReferencePersonnelClasses"/> test collection
+        /// </summary>
+        public static int GetRandomPersonnelClassId()
+        {
+            return ReferencePersonnelClasses[
+                new Random().Next(0, ReferencePersonnelClasses.Length)
+            ].Id;
+        }
 
         #endregion
 
@@ -298,6 +498,40 @@ namespace HRC.DB.Master.Test
 
         #endregion
 
+        #region ReferenceRanks
+
+        public static readonly ReferenceRank[] ReferenceRanks = {
+            new ReferenceRank { Id = 1, Code = "CPL", LongName = "Corporal" },
+            new ReferenceRank { Id = 2, Code = "CPT", LongName = "Captain" },
+            new ReferenceRank { Id = 3, Code = "COL", LongName = "Colonel" },
+            new ReferenceRank { Id = 4, Code = "CSR", LongName = "Cadet Senior Advanced ROTC" }
+        };
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceRank"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferenceRanks"/> test collection
+        /// </summary>
+        public static string GetNotExistsRankCode()
+        {
+            return AssertHelper.GetValueNotInArray(ReferenceRanks,
+                "Code", 1);
+        }
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceRank"/> that exists in the
+        /// <see cref="PreDefinedData.ReferenceRanks"/> test collection
+        /// </summary>
+        public static int GetRandomRankId()
+        {
+            return ReferenceRanks[
+                new Random().Next(0, ReferenceRanks.Length)
+            ].Id;
+        }
+
+        #endregion
+
         #region ReferenceReligions
 
         public static readonly ReferenceReligion[] ReferenceReligions = {
@@ -324,6 +558,106 @@ namespace HRC.DB.Master.Test
             ReferenceReligions[
                 new Random().Next(0, ReferenceReligions.Length)
             ].Id;
+
+        #endregion
+
+        #region ReferenceServiceBranches
+
+        public static readonly ReferenceServiceBranch[] ReferenceServiceBranches = {
+            new ReferenceServiceBranch { Id = 1, Code = "A", LongName = "Army" },
+            new ReferenceServiceBranch { Id = 2, Code = "N", LongName = "Navy" },
+            new ReferenceServiceBranch { Id = 3, Code = "F", LongName = "Air Force" },
+        };
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceServiceBranch"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferenceServiceBranches"/> test collection
+        /// </summary>
+        public static string GetNotExistsServiceBranchCode()
+        {
+            return AssertHelper.GetValueNotInArray(ReferenceServiceBranches,
+                "Code", 1);
+        }
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceServiceBranch"/> that exists in the
+        /// <see cref="PreDefinedData.ReferenceServiceBranches"/> test collection
+        /// </summary>
+        public static int GetRandomServiceBranchId()
+        {
+            return ReferenceServiceBranches[
+                new Random().Next(0, ReferenceServiceBranches.Length)
+            ].Id;
+        }
+
+        #endregion
+
+        #region ReferenceServiceBranchComponents
+
+        public static readonly ReferenceServiceBranchComponent[] ReferenceServiceBranchComponents = {
+            new ReferenceServiceBranchComponent { Id = 1, ServiceBranchId = 1, Code = "R", LongName = "Regular" },
+            new ReferenceServiceBranchComponent { Id = 2, ServiceBranchId = 1, Code = "G", LongName = "Guard" },
+            new ReferenceServiceBranchComponent { Id = 3, ServiceBranchId = 1, Code = "V", LongName = "Reserve" },
+            new ReferenceServiceBranchComponent { Id = 4, ServiceBranchId = 1, Code = "Z", LongName = "Unknown, Commissioned Corps" }
+        };
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceServiceBranchComponent"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferenceServiceBranchComponents"/> test collection
+        /// </summary>
+        public static string GetNotExistsServiceBranchComponentCode()
+        {
+            return AssertHelper.GetValueNotInArray(ReferenceServiceBranchComponents,
+                "Code", 1);
+        }
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceServiceBranchComponent"/> that exists in the
+        /// <see cref="PreDefinedData.ReferenceServiceBranchComponents"/> test collection
+        /// </summary>
+        public static int GetRandomServiceBranchComponentId()
+        {
+            return ReferenceServiceBranchComponents[
+                new Random().Next(0, ReferenceServiceBranchComponents.Length)
+            ].Id;
+        }
+
+        #endregion
+
+        #region ReferenceSsnVerifications
+
+        public static readonly ReferenceSsnVerification[] ReferenceSsnVerifications = {
+            new ReferenceSsnVerification { Id = 1, Code = "0", LongName = "Verified SSN" },
+            new ReferenceSsnVerification { Id = 2, Code = "2", LongName = "Name and DOB match; gender code does not match" },
+            new ReferenceSsnVerification { Id = 3, Code = "6", LongName = "SSN did not verify; other reason" }
+        };
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceSsnVerification"/> that does not exist in the
+        /// <see cref="PreDefinedData.ReferenceSsnVerifications"/> test collection
+        /// </summary>
+        public static string GetNotExistsSsnVerificationCode()
+        {
+            return AssertHelper.GetValueNotInArray(ReferenceSsnVerifications,
+                "Code", 1);
+        }
+
+        /// <summary>
+        /// Helper method to retrieve a blood type code, which is the primary key
+        /// of the <see cref="ReferenceSsnVerification"/> that exists in the
+        /// <see cref="PreDefinedData.ReferenceSsnVerifications"/> test collection
+        /// </summary>
+        public static int GetRandomSsnVerificationId()
+        {
+            return ReferenceSsnVerifications[
+                new Random().Next(0, ReferenceSsnVerifications.Length)
+            ].Id;
+        }
 
         #endregion
 

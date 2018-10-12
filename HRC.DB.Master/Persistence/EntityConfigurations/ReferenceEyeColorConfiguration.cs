@@ -15,7 +15,7 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
     public class ReferenceEyeColorConfiguration : IEntityTypeConfiguration<ReferenceEyeColor>
     {
         public const int CodeLength = 2;
-        public const int LongNameLength = 14;
+        public const int LongNameLength = 15;
 
         public void Configure(EntityTypeBuilder<ReferenceEyeColor> builder)
         {

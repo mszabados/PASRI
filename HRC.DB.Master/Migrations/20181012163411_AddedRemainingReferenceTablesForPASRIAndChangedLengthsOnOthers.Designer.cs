@@ -4,14 +4,16 @@ using HRC.DB.Master.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HRC.DB.Master.Migrations
 {
     [DbContext(typeof(MasterDbContext))]
-    partial class MasterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181012163411_AddedRemainingReferenceTablesForPASRIAndChangedLengthsOnOthers")]
+    partial class AddedRemainingReferenceTablesForPASRIAndChangedLengthsOnOthers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -912,7 +914,7 @@ namespace HRC.DB.Master.Migrations
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.ToTable("RE_SSN_VERIFICATION","PERSON");
+                    b.ToTable("RE_SSN_VERIFICATION","RE");
                 });
 
             modelBuilder.Entity("HRC.DB.Master.Core.Domain.ReferenceStateProvince", b =>

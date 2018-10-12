@@ -17,7 +17,7 @@ namespace HRC.DB.Master.Core
     /// </remarks>
     public interface IUnitOfWork : IDisposable
     {
-        IPersonRepository Persons { get;  }
+        IPersonRepository Persons { get; }
         IBirthRepository Births { get; }
         IReferenceCountryRepository ReferenceCountries { get; }
         IReferenceEthnicGroupRepository ReferenceEthnicGroups { get; }
@@ -29,6 +29,16 @@ namespace HRC.DB.Master.Core
         IReferenceStateProvinceRepository ReferenceStateProvinces { get; }
         IReferenceNameSuffixRepository ReferenceNameSuffixes { get; }
         IReferenceBloodTypeRepository ReferenceBloodTypes { get; }
+        IReferenceAccessionSourceRepository ReferenceAccessionSources { get; }
+        IReferenceBasisForUsCitizenshipRepository ReferenceBasesForUsCitizenship { get; }
+        IReferenceMarriageRepository ReferenceMarriages{ get; }
+        IReferenceMilSvcCitizenshipQualRepository ReferenceMilSvcCitizenshipQuals { get; }
+        IReferencePayPlanRepository ReferencePayPlans { get; }
+        IReferencePersonnelClassRepository ReferencePersonnelClasses{ get; }
+        IReferenceRankRepository ReferenceRanks { get; }
+        IReferenceServiceBranchRepository ReferenceServiceBranches{ get; }
+        IReferenceServiceBranchComponentRepository ReferenceServiceBranchComponents { get; }
+        IReferenceSsnVerificationRepository ReferenceSsnVerifications { get; }
 
         int Complete();
     }

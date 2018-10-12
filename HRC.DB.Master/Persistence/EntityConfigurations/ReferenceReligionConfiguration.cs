@@ -15,7 +15,7 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
     public class ReferenceReligionConfiguration : IEntityTypeConfiguration<ReferenceReligion>
     {
         public const int CodeLength = 2;
-        public const int LongNameLength = 253;
+        public const int LongNameLength = 255;
 
         public void Configure(EntityTypeBuilder<ReferenceReligion> builder)
         {

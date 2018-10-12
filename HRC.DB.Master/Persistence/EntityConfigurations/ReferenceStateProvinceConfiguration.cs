@@ -14,8 +14,8 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
     /// </remarks>
     public class ReferenceStateProvinceConfiguration : IEntityTypeConfiguration<ReferenceStateProvince>
     {
-        public const int CodeLength = 2;
-        public const int LongNameLength = 35;
+        public const int CodeLength = 3;
+        public const int LongNameLength = 250;
 
         public void Configure(EntityTypeBuilder<ReferenceStateProvince> builder)
         {
@@ -33,7 +33,7 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
 
             builder.Property(p => p.Code)
                 .HasColumnName("code")
-                .HasColumnType($"char({CodeLength})")
+                .HasColumnType($"varchar({CodeLength})")
                 .IsRequired();
             builder.HasIndex(c => c.Code).IsUnique();
 

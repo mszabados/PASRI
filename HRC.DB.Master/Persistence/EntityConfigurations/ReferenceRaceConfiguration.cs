@@ -15,7 +15,7 @@ namespace HRC.DB.Master.Persistence.EntityConfigurations
     public class ReferenceRaceConfiguration : IEntityTypeConfiguration<ReferenceRace>
     {
         public const int CodeLength = 1;
-        public const int LongNameLength = 237;
+        public const int LongNameLength = 200;
 
         public void Configure(EntityTypeBuilder<ReferenceRace> builder)
         {
